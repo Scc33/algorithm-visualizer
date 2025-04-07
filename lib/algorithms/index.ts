@@ -2,6 +2,9 @@ import { AlgorithmVisualization, AlgorithmInfo } from "../types";
 import { bubbleSort } from "./bubbleSort";
 import { selectionSort } from "./selectionSort";
 import { insertionSort } from "./insertionSort";
+import { mergeSort } from "./mergeSort";
+import { quickSort } from "./quickSort";
+import { heapSort } from "./heapSort";
 
 // Map algorithm names to their implementation functions
 const algorithms: Record<string, (array: number[]) => AlgorithmVisualization> =
@@ -9,6 +12,9 @@ const algorithms: Record<string, (array: number[]) => AlgorithmVisualization> =
     bubbleSort,
     selectionSort,
     insertionSort,
+    mergeSort,
+    quickSort,
+    heapSort,
     // Add more algorithms as they are implemented
   };
 
@@ -72,4 +78,11 @@ export const availableAlgorithms: AlgorithmInfo[] = [
 ];
 
 // Export all algorithms
-export { bubbleSort, selectionSort, insertionSort };
+export {
+  bubbleSort,
+  selectionSort,
+  insertionSort,
+  mergeSort,
+  quickSort,
+  heapSort,
+};
