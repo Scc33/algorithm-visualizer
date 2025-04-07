@@ -10,8 +10,10 @@ export default function AboutPage() {
     >
       <div className="max-w-4xl mx-auto">
         <section className="mb-12">
-          <h2 className="heading-lg mb-4">Our Philosophical Approach</h2>
-          <p className="text-gray-700 mb-4">
+          <h2 className="heading-lg mb-4 text-white">
+            Our Philosophical Approach
+          </h2>
+          <p className="text-white mb-4">
             At its essence, Algorithm Visualizer serves as an intellectual
             bridge between abstract computational theory and tangible
             comprehension. We&apos;ve architected this platform upon the
@@ -20,7 +22,7 @@ export default function AboutPage() {
             cognitive processing is augmented through visual perception and
             interactive engagement.
           </p>
-          <p className="text-gray-700 mb-4">
+          <p className="text-white mb-4">
             Much like how the Rosetta Stone unlocked ancient linguistic
             mysteries by providing parallel representations of the same content,
             our visualizations decode the cryptic language of algorithms by
@@ -30,7 +32,7 @@ export default function AboutPage() {
             inner mechanisms discernible to both novice learners and seasoned
             practitioners.
           </p>
-          <p className="text-gray-700 mb-4">
+          <p className="text-white mb-4">
             Whether you&apos;re a student navigating the labyrinthine pathways
             of computer science fundamentals, an educator curating pedagogical
             resources, or a professional developer refining your algorithmic
@@ -41,7 +43,9 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-12">
-          <h2 className="heading-lg mb-4">Architectural Cornerstones</h2>
+          <h2 className="heading-lg mb-4 text-white">
+            Architectural Cornerstones
+          </h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="card p-6">
               <h3 className="heading-sm mb-2">Dynamic Visual Orchestration</h3>
@@ -89,18 +93,18 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-12">
-          <h2 className="heading-lg mb-4">Engagement Methodology</h2>
+          <h2 className="heading-lg mb-4 text-white">Engagement Methodology</h2>
           <ol className="list-decimal pl-6 space-y-4">
-            <li className="text-gray-700">
-              <span className="font-medium text-gray-900">
+            <li className="text-white">
+              <span className="font-medium text-white">
                 Algorithm Selection:
               </span>{" "}
               Navigate our taxonomical hierarchy—organized by both functional
               category and cognitive complexity—to identify an algorithm that
               aligns with your intellectual objectives.
             </li>
-            <li className="text-gray-700">
-              <span className="font-medium text-gray-900">
+            <li className="text-white">
+              <span className="font-medium text-white">
                 Observational Analysis:
               </span>{" "}
               Witness the algorithm&apos;s procedural logic manifest through
@@ -108,8 +112,8 @@ export default function AboutPage() {
               through chromatic encoding to elucidate its functional
               significance.
             </li>
-            <li className="text-gray-700">
-              <span className="font-medium text-gray-900">
+            <li className="text-white">
+              <span className="font-medium text-white">
                 Temporal Modulation:
               </span>{" "}
               Exercise precise control over the visualization&apos;s
@@ -117,8 +121,8 @@ export default function AboutPage() {
               or regress, and calibrate kinetic velocity to synchronize with
               your cognitive processing rate.
             </li>
-            <li className="text-gray-700">
-              <span className="font-medium text-gray-900">
+            <li className="text-white">
+              <span className="font-medium text-white">
                 Permutational Exploration:
               </span>{" "}
               Generate diverse datasets to examine how algorithmic behavior
@@ -126,8 +130,8 @@ export default function AboutPage() {
               consistent patterns and edge-case behaviors that illuminate the
               algorithm&apos;s robust properties and potential vulnerabilities.
             </li>
-            <li className="text-gray-700">
-              <span className="font-medium text-gray-900">
+            <li className="text-white">
+              <span className="font-medium text-white">
                 Theoretical Integration:
               </span>{" "}
               Complement empirical observation with analytical understanding by
@@ -140,11 +144,13 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-12">
-          <h2 className="heading-lg mb-4">Algorithmic Taxonomy</h2>
+          <h2 className="heading-lg mb-4 text-white">Algorithmic Taxonomy</h2>
           <div className="space-y-4">
             <div>
-              <h3 className="heading-sm mb-2">Ordering Methodologies</h3>
-              <p className="text-gray-700">
+              <h3 className="heading-sm mb-2 text-white">
+                Ordering Methodologies
+              </h3>
+              <p className="text-white">
                 These algorithms—the linguistic syntax arrangers of the
                 computational world—transform chaotic data collections into
                 structured sequences through systematic element comparisons and
@@ -156,8 +162,10 @@ export default function AboutPage() {
               </p>
             </div>
             <div>
-              <h3 className="heading-sm mb-2">Retrieval Mechanisms</h3>
-              <p className="text-gray-700">
+              <h3 className="heading-sm mb-2 text-white">
+                Retrieval Mechanisms
+              </h3>
+              <p className="text-white">
                 Much like how skilled librarians employ different strategies to
                 locate specific volumes—from sequential shelf scanning to
                 indexed catalog consultation—these algorithms demonstrate the
@@ -167,8 +175,10 @@ export default function AboutPage() {
               </p>
             </div>
             <div>
-              <h3 className="heading-sm mb-2">Network Traversal Frameworks</h3>
-              <p className="text-gray-700">
+              <h3 className="heading-sm mb-2 text-white">
+                Network Traversal Frameworks
+              </h3>
+              <p className="text-white">
                 These sophisticated mechanisms navigate the complex relational
                 landscapes represented by graph structures—analogous to how
                 different exploration strategies might be employed to traverse a
@@ -181,14 +191,16 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="heading-lg mb-4">Technological Infrastructure</h2>
-          <p className="text-gray-700 mb-4">
+          <h2 className="heading-lg mb-4 text-white">
+            Technological Infrastructure
+          </h2>
+          <p className="text-white mb-4">
             Our platform orchestrates a symphony of contemporary web
             technologies, meticulously integrated to deliver an immersive
             educational experience that balances computational robustness with
             interface elegance:
           </p>
-          <ul className="list-disc pl-6 text-gray-700">
+          <ul className="list-disc pl-6 text-white">
             <li>
               React.js for declarative component architecture and state
               management
