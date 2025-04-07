@@ -17,11 +17,11 @@ export default function SortingVisualization({
         const height = (value / maxValue) * 100;
 
         // Determine the bar color based on its state
-        let barColor = "bg-blue-500";
+        let barColor = "bg-blue-400";
         if (completed.includes(index)) {
-          barColor = "bg-green-500";
+          barColor = "bg-green-400";
         } else if (comparing.includes(index)) {
-          barColor = swapped ? "bg-red-500" : "bg-yellow-500";
+          barColor = swapped ? "bg-red-400" : "bg-yellow-400";
         }
 
         return (

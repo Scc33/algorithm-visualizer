@@ -1,3 +1,4 @@
+import Footer from "./Footer";
 import Navbar from "./Navbar";
 
 interface PageLayoutProps {
@@ -17,7 +18,7 @@ export default function PageLayout({
 
       <main className="flex-grow">
         {(title || subtitle) && (
-          <div className="bg-gray-100 border-b">
+          <div className="bg-gray-50 border-b">
             <div className="container-content py-8">
               {title && <h1 className="heading-xl">{title}</h1>}
               {subtitle && (
@@ -30,16 +31,7 @@ export default function PageLayout({
         <div className="container-content py-8">{children}</div>
       </main>
 
-      <footer className="bg-white border-t py-6">
-        <div className="container-content">
-          <div className="flex flex-col items-center justify-center text-sm text-gray-500">
-            <p>© {new Date().getFullYear()} Algorithm Visualizer</p>
-            <p className="mt-1">
-              Made with Next.js, TypeScript, and Tailwind CSS
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

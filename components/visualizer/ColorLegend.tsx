@@ -1,9 +1,9 @@
 export default function ColorLegend() {
   const legendItems = [
-    { color: "bg-blue-500", label: "Unsorted" },
-    { color: "bg-yellow-500", label: "Comparing" },
-    { color: "bg-red-500", label: "Swapping" },
-    { color: "bg-green-500", label: "Sorted" },
+    { color: "bg-blue-400", label: "Unsorted" },
+    { color: "bg-yellow-400", label: "Comparing" },
+    { color: "bg-red-400", label: "Swapping" },
+    { color: "bg-green-400", label: "Sorted" },
   ];
 
   return (
