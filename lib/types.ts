@@ -11,6 +11,7 @@ export interface AlgorithmVisualization {
   description: string;
   timeComplexity: string;
   spaceComplexity: string;
+  reference: string;
   pseudoCode: string[];
   category: string;
   key: string;

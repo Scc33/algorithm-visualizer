@@ -64,6 +64,7 @@ export function bubbleSort(array: number[]): AlgorithmVisualization {
       "A simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order.",
     timeComplexity: "O(n²)",
     spaceComplexity: "O(1)",
+    reference: "https://en.wikipedia.org/wiki/Bubble_sort",
     pseudoCode: [
       "procedure bubbleSort(A: list of sortable items)",
       "  n := length(A)",

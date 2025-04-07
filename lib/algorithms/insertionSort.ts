@@ -73,6 +73,7 @@ export function insertionSort(array: number[]): AlgorithmVisualization {
       "Insertion sort iterates through an array and at each iteration it removes one element, finds the location where it belongs and inserts it there.",
     timeComplexity: "O(n²)",
     spaceComplexity: "O(1)",
+    reference: "https://en.wikipedia.org/wiki/Insertion_sort",
     pseudoCode: [
       "procedure insertionSort(A: list of sortable items)",
       "  n := length(A)",

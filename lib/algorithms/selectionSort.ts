@@ -83,6 +83,7 @@ export function selectionSort(array: number[]): AlgorithmVisualization {
       "The selection sort algorithm sorts an array by repeatedly finding the minimum element from the unsorted part and putting it at the beginning.",
     timeComplexity: "O(n²)",
     spaceComplexity: "O(1)",
+    reference: "https://en.wikipedia.org/wiki/Selection_sort",
     pseudoCode: [
       "procedure selectionSort(A: list of sortable items)",
       "  n := length(A)",
