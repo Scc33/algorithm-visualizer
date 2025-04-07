@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="bg-white">
@@ -8,15 +10,12 @@ export default function Footer() {
           </span>
         </a>
         <div className="flex justify-center space-x-6 md:order-2">
-          <a
-            href="https://seancoughlin.me"
-            className="text-gray-400 hover:text-gray-500"
-          >
+          <Link href="/about" className="text-gray-400 hover:text-gray-500">
             <span className="sr-only">About</span>
             <span className="text-sm text-gray-500 hover:text-gray-900">
               About
             </span>
-          </a>
+          </Link>
           <a
             href="https://portfolio.seancoughlin.me"
             className="text-gray-400 hover:text-gray-500"
