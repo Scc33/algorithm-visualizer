@@ -1,26 +1,98 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --foreground-rgb: 15, 23, 42;
+  --background-rgb: 248, 250, 252;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground-rgb: 248, 250, 252;
+    --background-rgb: 15, 23, 42;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  font-family: var(--font-geist-sans);
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium transition-colors;
+  }
+
+  .btn-primary {
+    @apply bg-blue-500 text-white hover:bg-blue-600;
+  }
+
+  .btn-success {
+    @apply bg-green-500 text-white hover:bg-green-600;
+  }
+
+  .btn-danger {
+    @apply bg-red-500 text-white hover:bg-red-600;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-500 text-white hover:bg-gray-600;
+  }
+
+  .card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden;
+  }
+
+  .badge {
+    @apply px-2 py-1 text-xs font-medium rounded-full;
+  }
+
+  .badge-easy {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .badge-medium {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+
+  .badge-hard {
+    @apply bg-red-100 text-red-800;
+  }
+
+  .container-content {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .heading-xl {
+    @apply text-3xl font-bold text-gray-900 sm:text-4xl;
+  }
+
+  .heading-lg {
+    @apply text-2xl font-bold text-gray-900;
+  }
+
+  .heading-md {
+    @apply text-xl font-semibold text-gray-900;
+  }
+
+  .heading-sm {
+    @apply text-lg font-semibold text-gray-900;
+  }
+
+  .text-code {
+    @apply font-mono text-sm bg-gray-100 px-1 py-0.5 rounded;
+  }
+}
+
+/* Custom styles for algorithm visualization elements */
+.bar-chart {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.slider-control {
+  @apply w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer;
+}
+
+.slider-control::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 rounded-full bg-blue-500;
 }

@@ -1,4 +1,4 @@
-import { AlgorithmVisualization, SortingStep } from "./types";
+import { AlgorithmVisualization, SortingStep } from "../types";
 
 export function bubbleSort(array: number[]): AlgorithmVisualization {
   const steps: SortingStep[] = [];
@@ -58,6 +58,8 @@ export function bubbleSort(array: number[]): AlgorithmVisualization {
   return {
     steps,
     name: "Bubble Sort",
+    key: "bubbleSort",
+    category: "sorting",
     description:
       "A simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order.",
     timeComplexity: "O(n²)",
@@ -78,15 +80,4 @@ export function bubbleSort(array: number[]): AlgorithmVisualization {
       "end procedure",
     ],
   };
-}
-
-export function generateRandomArray(
-  min: number,
-  max: number,
-  length: number
-): number[] {
-  return Array.from(
-    { length },
-    () => Math.floor(Math.random() * (max - min + 1)) + min
-  );
 }

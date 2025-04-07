@@ -3,11 +3,11 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-export default function BubbleSortRedirect() {
+export default function SelectionSortRedirect() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace("/sorting/bubbleSort");
+    router.replace("/sorting/selectionSort");
   }, [router]);
 
   return null;

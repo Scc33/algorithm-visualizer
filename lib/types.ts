@@ -12,6 +12,22 @@ export interface AlgorithmVisualization {
   timeComplexity: string;
   spaceComplexity: string;
   pseudoCode: string[];
+  category: string;
+  key: string;
+}
+
+export type AlgorithmCategory =
+  | "sorting"
+  | "searching"
+  | "graph"
+  | "datastructure";
+
+export interface AlgorithmInfo {
+  name: string;
+  key: string;
+  category: AlgorithmCategory;
+  description: string;
+  difficulty: "Easy" | "Medium" | "Hard";
 }
 
 export type VisualizationState = {
