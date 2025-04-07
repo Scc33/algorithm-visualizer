@@ -1,0 +1,43 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    # Look for `package.json` and `lock` files in the `root` directory
+    directory: "/"
+    # Check for updates once a week
+    schedule:
+      interval: "weekly"
+    # Specify labels for pull requests
+    labels:
+      - "dependencies"
+    # Group all updates together
+    groups:
+      development-dependencies:
+        patterns:
+          - "@types/*"
+          - "eslint*"
+          - "typescript"
+        update-types:
+          - "minor"
+          - "patch"
+      production-dependencies:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "next"
+        update-types:
+          - "minor"
+          - "patch"
+    # Set version strategies
+    versioning-strategy: increase
+    # Maximum number of open pull requests for version updates
+    open-pull-requests-limit: 10
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "github-actions"
