@@ -47,6 +47,10 @@ body {
     @apply px-2 py-1 text-xs font-medium rounded-full;
   }
 
+  .badge-info {
+    @apply bg-blue-100 text-blue-800;
+  }
+
   .badge-easy {
     @apply bg-green-100 text-green-800;
   }

@@ -10,9 +10,9 @@ export default function AlgorithmCard({ algorithm }: AlgorithmCardProps) {
 
   // Determine badge color based on difficulty
   const badgeClass = {
-    Easy: "badge-easy",
-    Medium: "badge-medium",
-    Hard: "badge-hard",
+    easy: "badge-easy",
+    medium: "badge-medium",
+    hard: "badge-hard",
   }[difficulty];
 
   return (
@@ -20,13 +20,20 @@ export default function AlgorithmCard({ algorithm }: AlgorithmCardProps) {
       <div className="p-6">
         <div className="flex justify-between items-start">
           <h3 className="heading-md">{name}</h3>
-          <div className={`badge ${badgeClass}`}>{difficulty}</div>
+          <Link
+            className={`badge ${badgeClass} capitalize`}
+            href={`/${difficulty}`}
+          >
+            {difficulty}
+          </Link>
         </div>
 
         <p className="mt-2 text-gray-600 line-clamp-2">{description}</p>
 
         <div className="mt-4 flex justify-between items-center">
-          <span className="text-sm text-gray-500 capitalize">{category}</span>
+          <Link className="badge badge-info capitalize" href={`/${category}`}>
+            {category}
+          </Link>
 
           <Link
             href={`/${category}/${key}`}

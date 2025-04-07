@@ -27,7 +27,7 @@ export interface AlgorithmInfo {
   key: string;
   category: AlgorithmCategory;
   description: string;
-  difficulty: "Easy" | "Medium" | "Hard";
+  difficulty: "easy" | "medium" | "hard";
 }
 
 export type VisualizationState = {
