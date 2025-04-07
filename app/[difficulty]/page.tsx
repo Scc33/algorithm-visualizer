@@ -5,12 +5,13 @@ import AlgorithmCard from "@/components/AlgorithmCard";
 import { availableAlgorithms } from "@/lib/algorithms";
 
 type DifficultyParams = {
-  params: {
+  params: Promise<{
     difficulty: string;
-  };
+  }>;
 };
 
-export default function DifficultyPage({ params }: DifficultyParams) {
+export default async function DifficultyPage(props: DifficultyParams) {
+  const params = await props.params;
   const { difficulty } = params;
 
   // Validate that difficulty is one of the valid types
