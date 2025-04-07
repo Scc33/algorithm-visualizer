@@ -141,7 +141,7 @@ export default async function Image({
             color: "#94a3b8",
           }}
         >
-          Learn algorithms interactively at algorithm-visualizer.vercel.app
+          Learn algorithms interactively at algorithm-visualizer.seancoughlin.me
         </div>
       </div>
     ),

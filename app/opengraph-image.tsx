@@ -142,7 +142,7 @@ export default function Image() {
             color: "#94a3b8",
           }}
         >
-          algorithm-visualizer.vercel.app
+          algorithm-visualizer.seancoughlin.me
         </div>
       </div>
     ),
