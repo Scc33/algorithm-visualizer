@@ -7,11 +7,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import {
-  AlgorithmVisualization,
-  VisualizationState,
-  VisualizationAction,
-} from "@/lib/types";
+import { VisualizationState, VisualizationAction } from "@/lib/types";
 import { generateRandomArray, saveState, loadState } from "@/lib/utils";
 import { getAlgorithmByName } from "@/lib/algorithms";
 

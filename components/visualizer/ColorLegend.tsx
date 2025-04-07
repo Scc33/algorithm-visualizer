@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ColorLegend() {
   const legendItems = [
     { color: "bg-blue-500", label: "Unsorted" },

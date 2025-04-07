@@ -1,4 +1,3 @@
-import React from "react";
 import { SortingStep } from "@/lib/types";
 
 interface SortingVisualizationProps {

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import SortingVisualization from "../SortingVisualization";
 import VisualizerControls from "./VisualizerControls";
 import AlgorithmInfo from "./AlgorithmInfo";

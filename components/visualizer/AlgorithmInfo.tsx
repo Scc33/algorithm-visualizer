@@ -1,4 +1,3 @@
-import React from "react";
 import { AlgorithmVisualization } from "@/lib/types";
 
 interface AlgorithmInfoProps {

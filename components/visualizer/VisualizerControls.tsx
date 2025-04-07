@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 
 interface VisualizerControlsProps {
