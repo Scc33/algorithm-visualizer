@@ -34,7 +34,7 @@ export default function VisualizerControls({
         <button
           onClick={handlePrev}
           disabled={currentStep <= 0 || isPlaying}
-          className="btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn btn-primary disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
         >
           <svg
             className="w-5 h-5"
@@ -54,7 +54,7 @@ export default function VisualizerControls({
         {isPlaying ? (
           <button
             onClick={handlePause}
-            className="btn btn-danger flex items-center space-x-2"
+            className="btn btn-danger flex items-center space-x-2 cursor-pointer"
           >
             <svg
               className="w-5 h-5"
@@ -75,7 +75,7 @@ export default function VisualizerControls({
           <button
             onClick={handlePlay}
             disabled={currentStep >= totalSteps - 1}
-            className="btn btn-success flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn btn-success flex items-center space-x-2 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
           >
             <svg
               className="w-5 h-5"
@@ -103,7 +103,7 @@ export default function VisualizerControls({
         <button
           onClick={handleNext}
           disabled={currentStep >= totalSteps - 1 || isPlaying}
-          className="btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn btn-primary disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
         >
           <svg
             className="w-5 h-5"
@@ -120,12 +120,47 @@ export default function VisualizerControls({
           </svg>
         </button>
       </div>
+      <div>
+        <div className="flex justify-between text-sm mb-1">
+          <span className="font-medium">Progress</span>
+          <span className="text-gray-500">
+            Step {currentStep + 1} of {totalSteps}
+          </span>
+        </div>
+        <input
+          type="range"
+          min="0"
+          max={totalSteps - 1}
+          value={currentStep}
+          onChange={handleStepChange}
+          className="slider-control w-full"
+          disabled={isPlaying}
+        />
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-700 mb-1">
+          Animation Speed
+        </label>
+        <input
+          type="range"
+          min="1"
+          max="10"
+          value={speed}
+          onChange={handleSpeedChange}
+          className="slider-control"
+        />
+        <div className="flex justify-between text-xs text-gray-500 mt-1">
+          <span>Slow</span>
+          <span>Fast</span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex items-center space-x-4">
           <button
             onClick={handleReset}
-            className="btn btn-secondary flex items-center space-x-2"
+            className="btn btn-secondary  w-full flex items-center justify-center space-x-2 cursor-pointer"
           >
             <svg
               className="w-5 h-5"
@@ -144,28 +179,10 @@ export default function VisualizerControls({
           </button>
         </div>
 
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Animation Speed
-          </label>
-          <input
-            type="range"
-            min="1"
-            max="10"
-            value={speed}
-            onChange={handleSpeedChange}
-            className="slider-control"
-          />
-          <div className="flex justify-between text-xs text-gray-500 mt-1">
-            <span>Slow</span>
-            <span>Fast</span>
-          </div>
-        </div>
-
         <div>
           <button
             onClick={onGenerateNewArray}
-            className="btn btn-primary bg-purple-500 hover:bg-purple-600 w-full flex items-center justify-center space-x-2"
+            className="btn btn-primary bg-purple-500 hover:bg-purple-600 w-full flex items-center justify-center space-x-2 cursor-pointer"
           >
             <svg
               className="w-5 h-5"
@@ -183,24 +200,6 @@ export default function VisualizerControls({
             <span>New Array</span>
           </button>
         </div>
-      </div>
-
-      <div>
-        <div className="flex justify-between text-sm mb-1">
-          <span className="font-medium">Progress</span>
-          <span className="text-gray-500">
-            Step {currentStep + 1} of {totalSteps}
-          </span>
-        </div>
-        <input
-          type="range"
-          min="0"
-          max={totalSteps - 1}
-          value={currentStep}
-          onChange={handleStepChange}
-          className="slider-control w-full"
-          disabled={isPlaying}
-        />
       </div>
     </div>
   );
