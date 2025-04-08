@@ -3,7 +3,6 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import VisualizerControls from "@/components/visualizer/VisualizerControls";
 import { AlgorithmProvider, useAlgorithm } from "@/context/AlgorithmContext";
-import { getAlgorithmByName } from "@/lib/algorithms";
 
 // Mock the algorithms module
 jest.mock("@/lib/algorithms", () => ({

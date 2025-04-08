@@ -15,7 +15,10 @@ const customJestConfig = {
   },
   // Add more setup options before each test is run
   // testPathIgnorePatterns: ['/node_modules/', '/.next/'],
-  testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+  testMatch: [
+    "**/__tests__/**/*.test.[jt]s?(x)",
+    "**/?(*.)+(spec|test).[jt]s?(x)",
+  ],
   collectCoverage: true,
   collectCoverageFrom: [
     "components/**/*.{js,jsx,ts,tsx}",

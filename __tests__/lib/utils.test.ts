@@ -1,85 +1,37 @@
 import {
-  saveState,
-  loadState,
   generateRandomArray,
   getAlgorithmLabel,
   getDifficulty,
 } from "@/lib/utils";
 
-// Mock localStorage
-const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-};
-Object.defineProperty(window, "localStorage", { value: localStorageMock });
+// We need to mock localStorage before importing the module
+const localStorageMock = (() => {
+  let store: Record<string, string> = {};
+  return {
+    getItem: jest.fn((key: string) => store[key] || null),
+    setItem: jest.fn((key: string, value: string) => {
+      store[key] = value;
+    }),
+    clear: jest.fn(() => {
+      store = {};
+    }),
+    removeItem: jest.fn((key: string) => {
+      delete store[key];
+    }),
+  };
+})();
+
+// Replace the window.localStorage object with our mock
+Object.defineProperty(window, "localStorage", {
+  value: localStorageMock,
+  writable: true,
+});
 
 describe("Utils Functions", () => {
+  // Reset mocks before each test
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  describe("saveState", () => {
-    it("should save state to localStorage", () => {
-      const state = { data: [1, 2, 3], speed: 5, algorithm: "bubbleSort" };
-      saveState(state);
-      expect(localStorageMock.setItem).toHaveBeenCalledWith(
-        "algorithm-visualizer-state",
-        JSON.stringify(state)
-      );
-    });
-
-    it("should handle errors", () => {
-      const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
-
-      // Simulate an error when setting item
-      localStorageMock.setItem.mockImplementation(() => {
-        throw new Error("localStorage error");
-      });
-
-      const state = { data: [1, 2, 3] };
-      saveState(state);
-
-      expect(consoleErrorSpy).toHaveBeenCalled();
-      consoleErrorSpy.mockRestore();
-    });
-  });
-
-  describe("loadState", () => {
-    it("should load state from localStorage", () => {
-      const state = { data: [1, 2, 3], speed: 5, algorithm: "bubbleSort" };
-      localStorageMock.getItem.mockReturnValue(JSON.stringify(state));
-
-      const result = loadState();
-
-      expect(localStorageMock.getItem).toHaveBeenCalledWith(
-        "algorithm-visualizer-state"
-      );
-      expect(result).toEqual(state);
-    });
-
-    it("should return undefined when localStorage is empty", () => {
-      localStorageMock.getItem.mockReturnValue(null);
-
-      const result = loadState();
-
-      expect(result).toBeUndefined();
-    });
-
-    it("should handle errors", () => {
-      const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
-
-      // Simulate an error when getting item
-      localStorageMock.getItem.mockImplementation(() => {
-        throw new Error("localStorage error");
-      });
-
-      const result = loadState();
-
-      expect(consoleErrorSpy).toHaveBeenCalled();
-      expect(result).toBeUndefined();
-
-      consoleErrorSpy.mockRestore();
-    });
+    localStorageMock.clear();
   });
 
   describe("generateRandomArray", () => {

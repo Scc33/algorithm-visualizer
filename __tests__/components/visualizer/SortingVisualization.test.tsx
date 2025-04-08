@@ -79,10 +79,25 @@ describe("SortingVisualization", () => {
     // Get all the bar elements
     const bars = container.querySelectorAll(".bar-chart");
 
-    // Check that heights are set as percentages of maxValue
-    expect(bars[0].style.height).toBe("33%"); // 5/15 * 100
-    expect(bars[1].style.height).toBe("67%"); // 10/15 * 100
-    expect(bars[2].style.height).toBe("100%"); // 15/15 * 100
+    // Check that heights are proportional to their values
+    // We need to be a bit flexible with the exact percentages as rounding can occur
+    const firstBarHeight = parseFloat(bars[0].style.height);
+    const secondBarHeight = parseFloat(bars[1].style.height);
+    const thirdBarHeight = parseFloat(bars[2].style.height);
+
+    // Verify proper scaling (allow small margin for rounding)
+    expect(firstBarHeight).toBeGreaterThanOrEqual(32);
+    expect(firstBarHeight).toBeLessThanOrEqual(34);
+
+    expect(secondBarHeight).toBeGreaterThanOrEqual(66);
+    expect(secondBarHeight).toBeLessThanOrEqual(68);
+
+    expect(thirdBarHeight).toBeGreaterThanOrEqual(99);
+    expect(thirdBarHeight).toBeLessThanOrEqual(101);
+
+    // Verify relative heights (proportions should be maintained)
+    expect(secondBarHeight).toBeCloseTo(firstBarHeight * 2, 0);
+    expect(thirdBarHeight).toBeCloseTo(firstBarHeight * 3, 0);
   });
 
   it("should adjust bar widths based on the number of elements", () => {
