@@ -1,7 +1,7 @@
 import { SearchStep } from "@/lib/types";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 import { getAlgorithmByName } from "@/lib/algorithms";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface SearchVisualizationProps {
   step: SearchStep;
@@ -15,31 +15,34 @@ export default function SearchVisualization({
   const { state, dispatch } = useAlgorithm();
   const [inputTarget, setInputTarget] = useState(target.toString());
 
+  // Update the input field when the target changes externally
+  useEffect(() => {
+    setInputTarget(target.toString());
+  }, [target]);
+
   const handleTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputTarget(e.target.value);
+    const newValue = e.target.value;
+    setInputTarget(newValue);
+
+    // Only process valid numbers
+    const newTarget = parseInt(newValue);
+    if (!isNaN(newTarget) && newTarget !== target) {
+      updateTarget(newTarget);
+    }
   };
 
-  const handleTargetSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newTarget = parseInt(inputTarget);
-
-    if (isNaN(newTarget)) {
-      alert("Please enter a valid number");
-      setInputTarget(target.toString());
-      return;
-    }
-
-    // If target hasn't changed, do nothing
-    if (newTarget === target) return;
-
+  const updateTarget = (newTarget: number) => {
+    console.log(newTarget);
     // Update the target value
     dispatch({ type: "SET_TARGET", payload: newTarget });
 
     // Regenerate visualization with the new target
     const algorithmFunction = getAlgorithmByName(state.algorithm);
+    console.log(algorithmFunction);
     if (algorithmFunction) {
       try {
         const viz = algorithmFunction(state.data, newTarget);
+        console.log(viz);
         dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
       } catch (error) {
         console.error("Error generating visualization:", error);
@@ -50,7 +53,7 @@ export default function SearchVisualization({
   return (
     <div className="flex flex-col items-center space-y-8 w-full p-6 bg-white">
       <div className="flex flex-wrap items-center gap-4 mb-4 w-full">
-        <form onSubmit={handleTargetSubmit} className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <label htmlFor="target-input" className="font-medium text-gray-600">
             Target Value:
           </label>
@@ -61,13 +64,7 @@ export default function SearchVisualization({
             onChange={handleTargetChange}
             className="w-16 px-2 py-1 border border-gray-300 rounded text-center text-gray-600"
           />
-          <button
-            type="submit"
-            className="btn btn-primary text-sm py-1 cursor-pointer"
-          >
-            Set Target
-          </button>
-        </form>
+        </div>
 
         <div className="font-medium ml-auto text-gray-600">
           Status:
