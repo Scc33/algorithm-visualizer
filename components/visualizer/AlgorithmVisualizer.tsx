@@ -23,7 +23,7 @@ export default function AlgorithmVisualizer() {
     });
 
     // Set a new random target for search algorithms
-    if (isSearchAlgorithm()) {
+    if (algorithm.includes("search")) {
       const newData = data.slice();
       const newTarget = getRandomValueFromArray(newData);
       dispatch({ type: "SET_TARGET", payload: newTarget });
@@ -33,7 +33,7 @@ export default function AlgorithmVisualizer() {
     const algorithmFunction = getAlgorithmByName(algorithm);
     if (algorithmFunction) {
       try {
-        const viz = isSearchAlgorithm()
+        const viz = algorithm.includes("search")
           ? algorithmFunction(data, target)
           : algorithmFunction(data);
         dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
@@ -43,21 +43,15 @@ export default function AlgorithmVisualizer() {
     }
   };
 
-  // Check if the current algorithm is a search algorithm
-  const isSearchAlgorithm = () => {
-    return visualizationData?.category === "searching";
-  };
-
   // Set a new target value for search algorithms
   const handleSetTarget = () => {
     // Only show for search algorithms
-    if (!isSearchAlgorithm()) return;
+    if (!algorithm.includes("search")) return;
 
     const newTarget = prompt(
       "Enter a target value to search for:",
-      target?.toString() || "42"
+      target?.toString()
     );
-
     if (newTarget === null) return; // User canceled
 
     const parsedTarget = parseInt(newTarget);
@@ -71,12 +65,8 @@ export default function AlgorithmVisualizer() {
     // Regenerate visualization with the new target
     const algorithmFunction = getAlgorithmByName(algorithm);
     if (algorithmFunction) {
-      try {
-        const viz = algorithmFunction(data, parsedTarget);
-        dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
-      } catch (error) {
-        console.error("Error generating visualization:", error);
-      }
+      const viz = algorithmFunction(data, parsedTarget);
+      dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
     }
   };
 
@@ -94,7 +84,8 @@ export default function AlgorithmVisualizer() {
     );
   }
 
-  const isSearching = isSearchAlgorithm();
+  const isSearchAlgorithm = algorithm.toLowerCase().includes("search");
+  console.log(algorithm, isSearchAlgorithm);
 
   return (
     <div className="space-y-8">
@@ -103,7 +94,7 @@ export default function AlgorithmVisualizer() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <div className="card">
-            {isSearching ? (
+            {isSearchAlgorithm ? (
               <SearchVisualization
                 step={visualizationData.steps[currentStep] as SearchStep}
                 maxValue={maxValue}
@@ -120,10 +111,10 @@ export default function AlgorithmVisualizer() {
             currentStep={currentStep}
             totalSteps={visualizationData.steps.length}
             onGenerateNewArray={handleGenerateNewArray}
-            onSetTarget={isSearching ? handleSetTarget : undefined}
+            onSetTarget={isSearchAlgorithm ? handleSetTarget : undefined}
           />
 
-          <ColorLegend isSearchAlgorithm={isSearching} />
+          <ColorLegend isSearchAlgorithm={isSearchAlgorithm} />
         </div>
 
         <div className="lg:col-span-1">
