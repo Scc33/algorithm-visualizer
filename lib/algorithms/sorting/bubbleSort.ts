@@ -1,4 +1,5 @@
-import { AlgorithmVisualization, SortingStep } from "../types";
+import { AlgorithmVisualization, SortingStep } from "../../types";
+import { createVisualization } from "../utils";
 
 export function bubbleSort(array: number[]): AlgorithmVisualization {
   const steps: SortingStep[] = [];
@@ -55,13 +56,7 @@ export function bubbleSort(array: number[]): AlgorithmVisualization {
     if (!swapped) break;
   }
 
-  return {
-    steps,
-    name: "Bubble Sort",
-    key: "bubbleSort",
-    category: "sorting",
-    description:
-      "A simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order.",
+  return createVisualization("bubbleSort", steps, {
     timeComplexity: "O(n²)",
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Bubble_sort",
@@ -80,5 +75,5 @@ export function bubbleSort(array: number[]): AlgorithmVisualization {
       "  until not swapped",
       "end procedure",
     ],
-  };
+  });
 }

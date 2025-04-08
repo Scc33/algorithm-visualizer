@@ -1,4 +1,5 @@
-import { AlgorithmVisualization, SortingStep } from "../types";
+import { AlgorithmVisualization, SortingStep } from "../../types";
+import { createVisualization } from "../utils";
 
 export function heapSort(array: number[]): AlgorithmVisualization {
   const steps: SortingStep[] = [];
@@ -56,13 +57,7 @@ export function heapSort(array: number[]): AlgorithmVisualization {
     completed: [...completed],
   });
 
-  return {
-    steps,
-    name: "Heap Sort",
-    key: "heapSort",
-    category: "sorting",
-    description:
-      "A comparison-based sorting algorithm that uses a binary heap data structure. It divides the input into a sorted and an unsorted region, and iteratively shrinks the unsorted region by extracting the largest element and moving it to the sorted region.",
+  return createVisualization("heapSort", steps, {
     timeComplexity: "O(n log n)",
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Heapsort",
@@ -99,7 +94,7 @@ export function heapSort(array: number[]): AlgorithmVisualization {
       "  end if",
       "end procedure",
     ],
-  };
+  });
 }
 
 function buildMaxHeap(

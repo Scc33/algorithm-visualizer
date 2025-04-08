@@ -1,21 +1,18 @@
 import React from "react";
 import { AlgorithmProvider } from "@/context/AlgorithmContext";
 import { Metadata } from "next";
-import { availableAlgorithms } from "@/lib/algorithms";
+import { availableAlgorithms } from "@/lib/algorithms/metadata";
 import { constructMetadata } from "@/lib/seo/metadata";
-import { getAlgorithmLabel } from "@/lib/utils";
 
 type Props = {
-  params: { algorithm: string };
+  params: Promise<{ algorithm: string }>;
 };
 
-export function generateMetadata({ params }: Props): Metadata {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const { algorithm } = params;
 
-  // Find the algorithm in our available list
-  const algorithmInfo = availableAlgorithms.find(
-    (algo) => algo.key === algorithm
-  );
+  const algorithmInfo = availableAlgorithms[algorithm];
 
   if (!algorithmInfo) {
     return constructMetadata({
@@ -25,19 +22,18 @@ export function generateMetadata({ params }: Props): Metadata {
     });
   }
 
-  const title = getAlgorithmLabel(algorithm);
-  const { description, difficulty, category } = algorithmInfo;
+  const { name, description, difficulty, category } = algorithmInfo;
 
   return constructMetadata({
-    title,
+    title: name,
     description,
     path: `/sorting/${algorithm}`,
     keywords: [
       algorithm,
-      title.toLowerCase(),
-      `${title.toLowerCase()} visualization`,
-      `${title.toLowerCase()} explanation`,
-      `${title.toLowerCase()} algorithm`,
+      name.toLowerCase(),
+      `${name.toLowerCase()} visualization`,
+      `${name.toLowerCase()} explanation`,
+      `${name.toLowerCase()} algorithm`,
       `${difficulty} algorithm`,
       `${category} algorithm`,
     ],

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmCard from "@/components/AlgorithmCard";
-import { availableAlgorithms } from "@/lib/algorithms";
+import { availableAlgorithms } from "@/lib/algorithms/metadata";
 
 type DifficultyParams = {
   params: Promise<{
@@ -20,8 +20,8 @@ export default async function DifficultyPage(props: DifficultyParams) {
   }
 
   // Filter algorithms by the current difficulty
-  const filteredAlgorithms = availableAlgorithms.filter(
-    (algo) => algo.difficulty === difficulty
+  const filteredAlgorithms = Object.entries(availableAlgorithms).filter(
+    ([, algo]) => algo.difficulty === difficulty
   );
 
   // Capitalize the first letter for display
@@ -36,7 +36,7 @@ export default async function DifficultyPage(props: DifficultyParams) {
       {filteredAlgorithms.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredAlgorithms.map((algorithm) => (
-            <AlgorithmCard key={algorithm.key} algorithm={algorithm} />
+            <AlgorithmCard key={algorithm[0]} algorithm={algorithm[1]} />
           ))}
         </div>
       ) : (

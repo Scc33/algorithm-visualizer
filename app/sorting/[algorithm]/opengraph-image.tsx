@@ -1,6 +1,5 @@
 import { ImageResponse } from "next/og";
-import { getAlgorithmLabel } from "@/lib/utils";
-import { availableAlgorithms } from "@/lib/algorithms";
+import { availableAlgorithms } from "@/lib/algorithms/metadata";
 import { APP_URL } from "@/constants/URL";
 
 export const runtime = "edge";
@@ -27,12 +26,8 @@ export default async function Image({
 }) {
   const { algorithm } = params;
 
-  // Find the algorithm info
-  const algorithmInfo = availableAlgorithms.find(
-    (algo) => algo.key === algorithm
-  );
+  const algorithmInfo = availableAlgorithms[algorithm];
 
-  const title = getAlgorithmLabel(algorithm);
   const description =
     algorithmInfo?.description || "Interactive algorithm visualization";
   const difficulty = algorithmInfo?.difficulty || "unknown";
@@ -110,7 +105,7 @@ export default async function Image({
               marginBottom: 20,
             }}
           >
-            {title}
+            {algorithmInfo.name}
           </h1>
 
           <div

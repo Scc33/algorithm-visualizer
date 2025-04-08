@@ -12,7 +12,7 @@ import { SearchStep, SortingStep } from "@/lib/types";
 
 export default function AlgorithmVisualizer() {
   const { state, dispatch } = useAlgorithm();
-  const { currentStep, algorithm, data, visualizationData } = state;
+  const { currentStep, algorithm, data, visualizationData, target } = state;
 
   // Generate a new random array
   const handleGenerateNewArray = () => {
@@ -25,8 +25,14 @@ export default function AlgorithmVisualizer() {
     const algorithmFunction = getAlgorithmByName(algorithm);
     if (algorithmFunction) {
       try {
-        // For search algorithms, the target will be set in the reducer
-        const viz = algorithmFunction(data, state.target);
+        const newData = [...state.data];
+
+        // Special handling for binary search - ensure sorted array and target exists
+        if (algorithm === "binarySearch") {
+          newData.sort((a, b) => a - b);
+        }
+
+        const viz = algorithmFunction(newData, target);
         dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
       } catch (error) {
         console.error("Error generating visualization:", error);

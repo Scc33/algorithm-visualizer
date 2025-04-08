@@ -22,6 +22,7 @@ export interface AlgorithmVisualization {
   reference: string;
   pseudoCode: string[];
   category: string;
+  difficulty: string;
   key: string;
 }
 
@@ -35,6 +36,7 @@ export interface AlgorithmInfo {
   name: string;
   key: string;
   category: AlgorithmCategory;
+  subtitle: string;
   description: string;
   difficulty: "easy" | "medium" | "hard";
 }

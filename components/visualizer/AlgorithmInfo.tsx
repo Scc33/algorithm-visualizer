@@ -48,6 +48,20 @@ export default function AlgorithmInfo({ algorithm }: AlgorithmInfoProps) {
 
         <div className="flex-1 min-w-[140px]">
           <h3 className="text-sm font-semibold text-gray-600 mb-2">
+            Difficulty
+          </h3>
+          <div className="bg-gray-50 px-3 py-2 rounded-md border border-gray-100">
+            <Link
+              className={`font-medium capitalize badge badge-${algorithm.difficulty}`}
+              href={`/difficulty/${algorithm.difficulty}`}
+            >
+              {algorithm.difficulty}
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex-1 min-w-[140px]">
+          <h3 className="text-sm font-semibold text-gray-600 mb-2">
             Reference
           </h3>
           <div className="bg-gray-50 px-3 py-2 rounded-md border border-gray-100">

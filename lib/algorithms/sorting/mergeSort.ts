@@ -1,4 +1,5 @@
-import { AlgorithmVisualization, SortingStep } from "../types";
+import { AlgorithmVisualization, SortingStep } from "../../types";
+import { createVisualization } from "../utils";
 
 export function mergeSort(array: number[]): AlgorithmVisualization {
   const steps: SortingStep[] = [];
@@ -29,13 +30,7 @@ export function mergeSort(array: number[]): AlgorithmVisualization {
     completed: finalCompleted,
   });
 
-  return {
-    steps,
-    name: "Merge Sort",
-    key: "mergeSort",
-    category: "sorting",
-    description:
-      "A divide and conquer algorithm that divides the input array in two halves, recursively sorts them, and then merges the sorted halves.",
+  return createVisualization("mergeSort", steps, {
     timeComplexity: "O(n log n)",
     spaceComplexity: "O(n)",
     reference: "https://en.wikipedia.org/wiki/Merge_sort",
@@ -75,7 +70,7 @@ export function mergeSort(array: number[]): AlgorithmVisualization {
       "  end for",
       "end procedure",
     ],
-  };
+  });
 }
 
 function mergeSortHelper(

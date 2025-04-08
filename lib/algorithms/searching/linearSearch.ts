@@ -1,5 +1,5 @@
-// lib/algorithms/linearSearch.ts
-import { AlgorithmVisualization, SearchStep } from "../types";
+import { AlgorithmVisualization, SearchStep } from "../../types";
+import { createVisualization } from "../utils";
 
 export function linearSearch(
   array: number[],
@@ -9,14 +9,11 @@ export function linearSearch(
   const arr = [...array];
   const visited: number[] = [];
 
-  // Set a default target if one is not provided or not found in the array
-  const targetValue = target || 42;
-
   // Initial state
   steps.push({
     array: [...arr],
     current: -1,
-    target: targetValue,
+    target: target,
     found: false,
     visited: [],
   });
@@ -30,18 +27,18 @@ export function linearSearch(
     steps.push({
       array: [...arr],
       current: i,
-      target: targetValue,
+      target: target,
       found: false,
       visited: [...visited],
     });
 
     // Check if current element equals target
-    if (arr[i] === targetValue) {
+    if (arr[i] === target) {
       // Found the target, record final step
       steps.push({
         array: [...arr],
         current: i,
-        target: targetValue,
+        target: target,
         found: true,
         visited: [...visited],
       });
@@ -54,19 +51,13 @@ export function linearSearch(
     steps.push({
       array: [...arr],
       current: -1,
-      target: targetValue,
+      target: target,
       found: false,
       visited: [...visited],
     });
   }
 
-  return {
-    steps,
-    name: "Linear Search",
-    key: "linearSearch",
-    category: "searching",
-    description:
-      "Linear search is a simple search algorithm that finds the position of a target value within a list by checking each element sequentially until a match is found or the end of the list is reached.",
+  return createVisualization("linearSearch", steps, {
     timeComplexity: "O(n)",
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Linear_search",
@@ -80,5 +71,5 @@ export function linearSearch(
       "  return -1  // Target not found",
       "end procedure",
     ],
-  };
+  });
 }

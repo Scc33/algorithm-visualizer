@@ -5,18 +5,15 @@ import { useParams } from "next/navigation";
 import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmVisualizer from "@/components/visualizer/AlgorithmVisualizer";
 import { useAlgorithm } from "@/context/AlgorithmContext";
-import { getAlgorithmByName, availableAlgorithms } from "@/lib/algorithms";
-import { getAlgorithmLabel } from "@/lib/utils";
+import { getAlgorithmByName } from "@/lib/algorithms";
+import { availableAlgorithms } from "@/lib/algorithms/metadata";
 
 export default function AlgorithmPage() {
   const params = useParams();
   const algorithmKey = params.algorithm as string;
   const { dispatch, state } = useAlgorithm();
 
-  // Find algorithm info
-  const algorithmInfo = availableAlgorithms.find(
-    (algo) => algo.key === algorithmKey
-  );
+  const algorithmInfo = availableAlgorithms[algorithmKey];
 
   // Set the current algorithm and generate visualization
   useEffect(() => {
@@ -56,8 +53,8 @@ export default function AlgorithmPage() {
 
   return (
     <PageLayout
-      title={getAlgorithmLabel(algorithmKey)}
-      subtitle={algorithmInfo.description}
+      title={algorithmInfo.name}
+      subtitle={algorithmInfo.subtitle}
       algorithmData={state.visualizationData || undefined}
     >
       <AlgorithmVisualizer />

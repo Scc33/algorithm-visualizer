@@ -1,6 +1,6 @@
 import Link from "next/link";
 import PageLayout from "@/components/layout/PageLayout";
-import { availableAlgorithms } from "@/lib/algorithms";
+import { availableAlgorithms } from "@/lib/algorithms/metadata";
 
 // Define type for card properties
 type CardProps = {
@@ -12,20 +12,19 @@ type CardProps = {
 
 export default function DifficultiesPage() {
   // Get unique difficulties and count algorithms per difficulty
-  const difficultyData = availableAlgorithms.reduce((acc, algorithm) => {
-    const { difficulty } = algorithm;
-    if (!acc[difficulty]) {
-      acc[difficulty] = {
-        count: 0,
-        label: difficulty.charAt(0).toUpperCase() + difficulty.slice(1),
-      };
-    }
-    acc[difficulty].count++;
-    return acc;
-  }, {} as Record<string, { count: number; label: string }>);
-
-  // Order by increasing difficulty
-  const orderedDifficulties = ["easy", "medium", "hard"];
+  const difficultyData = Object.entries(
+    Object.entries(availableAlgorithms).reduce((acc, [, algorithm]) => {
+      const { difficulty } = algorithm;
+      if (!acc[difficulty]) {
+        acc[difficulty] = {
+          count: 0,
+          label: difficulty.charAt(0).toUpperCase() + difficulty.slice(1),
+        };
+      }
+      acc[difficulty].count++;
+      return acc;
+    }, {} as Record<string, { count: number; label: string }>)
+  );
 
   // Define colors and descriptions for each difficulty
   const difficultyCardProps: Record<string, CardProps> = {
@@ -55,14 +54,12 @@ export default function DifficultiesPage() {
       subtitle="Browse algorithms by their difficulty level from beginner to advanced."
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-        {orderedDifficulties.map((difficulty) => {
-          const { count, label } = difficultyData[difficulty] || {
-            count: 0,
-            label: difficulty,
-          };
+        {difficultyData.map((difficulty) => {
+          const label = difficulty[1].label.toLowerCase();
+          const count = difficulty[1].count;
 
           // Get card props with fallback for unknown difficulties
-          const cardProps = difficultyCardProps[difficulty] || {
+          const cardProps = difficultyCardProps[label] || {
             color: "bg-gray-50 border-gray-200",
             textColor: "text-gray-800",
             icon: "?",
@@ -71,12 +68,14 @@ export default function DifficultiesPage() {
 
           return (
             <Link
-              key={difficulty}
-              href={`/${difficulty}`}
+              key={label}
+              href={`/difficulty/${label}`}
               className={`block ${cardProps.color} border-2 rounded-lg p-6 hover:shadow-md transition-all`}
             >
               <div className="flex items-center justify-between mb-4">
-                <h2 className={`heading-lg ${cardProps.textColor}`}>{label}</h2>
+                <h2 className={`heading-lg ${cardProps.textColor} capitalize`}>
+                  {label}
+                </h2>
                 <span className={`text-2xl ${cardProps.textColor}`}>
                   {cardProps.icon}
                 </span>
