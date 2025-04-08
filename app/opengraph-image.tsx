@@ -1,3 +1,4 @@
+import { APP_URL } from "@/constants/URL";
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
@@ -142,7 +143,7 @@ export default function Image() {
             color: "#94a3b8",
           }}
         >
-          algorithm-visualizer.seancoughlin.me
+          {APP_URL}
         </div>
       </div>
     ),

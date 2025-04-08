@@ -12,27 +12,28 @@ export default function SortingVisualization({
   const { array, comparing, swapped, completed } = step;
 
   return (
-    <div className="flex items-end justify-center w-full h-64 p-4 bg-white rounded-lg shadow">
+    <div className="flex items-end justify-center w-full h-64 p-6 bg-white">
       {array.map((value, index) => {
         const height = (value / maxValue) * 100;
 
-        let backgroundColor = "bg-blue-500";
+        // Determine the bar color based on its state
+        let barColor = "bg-blue-400";
         if (completed.includes(index)) {
-          backgroundColor = "bg-green-500";
+          barColor = "bg-green-400";
         } else if (comparing.includes(index)) {
-          backgroundColor = swapped ? "bg-red-500" : "bg-yellow-500";
+          barColor = swapped ? "bg-red-400" : "bg-yellow-400";
         }
 
         return (
           <div
             key={index}
-            className={`mx-1 ${backgroundColor} transition-all duration-300`}
+            className={`mx-1 rounded-t-sm ${barColor} bar-chart flex flex-col justify-end items-center`}
             style={{
               height: `${height}%`,
-              width: `${Math.max(100 / array.length - 2, 4)}%`,
+              width: `${Math.max(100 / array.length - 4, 6)}%`,
             }}
           >
-            <div className="text-xs text-center text-white">{value}</div>
+            <div className="text-xs font-medium text-white mb-1">{value}</div>
           </div>
         );
       })}

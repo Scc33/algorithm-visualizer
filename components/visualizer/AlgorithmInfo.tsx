@@ -54,6 +54,8 @@ export default function AlgorithmInfo({ algorithm }: AlgorithmInfoProps) {
             <a
               className="font-medium capitalize badge badge-info"
               href={algorithm.reference}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Wikipedia
             </a>

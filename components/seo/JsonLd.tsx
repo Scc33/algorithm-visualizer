@@ -1,6 +1,44 @@
 import React from "react";
 import { AlgorithmVisualization } from "@/lib/types";
 
+interface BaseJsonLd {
+  "@context": string;
+  "@type": string;
+  name: string;
+  description: string;
+  url: string;
+  author: {
+    "@type": string;
+    name: string;
+    url: string;
+  };
+  publisher: {
+    "@type": string;
+    name: string;
+    url: string;
+  };
+  datePublished: string;
+  dateModified: string;
+  inLanguage: string;
+}
+
+// Algorithm-specific JSON-LD properties
+interface AlgorithmJsonLd extends BaseJsonLd {
+  "@type": "Algorithm";
+  programmingLanguage: string;
+  codeSampleType: string;
+  runtimePlatform: string;
+  algorithmCategory: string;
+  timeComplexity: string;
+  spaceComplexity: string;
+  educationalUse: string;
+  citation?: string;
+}
+
+// Discriminated union of possible JSON-LD types
+type SchemaJsonLd = BaseJsonLd | AlgorithmJsonLd;
+
+// Component props
 type JsonLdProps = {
   algorithmData?: AlgorithmVisualization;
   url: string;
@@ -17,7 +55,7 @@ export default function JsonLd({
   description,
 }: JsonLdProps) {
   // Base WebPage or WebApplication JSON-LD
-  let jsonLd: any = {
+  let jsonLd: SchemaJsonLd = {
     "@context": "https://schema.org",
     "@type": type,
     name: name || "Algorithm Visualizer",
@@ -44,6 +82,7 @@ export default function JsonLd({
   if (algorithmData && type === "Algorithm") {
     jsonLd = {
       ...jsonLd,
+      "@type": "Algorithm", // explicitly set the type
       name: algorithmData.name,
       description: algorithmData.description,
       programmingLanguage: "JavaScript/TypeScript",
@@ -54,7 +93,7 @@ export default function JsonLd({
       spaceComplexity: algorithmData.spaceComplexity,
       educationalUse: "Teaching/Learning",
       citation: algorithmData.reference,
-    };
+    } as AlgorithmJsonLd;
   }
 
   return (

@@ -49,7 +49,7 @@ export default function AlgorithmPage() {
     <PageLayout
       title={getAlgorithmLabel(algorithmKey)}
       subtitle={algorithmInfo.description}
-      algorithmData={state.visualizationData}
+      algorithmData={state.visualizationData || undefined}
     >
       <AlgorithmVisualizer />
     </PageLayout>

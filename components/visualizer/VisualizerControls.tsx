@@ -35,6 +35,7 @@ export default function VisualizerControls({
           onClick={handlePrev}
           disabled={currentStep <= 0 || isPlaying}
           className="btn btn-primary disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+          aria-label="Previous"
         >
           <svg
             className="w-5 h-5"
@@ -104,6 +105,7 @@ export default function VisualizerControls({
           onClick={handleNext}
           disabled={currentStep >= totalSteps - 1 || isPlaying}
           className="btn btn-primary disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+          aria-label="Next"
         >
           <svg
             className="w-5 h-5"
@@ -135,11 +137,15 @@ export default function VisualizerControls({
           onChange={handleStepChange}
           className="slider-control w-full"
           disabled={isPlaying}
+          aria-label="Progress"
         />
       </div>
 
       <div className="flex flex-col">
-        <label className="text-sm font-medium text-gray-700 mb-1">
+        <label
+          className="text-sm font-medium text-gray-700 mb-1"
+          id="speed-label"
+        >
           Animation Speed
         </label>
         <input
@@ -149,6 +155,7 @@ export default function VisualizerControls({
           value={speed}
           onChange={handleSpeedChange}
           className="slider-control"
+          aria-labelledby="speed-label"
         />
         <div className="flex justify-between text-xs text-gray-500 mt-1">
           <span>Slow</span>
@@ -160,7 +167,7 @@ export default function VisualizerControls({
         <div className="flex items-center space-x-4">
           <button
             onClick={handleReset}
-            className="btn btn-secondary  w-full flex items-center justify-center space-x-2 cursor-pointer"
+            className="btn btn-secondary w-full flex items-center justify-center space-x-2 cursor-pointer"
           >
             <svg
               className="w-5 h-5"

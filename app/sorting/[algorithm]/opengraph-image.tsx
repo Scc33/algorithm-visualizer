@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getAlgorithmLabel } from "@/lib/utils";
 import { availableAlgorithms } from "@/lib/algorithms";
+import { APP_URL } from "@/constants/URL";
 
 export const runtime = "edge";
 
@@ -10,6 +11,13 @@ export const contentType = "image/png";
 export const size = {
   width: 1200,
   height: 630,
+};
+
+type DifficultyColors = {
+  easy: string;
+  medium: string;
+  hard: string;
+  [key: string]: string; // Index signature for any string key
 };
 
 export default async function Image({
@@ -29,13 +37,15 @@ export default async function Image({
     algorithmInfo?.description || "Interactive algorithm visualization";
   const difficulty = algorithmInfo?.difficulty || "unknown";
 
-  // Create difficulty badge color
-  const badgeColor =
-    {
-      easy: "#16a34a", // Green
-      medium: "#ca8a04", // Yellow
-      hard: "#dc2626", // Red
-    }[difficulty] || "#6b7280";
+  // Create difficulty badge color with proper type
+  const difficultyColors: DifficultyColors = {
+    easy: "#16a34a", // Green
+    medium: "#ca8a04", // Yellow
+    hard: "#dc2626", // Red
+  };
+
+  // Default to gray if not found
+  const badgeColor = difficultyColors[difficulty] || "#6b7280";
 
   return new ImageResponse(
     (
@@ -141,7 +151,7 @@ export default async function Image({
             color: "#94a3b8",
           }}
         >
-          Learn algorithms interactively at algorithm-visualizer.seancoughlin.me
+          Learn algorithms interactively at {APP_URL}
         </div>
       </div>
     ),
