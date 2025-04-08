@@ -1,10 +1,27 @@
-export default function ColorLegend() {
-  const legendItems = [
+interface ColorLegendProps {
+  isSearchAlgorithm?: boolean;
+}
+
+export default function ColorLegend({
+  isSearchAlgorithm = false,
+}: ColorLegendProps) {
+  const sortingLegendItems = [
     { color: "bg-blue-400", label: "Unsorted" },
     { color: "bg-yellow-400", label: "Comparing" },
     { color: "bg-red-400", label: "Swapping" },
     { color: "bg-green-400", label: "Sorted" },
   ];
+
+  const searchLegendItems = [
+    { color: "bg-blue-400", label: "Unvisited" },
+    { color: "bg-yellow-400", label: "Current" },
+    { color: "bg-gray-400", label: "Visited" },
+    { color: "bg-green-500", label: "Found" },
+  ];
+
+  const legendItems = isSearchAlgorithm
+    ? searchLegendItems
+    : sortingLegendItems;
 
   return (
     <div className="card p-4">

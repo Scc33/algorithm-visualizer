@@ -1,3 +1,4 @@
+// context/AlgorithmContext.tsx
 "use client";
 
 import React, {
@@ -18,6 +19,7 @@ const initialState: VisualizationState = {
   speed: 5,
   algorithm: "bubbleSort",
   data: generateRandomArray(5, 95, 15),
+  target: 42, // Default target value for search algorithms
   visualizationData: null,
 };
 
@@ -46,6 +48,8 @@ function reducer(
       return { ...state, algorithm: action.payload };
     case "SET_DATA":
       return { ...state, data: action.payload };
+    case "SET_TARGET":
+      return { ...state, target: action.payload };
     case "GENERATE_RANDOM_DATA":
       const { min, max, length } = action.payload;
       const newData = generateRandomArray(min, max, length);
@@ -82,6 +86,7 @@ export function AlgorithmProvider({ children }: { children: ReactNode }) {
     const savedState = loadState();
     let initialData = state.data;
     let initialAlgorithm = state.algorithm;
+    let initialTarget = state.target;
 
     if (savedState) {
       if (savedState.data) {
@@ -95,12 +100,18 @@ export function AlgorithmProvider({ children }: { children: ReactNode }) {
         initialAlgorithm = savedState.algorithm;
         dispatch({ type: "SET_ALGORITHM", payload: initialAlgorithm });
       }
+      if (savedState.target) {
+        initialTarget = savedState.target;
+        dispatch({ type: "SET_TARGET", payload: initialTarget });
+      }
     }
 
     // Generate initial visualization
     const algorithmFunction = getAlgorithmByName(initialAlgorithm);
     if (algorithmFunction) {
-      const viz = algorithmFunction(initialData);
+      const viz = initialAlgorithm.includes("search")
+        ? algorithmFunction(initialData, initialTarget)
+        : algorithmFunction(initialData);
       dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
     }
   }, []);
@@ -111,8 +122,9 @@ export function AlgorithmProvider({ children }: { children: ReactNode }) {
       data: state.data,
       speed: state.speed,
       algorithm: state.algorithm,
+      target: state.target,
     });
-  }, [state.data, state.speed, state.algorithm]);
+  }, [state.data, state.speed, state.algorithm, state.target]);
 
   // Handle playing animation
   useEffect(() => {

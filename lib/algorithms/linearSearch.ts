@@ -1,0 +1,80 @@
+import { AlgorithmVisualization, SearchStep } from "../types";
+
+export function linearSearch(
+  array: number[],
+  target: number
+): AlgorithmVisualization {
+  const steps: SearchStep[] = [];
+  const arr = [...array];
+  const visited: number[] = [];
+
+  // Initial state
+  steps.push({
+    array: [...arr],
+    current: -1,
+    target,
+    found: false,
+    visited: [],
+  });
+
+  // Linear search algorithm
+  for (let i = 0; i < arr.length; i++) {
+    // Add current index to visited
+    visited.push(i);
+
+    // Record the step of examining this index
+    steps.push({
+      array: [...arr],
+      current: i,
+      target,
+      found: false,
+      visited: [...visited],
+    });
+
+    // Check if current element equals target
+    if (arr[i] === target) {
+      // Found the target, record final step
+      steps.push({
+        array: [...arr],
+        current: i,
+        target,
+        found: true,
+        visited: [...visited],
+      });
+      break;
+    }
+  }
+
+  // If we've gone through the entire array without finding the target
+  if (!steps[steps.length - 1].found) {
+    steps.push({
+      array: [...arr],
+      current: -1,
+      target,
+      found: false,
+      visited: [...visited],
+    });
+  }
+
+  return {
+    steps,
+    name: "Linear Search",
+    key: "linearSearch",
+    category: "searching",
+    description:
+      "Linear search is a simple search algorithm that finds the position of a target value within a list by checking each element sequentially until a match is found or the end of the list is reached.",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(1)",
+    reference: "https://en.wikipedia.org/wiki/Linear_search",
+    pseudoCode: [
+      "procedure linearSearch(arr: array of elements, target: element)",
+      "  for i := 0 to length(arr) - 1 do",
+      "    if arr[i] = target then",
+      "      return i",
+      "    end if",
+      "  end for",
+      "  return -1  // Target not found",
+      "end procedure",
+    ],
+  };
+}

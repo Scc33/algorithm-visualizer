@@ -47,6 +47,7 @@ export function getAlgorithmLabel(algorithmKey: string): string {
     mergeSort: "Merge Sort",
     quickSort: "Quick Sort",
     heapSort: "Heap Sort",
+    linearSearch: "Linear Search",
   };
 
   return labels[algorithmKey] || algorithmKey;
@@ -60,7 +61,14 @@ export function getDifficulty(algorithmKey: string): string {
     mergeSort: "Medium",
     quickSort: "Medium",
     heapSort: "Hard",
+    linearSearch: "Easy",
   };
 
   return difficulties[algorithmKey] || "Unknown";
+}
+
+export function getRandomValueFromArray(array: number[]): number {
+  if (array.length === 0) return 0;
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
 }
