@@ -31,8 +31,8 @@ export default function SearchingAlgorithmPage() {
 
       dispatch({ type: "SET_TARGET", payload: target });
 
-      // Need to delay this slightly to ensure the target is set
-      setTimeout(() => {
+      // Generate visualization if not already generated OR if algorithm changed
+      if (!state.visualizationData || algorithmKey !== state.algorithm) {
         const algorithmFunction = getAlgorithmByName(algorithmKey);
         if (algorithmFunction) {
           try {
@@ -43,9 +43,16 @@ export default function SearchingAlgorithmPage() {
             console.error("Error generating visualization:", error);
           }
         }
-      }, 0);
+      }
     }
-  }, [algorithmKey, dispatch]);
+  }, [
+    algorithmKey,
+    dispatch,
+    state.algorithm,
+    state.data,
+    state.visualizationData,
+    state.target,
+  ]);
 
   if (!algorithmInfo) {
     return (

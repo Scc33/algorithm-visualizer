@@ -20,16 +20,25 @@ export default function AlgorithmPage() {
 
   // Set the current algorithm and generate visualization
   useEffect(() => {
-    if (algorithmKey && algorithmKey !== state.algorithm) {
+    if (algorithmKey) {
       dispatch({ type: "SET_ALGORITHM", payload: algorithmKey });
 
-      const algorithmFunction = getAlgorithmByName(algorithmKey);
-      if (algorithmFunction) {
-        const viz = algorithmFunction(state.data);
-        dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+      // Generate visualization if not already generated OR if algorithm changed
+      if (!state.visualizationData || algorithmKey !== state.algorithm) {
+        const algorithmFunction = getAlgorithmByName(algorithmKey);
+        if (algorithmFunction) {
+          const viz = algorithmFunction(state.data);
+          dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+        }
       }
     }
-  }, [algorithmKey, dispatch, state.algorithm, state.data]);
+  }, [
+    algorithmKey,
+    dispatch,
+    state.algorithm,
+    state.data,
+    state.visualizationData,
+  ]);
 
   if (!algorithmInfo) {
     return (
