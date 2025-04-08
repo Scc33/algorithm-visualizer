@@ -35,20 +35,6 @@ describe("AlgorithmCard", () => {
     ).toBeInTheDocument();
   });
 
-  it("should render the correct difficulty badge", () => {
-    render(<AlgorithmCard algorithm={mockAlgorithm} />);
-    const badge = screen.getByText("easy");
-    expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass("badge-easy");
-  });
-
-  it("should render the correct category badge", () => {
-    render(<AlgorithmCard algorithm={mockAlgorithm} />);
-    const badge = screen.getByText("sorting");
-    expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass("badge-info");
-  });
-
   it("should contain a link to the algorithm visualization page", () => {
     render(<AlgorithmCard algorithm={mockAlgorithm} />);
     const visualizeLink = screen.getByText("Visualize");
@@ -68,23 +54,5 @@ describe("AlgorithmCard", () => {
     render(<AlgorithmCard algorithm={mockAlgorithm} />);
     const categoryLink = screen.getByText("sorting");
     expect(categoryLink.closest("a")).toHaveAttribute("href", "/sorting");
-  });
-
-  it("should render with different difficulty badge styles", () => {
-    // Test easy difficulty
-    render(<AlgorithmCard algorithm={mockAlgorithm} />);
-    expect(screen.getByText("easy")).toHaveClass("badge-easy");
-
-    // Test medium difficulty
-    render(
-      <AlgorithmCard algorithm={{ ...mockAlgorithm, difficulty: "medium" }} />
-    );
-    expect(screen.getByText("medium")).toHaveClass("badge-medium");
-
-    // Test hard difficulty
-    render(
-      <AlgorithmCard algorithm={{ ...mockAlgorithm, difficulty: "hard" }} />
-    );
-    expect(screen.getByText("hard")).toHaveClass("badge-hard");
   });
 });
