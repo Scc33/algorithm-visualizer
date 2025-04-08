@@ -25,8 +25,10 @@ export default function SearchingAlgorithmPage() {
 
       // Generate a new target value if none exists or when algorithm changes
       const target =
-        state.data.length > 0
-          ? state.target || getRandomValueFromArray(state.data)
+        state.target !== undefined
+          ? state.target
+          : state.data.length > 0
+          ? getRandomValueFromArray(state.data)
           : 42;
 
       dispatch({ type: "SET_TARGET", payload: target });
@@ -36,7 +38,6 @@ export default function SearchingAlgorithmPage() {
         const algorithmFunction = getAlgorithmByName(algorithmKey);
         if (algorithmFunction) {
           try {
-            console.log("Generating visualization with target:", target);
             const viz = algorithmFunction(state.data, target);
             dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
           } catch (error) {

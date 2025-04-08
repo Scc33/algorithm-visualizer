@@ -8,7 +8,7 @@ import {
   ReactNode,
 } from "react";
 import { VisualizationState, VisualizationAction } from "@/lib/types";
-import { generateRandomArray } from "@/lib/utils";
+import { generateRandomArray, getRandomValueFromArray } from "@/lib/utils";
 
 // Initial state
 const initialState: VisualizationState = {
@@ -51,7 +51,22 @@ function reducer(
     case "GENERATE_RANDOM_DATA":
       const { min, max, length } = action.payload;
       const newData = generateRandomArray(min, max, length);
-      return { ...state, data: newData, currentStep: 0 };
+      // For search algorithms, we should ensure the target is set
+      const isSearchAlgorithm =
+        state.algorithm.includes("search") ||
+        state.visualizationData?.category === "searching";
+
+      // If it's a search algorithm, pick a random element from the array as target
+      const newTarget = isSearchAlgorithm
+        ? getRandomValueFromArray(newData)
+        : state.target;
+
+      return {
+        ...state,
+        data: newData,
+        currentStep: 0,
+        target: newTarget,
+      };
     case "GENERATE_VISUALIZATION":
       return { ...state, visualizationData: action.payload, currentStep: 0 };
     case "NEXT_STEP":

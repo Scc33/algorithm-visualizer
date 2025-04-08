@@ -1,4 +1,3 @@
-// lib/algorithms/linearSearch.ts
 import { AlgorithmVisualization, SearchStep } from "../types";
 
 export function linearSearch(
@@ -9,8 +8,8 @@ export function linearSearch(
   const arr = [...array];
   const visited: number[] = [];
 
-  // Set a default target if one is not provided or not found in the array
-  const targetValue = target || 42;
+  // Use the provided target or fall back to default
+  const targetValue = target !== undefined ? target : 42;
 
   // Initial state
   steps.push({
