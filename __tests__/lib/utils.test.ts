@@ -1,35 +1,6 @@
 import { generateRandomArray } from "@/lib/utils";
 
-// We need to mock localStorage before importing the module
-const localStorageMock = (() => {
-  let store: Record<string, string> = {};
-  return {
-    getItem: jest.fn((key: string) => store[key] || null),
-    setItem: jest.fn((key: string, value: string) => {
-      store[key] = value;
-    }),
-    clear: jest.fn(() => {
-      store = {};
-    }),
-    removeItem: jest.fn((key: string) => {
-      delete store[key];
-    }),
-  };
-})();
-
-// Replace the window.localStorage object with our mock
-Object.defineProperty(window, "localStorage", {
-  value: localStorageMock,
-  writable: true,
-});
-
 describe("Utils Functions", () => {
-  // Reset mocks before each test
-  beforeEach(() => {
-    jest.clearAllMocks();
-    localStorageMock.clear();
-  });
-
   describe("generateRandomArray", () => {
     it("should generate a random array with the specified length", () => {
       const array = generateRandomArray(10, 50, 5);

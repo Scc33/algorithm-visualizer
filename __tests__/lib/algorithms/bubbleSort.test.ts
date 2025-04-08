@@ -1,4 +1,3 @@
-// __tests__/lib/algorithms/bubbleSort.test.ts
 import { bubbleSort } from "@/lib/algorithms/sorting/bubbleSort";
 
 describe("Bubble Sort Algorithm", () => {
