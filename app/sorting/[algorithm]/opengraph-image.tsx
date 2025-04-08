@@ -27,10 +27,7 @@ export default async function Image({
 }) {
   const { algorithm } = params;
 
-  // Find the algorithm info
-  const algorithmInfo = availableAlgorithms.find(
-    (algo) => algo.key === algorithm
-  );
+  const algorithmInfo = availableAlgorithms[algorithm];
 
   const title = getAlgorithmLabel(algorithm);
   const description =

@@ -4,9 +4,10 @@ import { availableAlgorithms } from "@/lib/algorithms/metadata";
 
 export default function SortingAlgorithms() {
   // Filter algorithms to only show sorting ones
-  const sortingAlgorithms = availableAlgorithms.filter(
-    (algo) => algo.category === "sorting"
+  const sortingAlgorithms = Object.entries(availableAlgorithms).filter(
+    ([, algo]) => algo.category === "sorting"
   );
+  console.log(sortingAlgorithms);
 
   return (
     <PageLayout
@@ -15,7 +16,7 @@ export default function SortingAlgorithms() {
     >
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {sortingAlgorithms.map((algorithm) => (
-          <AlgorithmCard key={algorithm.key} algorithm={algorithm} />
+          <AlgorithmCard key={algorithm[0]} algorithm={algorithm[1]} />
         ))}
       </div>
     </PageLayout>

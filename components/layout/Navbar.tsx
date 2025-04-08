@@ -41,16 +41,8 @@ export default function Navbar() {
           <NavLink href="/graph" active={pathname.includes("/graph")}>
             Graph
           </NavLink>
-          <NavLink
-            href="/difficulties"
-            active={
-              pathname.includes("/difficulties") ||
-              pathname === "/easy" ||
-              pathname === "/medium" ||
-              pathname === "/hard"
-            }
-          >
-            Difficulties
+          <NavLink href="/difficulty" active={pathname.includes("/difficulty")}>
+            Difficulty
           </NavLink>
         </nav>
 

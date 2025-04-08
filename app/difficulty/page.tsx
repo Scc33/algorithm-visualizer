@@ -12,17 +12,19 @@ type CardProps = {
 
 export default function DifficultiesPage() {
   // Get unique difficulties and count algorithms per difficulty
-  const difficultyData = availableAlgorithms.reduce((acc, algorithm) => {
-    const { difficulty } = algorithm;
-    if (!acc[difficulty]) {
-      acc[difficulty] = {
-        count: 0,
-        label: difficulty.charAt(0).toUpperCase() + difficulty.slice(1),
-      };
-    }
-    acc[difficulty].count++;
-    return acc;
-  }, {} as Record<string, { count: number; label: string }>);
+  const difficultyData = Object.entries(
+    Object.entries(availableAlgorithms).reduce((acc, [_, algorithm]) => {
+      const { difficulty } = algorithm;
+      if (!acc[difficulty]) {
+        acc[difficulty] = {
+          count: 0,
+          label: difficulty.charAt(0).toUpperCase() + difficulty.slice(1),
+        };
+      }
+      acc[difficulty].count++;
+      return acc;
+    }, {} as Record<string, { count: number; label: string }>)
+  );
 
   // Order by increasing difficulty
   const orderedDifficulties = ["easy", "medium", "hard"];
@@ -72,11 +74,13 @@ export default function DifficultiesPage() {
           return (
             <Link
               key={difficulty}
-              href={`/${difficulty}`}
+              href={`/difficulty/${difficulty}`}
               className={`block ${cardProps.color} border-2 rounded-lg p-6 hover:shadow-md transition-all`}
             >
               <div className="flex items-center justify-between mb-4">
-                <h2 className={`heading-lg ${cardProps.textColor}`}>{label}</h2>
+                <h2 className={`heading-lg ${cardProps.textColor} capitalize`}>
+                  {label}
+                </h2>
                 <span className={`text-2xl ${cardProps.textColor}`}>
                   {cardProps.icon}
                 </span>

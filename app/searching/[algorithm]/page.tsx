@@ -14,10 +14,7 @@ export default function SearchingAlgorithmPage() {
   const algorithmKey = params.algorithm as string;
   const { dispatch, state } = useAlgorithm();
 
-  // Find algorithm info
-  const algorithmInfo = availableAlgorithms.find(
-    (algo) => algo.key === algorithmKey
-  );
+  const algorithmInfo = availableAlgorithms[algorithmKey];
 
   // Set the current algorithm and generate visualization
   useEffect(() => {

@@ -12,9 +12,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const { algorithm } = params;
 
   // Find the algorithm in our available list
-  const algorithmInfo = availableAlgorithms.find(
-    (algo) => algo.key === algorithm
-  );
+  const algorithmInfo = availableAlgorithms[algorithm];
 
   if (!algorithmInfo) {
     return constructMetadata({

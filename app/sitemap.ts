@@ -20,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/difficulties`,
+      url: `${baseUrl}/difficulty`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
@@ -44,19 +44,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/easy`,
+      url: `${baseUrl}/difficulty/easy`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/medium`,
+      url: `${baseUrl}/difficulty/medium`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/hard`,
+      url: `${baseUrl}/difficulty/hard`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
@@ -64,16 +64,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // Generate algorithm-specific pages
-  const algorithmPages: MetadataRoute.Sitemap = availableAlgorithms.map(
-    (algorithm) => {
-      return {
-        url: `${baseUrl}/${algorithm.category}/${algorithm.key}`,
-        lastModified: new Date(),
-        changeFrequency: "monthly",
-        priority: 0.7,
-      };
-    }
-  );
+  const algorithmPages: MetadataRoute.Sitemap = Object.entries(
+    availableAlgorithms
+  ).map((algorithm) => {
+    return {
+      url: `${baseUrl}/${algorithm[1].category}/${algorithm[1].key}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    };
+  });
 
   return [...staticPages, ...algorithmPages];
 }

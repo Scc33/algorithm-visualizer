@@ -4,8 +4,8 @@ import { availableAlgorithms } from "@/lib/algorithms/metadata";
 
 export default function SearchingAlgorithms() {
   // Filter algorithms to only show searching ones
-  const searchingAlgorithms = availableAlgorithms.filter(
-    (algo) => algo.category === "searching"
+  const searchingAlgorithms = Object.entries(availableAlgorithms).filter(
+    ([, algo]) => algo.category === "searching"
   );
 
   return (
@@ -15,7 +15,7 @@ export default function SearchingAlgorithms() {
     >
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {searchingAlgorithms.map((algorithm) => (
-          <AlgorithmCard key={algorithm.key} algorithm={algorithm} />
+          <AlgorithmCard key={algorithm[0]} algorithm={algorithm[1]} />
         ))}
       </div>
     </PageLayout>
