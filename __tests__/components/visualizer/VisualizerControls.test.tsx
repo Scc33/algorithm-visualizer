@@ -116,8 +116,8 @@ describe("VisualizerControls", () => {
       </AlgorithmProvider>
     );
 
-    // Get the slider and change its value
-    const slider = screen.getByRole("slider", { name: "" }); // Progress slider
+    // Get the progress slider and change its value
+    const slider = screen.getByLabelText("Progress");
     fireEvent.change(slider, { target: { value: 1 } });
 
     // Check that step information has updated (step 2 of 3)
@@ -132,11 +132,11 @@ describe("VisualizerControls", () => {
     );
 
     // Move to the last step
-    const slider = screen.getByRole("slider", { name: "" }); // Progress slider
+    const slider = screen.getByLabelText("Progress");
     fireEvent.change(slider, { target: { value: 2 } });
 
     // Get the next button and check that it's disabled
-    const nextButton = screen.getByRole("button", { name: /Next/i });
+    const nextButton = screen.getByLabelText("Next");
     expect(nextButton).toBeDisabled();
   });
 
@@ -148,11 +148,11 @@ describe("VisualizerControls", () => {
     );
 
     // Should already be on the first step
-    const prevButton = screen.getByRole("button", { name: /Prev/i });
+    const prevButton = screen.getByLabelText("Previous");
     expect(prevButton).toBeDisabled();
 
     // Move to a later step and check that the button is enabled
-    const slider = screen.getByRole("slider", { name: "" }); // Progress slider
+    const slider = screen.getByLabelText("Progress");
     fireEvent.change(slider, { target: { value: 1 } });
     expect(prevButton).not.toBeDisabled();
   });
