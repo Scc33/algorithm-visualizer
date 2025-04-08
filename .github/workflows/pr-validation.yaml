@@ -36,9 +36,8 @@ jobs:
       - name: Build application
         run: npm run build
 
-      # Future addition when tests are implemented
-      # - name: Run tests
-      #   run: npm test
+      - name: Run tests
+        run: npm test
 
       - name: Scan for vulnerabilities
         run: npm audit --production
