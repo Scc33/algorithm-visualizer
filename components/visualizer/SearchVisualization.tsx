@@ -13,9 +13,9 @@ export default function SearchVisualization({
   return (
     <div className="flex flex-col items-center space-y-8 w-full p-6 bg-white">
       <div className="flex items-center space-x-2 mb-4">
-        <div className="font-medium">Searching for value:</div>
+        <div className="font-medium text-gray-600">Searching for value:</div>
         <div className="text-lg font-bold text-purple-600">{target}</div>
-        <div className="font-medium ml-4">
+        <div className="font-medium ml-4 text-gray-600">
           Status:
           <span
             className={`ml-2 font-bold ${

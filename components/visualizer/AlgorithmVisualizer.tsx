@@ -84,7 +84,8 @@ export default function AlgorithmVisualizer() {
     );
   }
 
-  const isSearchAlgorithm = algorithm.includes("search");
+  const isSearchAlgorithm = algorithm.toLowerCase().includes("search");
+  console.log(algorithm, isSearchAlgorithm);
 
   return (
     <div className="space-y-8">
