@@ -1,16 +1,19 @@
 "use client";
 
 import SortingVisualization from "./SortingVisualization";
+import SearchVisualization from "./SearchVisualization";
 import VisualizerControls from "./VisualizerControls";
 import AlgorithmInfo from "./AlgorithmInfo";
 import AlgorithmPseudocode from "./AlgorithmPseudocode";
 import ColorLegend from "./ColorLegend";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 import { getAlgorithmByName } from "@/lib/algorithms";
+import { SearchStep, SortingStep } from "@/lib/types";
+import { getRandomValueFromArray } from "@/lib/utils";
 
 export default function AlgorithmVisualizer() {
   const { state, dispatch } = useAlgorithm();
-  const { currentStep, algorithm, data, visualizationData } = state;
+  const { currentStep, algorithm, data, target, visualizationData } = state;
 
   // Generate a new random array
   const handleGenerateNewArray = () => {
@@ -19,9 +22,50 @@ export default function AlgorithmVisualizer() {
       payload: { min: 5, max: 95, length: 15 },
     });
 
+    // Set a new random target for search algorithms
+    if (algorithm.includes("search")) {
+      const newData = data.slice();
+      const newTarget = getRandomValueFromArray(newData);
+      dispatch({ type: "SET_TARGET", payload: newTarget });
+    }
+
+    // Regenerate visualization with the new data/target
     const algorithmFunction = getAlgorithmByName(algorithm);
     if (algorithmFunction) {
-      const viz = algorithmFunction(data);
+      try {
+        const viz = algorithm.includes("search")
+          ? algorithmFunction(data, target)
+          : algorithmFunction(data);
+        dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+      } catch (error) {
+        console.error("Error generating visualization:", error);
+      }
+    }
+  };
+
+  // Set a new target value for search algorithms
+  const handleSetTarget = () => {
+    // Only show for search algorithms
+    if (!algorithm.includes("search")) return;
+
+    const newTarget = prompt(
+      "Enter a target value to search for:",
+      target?.toString()
+    );
+    if (newTarget === null) return; // User canceled
+
+    const parsedTarget = parseInt(newTarget);
+    if (isNaN(parsedTarget)) {
+      alert("Please enter a valid number");
+      return;
+    }
+
+    dispatch({ type: "SET_TARGET", payload: parsedTarget });
+
+    // Regenerate visualization with the new target
+    const algorithmFunction = getAlgorithmByName(algorithm);
+    if (algorithmFunction) {
+      const viz = algorithmFunction(data, parsedTarget);
       dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
     }
   };
@@ -40,6 +84,8 @@ export default function AlgorithmVisualizer() {
     );
   }
 
+  const isSearchAlgorithm = algorithm.includes("search");
+
   return (
     <div className="space-y-8">
       <AlgorithmInfo algorithm={visualizationData} />
@@ -47,19 +93,27 @@ export default function AlgorithmVisualizer() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <div className="card">
-            <SortingVisualization
-              step={visualizationData.steps[currentStep]}
-              maxValue={maxValue}
-            />
+            {isSearchAlgorithm ? (
+              <SearchVisualization
+                step={visualizationData.steps[currentStep] as SearchStep}
+                maxValue={maxValue}
+              />
+            ) : (
+              <SortingVisualization
+                step={visualizationData.steps[currentStep] as SortingStep}
+                maxValue={maxValue}
+              />
+            )}
           </div>
 
           <VisualizerControls
             currentStep={currentStep}
             totalSteps={visualizationData.steps.length}
             onGenerateNewArray={handleGenerateNewArray}
+            onSetTarget={isSearchAlgorithm ? handleSetTarget : undefined}
           />
 
-          <ColorLegend />
+          <ColorLegend isSearchAlgorithm={isSearchAlgorithm} />
         </div>
 
         <div className="lg:col-span-1">

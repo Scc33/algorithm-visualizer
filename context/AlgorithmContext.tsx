@@ -1,6 +1,6 @@
 "use client";
 
-import React, {
+import {
   createContext,
   useContext,
   useReducer,
@@ -8,8 +8,7 @@ import React, {
   ReactNode,
 } from "react";
 import { VisualizationState, VisualizationAction } from "@/lib/types";
-import { generateRandomArray, saveState, loadState } from "@/lib/utils";
-import { getAlgorithmByName } from "@/lib/algorithms";
+import { generateRandomArray } from "@/lib/utils";
 
 // Initial state
 const initialState: VisualizationState = {
@@ -18,6 +17,7 @@ const initialState: VisualizationState = {
   speed: 5,
   algorithm: "bubbleSort",
   data: generateRandomArray(5, 95, 15),
+  target: 42, // Default target value for search algorithms
   visualizationData: null,
 };
 
@@ -46,6 +46,8 @@ function reducer(
       return { ...state, algorithm: action.payload };
     case "SET_DATA":
       return { ...state, data: action.payload };
+    case "SET_TARGET":
+      return { ...state, target: action.payload };
     case "GENERATE_RANDOM_DATA":
       const { min, max, length } = action.payload;
       const newData = generateRandomArray(min, max, length);
@@ -75,44 +77,6 @@ function reducer(
 // Provider component
 export function AlgorithmProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  // Initialize with saved state and generate visualization
-  useEffect(() => {
-    // Try to load saved state from localStorage
-    const savedState = loadState();
-    let initialData = state.data;
-    let initialAlgorithm = state.algorithm;
-
-    if (savedState) {
-      if (savedState.data) {
-        initialData = savedState.data;
-        dispatch({ type: "SET_DATA", payload: initialData });
-      }
-      if (savedState.speed) {
-        dispatch({ type: "SET_SPEED", payload: savedState.speed });
-      }
-      if (savedState.algorithm) {
-        initialAlgorithm = savedState.algorithm;
-        dispatch({ type: "SET_ALGORITHM", payload: initialAlgorithm });
-      }
-    }
-
-    // Generate initial visualization
-    const algorithmFunction = getAlgorithmByName(initialAlgorithm);
-    if (algorithmFunction) {
-      const viz = algorithmFunction(initialData);
-      dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
-    }
-  }, []);
-
-  // Save state changes to localStorage
-  useEffect(() => {
-    saveState({
-      data: state.data,
-      speed: state.speed,
-      algorithm: state.algorithm,
-    });
-  }, [state.data, state.speed, state.algorithm]);
 
   // Handle playing animation
   useEffect(() => {

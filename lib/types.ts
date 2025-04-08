@@ -5,8 +5,16 @@ export interface SortingStep {
   completed: number[];
 }
 
+export interface SearchStep {
+  array: number[];
+  current: number; // Current index being examined
+  target: number; // Value being searched for
+  found: boolean; // Whether the target has been found
+  visited: number[]; // Indices already visited
+}
+
 export interface AlgorithmVisualization {
-  steps: SortingStep[];
+  steps: SortingStep[] | SearchStep[];
   name: string;
   description: string;
   timeComplexity: string;
@@ -37,6 +45,7 @@ export type VisualizationState = {
   speed: number;
   algorithm: string;
   data: number[];
+  target?: number; // Added for search algorithms
   visualizationData: AlgorithmVisualization | null;
 };
 
@@ -46,6 +55,7 @@ export type VisualizationAction =
   | { type: "SET_SPEED"; payload: number }
   | { type: "SET_ALGORITHM"; payload: string }
   | { type: "SET_DATA"; payload: number[] }
+  | { type: "SET_TARGET"; payload: number } // Added for search algorithms
   | {
       type: "GENERATE_RANDOM_DATA";
       payload: { min: number; max: number; length: number };

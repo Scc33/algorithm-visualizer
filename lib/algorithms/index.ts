@@ -5,23 +5,30 @@ import { insertionSort } from "./insertionSort";
 import { mergeSort } from "./mergeSort";
 import { quickSort } from "./quickSort";
 import { heapSort } from "./heapSort";
+import { linearSearch } from "./linearSearch";
+
+// Default target value for search algorithms
+const DEFAULT_TARGET = 42;
 
 // Map algorithm names to their implementation functions
-const algorithms: Record<string, (array: number[]) => AlgorithmVisualization> =
-  {
-    bubbleSort,
-    selectionSort,
-    insertionSort,
-    mergeSort,
-    quickSort,
-    heapSort,
-    // Add more algorithms as they are implemented
-  };
+const algorithms: Record<
+  string,
+  (array: number[], target?: number) => AlgorithmVisualization
+> = {
+  bubbleSort,
+  selectionSort,
+  insertionSort,
+  mergeSort,
+  quickSort,
+  heapSort,
+  linearSearch: (array: number[]) => linearSearch(array, DEFAULT_TARGET),
+  // Add more algorithms as they are implemented
+};
 
 // Get algorithm function by name
 export function getAlgorithmByName(
   name: string
-): ((array: number[]) => AlgorithmVisualization) | null {
+): ((array: number[], target?: number) => AlgorithmVisualization) | null {
   return algorithms[name] || null;
 }
 
@@ -75,6 +82,14 @@ export const availableAlgorithms: AlgorithmInfo[] = [
       "Heap sort is a comparison-based sorting algorithm that uses a binary heap data structure to build a max-heap and then extract elements in order.",
     difficulty: "hard",
   },
+  {
+    name: "Linear Search",
+    key: "linearSearch",
+    category: "searching",
+    description:
+      "Linear search sequentially checks each element of the list until it finds an element that matches the target value.",
+    difficulty: "easy",
+  },
 ];
 
 // Export all algorithms
@@ -85,4 +100,5 @@ export {
   mergeSort,
   quickSort,
   heapSort,
+  linearSearch,
 };

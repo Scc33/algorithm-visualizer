@@ -1,33 +1,3 @@
-import { VisualizationState } from "./types";
-
-const STORAGE_KEY = "algorithm-visualizer-state";
-
-export function saveState(state: Partial<VisualizationState>): void {
-  if (typeof window === "undefined") return;
-
-  try {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem(STORAGE_KEY, serializedState);
-  } catch (error) {
-    console.error("Error saving to localStorage:", error);
-  }
-}
-
-export function loadState(): Partial<VisualizationState> | undefined {
-  if (typeof window === "undefined") return undefined;
-
-  try {
-    const serializedState = localStorage.getItem(STORAGE_KEY);
-    if (serializedState === null) {
-      return undefined;
-    }
-    return JSON.parse(serializedState);
-  } catch (error) {
-    console.error("Error loading from localStorage:", error);
-    return undefined;
-  }
-}
-
 export function generateRandomArray(
   min: number,
   max: number,
@@ -47,6 +17,7 @@ export function getAlgorithmLabel(algorithmKey: string): string {
     mergeSort: "Merge Sort",
     quickSort: "Quick Sort",
     heapSort: "Heap Sort",
+    linearSearch: "Linear Search",
   };
 
   return labels[algorithmKey] || algorithmKey;
@@ -60,7 +31,29 @@ export function getDifficulty(algorithmKey: string): string {
     mergeSort: "Medium",
     quickSort: "Medium",
     heapSort: "Hard",
+    linearSearch: "Easy",
   };
 
   return difficulties[algorithmKey] || "Unknown";
+}
+
+export function getRandomValueFromArray(array: number[]): number {
+  if (array.length === 0) return 42;
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}
+
+// Ensure the target value exists in the array for demo purposes
+export function ensureTargetInArray(array: number[], target: number): number[] {
+  if (array.length === 0) return [target];
+
+  // If target is not in the array, replace a random element with it
+  if (!array.includes(target)) {
+    const newArray = [...array];
+    const randomIndex = Math.floor(Math.random() * newArray.length);
+    newArray[randomIndex] = target;
+    return newArray;
+  }
+
+  return array;
 }

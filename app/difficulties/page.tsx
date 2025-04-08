@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import PageLayout from "@/components/layout/PageLayout";
 import { availableAlgorithms } from "@/lib/algorithms";
