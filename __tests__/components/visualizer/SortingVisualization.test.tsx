@@ -79,11 +79,10 @@ describe("SortingVisualization", () => {
     // Get all the bar elements
     const bars = container.querySelectorAll(".bar-chart");
 
-    // Check that heights are proportional to their values
-    // We need to be a bit flexible with the exact percentages as rounding can occur
-    const firstBarHeight = parseFloat(bars[0].style.height);
-    const secondBarHeight = parseFloat(bars[1].style.height);
-    const thirdBarHeight = parseFloat(bars[2].style.height);
+    // Use type assertion to access style properties
+    const firstBarHeight = parseFloat((bars[0] as HTMLElement).style.height);
+    const secondBarHeight = parseFloat((bars[1] as HTMLElement).style.height);
+    const thirdBarHeight = parseFloat((bars[2] as HTMLElement).style.height);
 
     // Verify proper scaling (allow small margin for rounding)
     expect(firstBarHeight).toBeGreaterThanOrEqual(32);
@@ -118,8 +117,8 @@ describe("SortingVisualization", () => {
     const largeBars = largeContainer.querySelectorAll(".bar-chart");
 
     // The width of bars in the small array should be wider than in the large array
-    const smallBarWidth = parseFloat(smallBars[0].style.width);
-    const largeBarWidth = parseFloat(largeBars[0].style.width);
+    const smallBarWidth = parseFloat((smallBars[0] as HTMLElement).style.width);
+    const largeBarWidth = parseFloat((largeBars[0] as HTMLElement).style.width);
 
     expect(smallBarWidth).toBeGreaterThan(largeBarWidth);
   });

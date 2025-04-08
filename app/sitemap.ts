@@ -6,7 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || APP_URL;
 
   // Base/static pages
-  const staticPages = [
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -64,14 +64,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // Generate algorithm-specific pages
-  const algorithmPages = availableAlgorithms.map((algorithm) => {
-    return {
-      url: `${baseUrl}/${algorithm.category}/${algorithm.key}`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    } as const;
-  });
+  const algorithmPages: MetadataRoute.Sitemap = availableAlgorithms.map(
+    (algorithm) => {
+      return {
+        url: `${baseUrl}/${algorithm.category}/${algorithm.key}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.7,
+      };
+    }
+  );
 
   return [...staticPages, ...algorithmPages];
 }

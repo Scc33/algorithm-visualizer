@@ -2,7 +2,6 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import AlgorithmPage from "@/app/sorting/[algorithm]/page";
 import { AlgorithmProvider } from "@/context/AlgorithmContext";
-import { getAlgorithmByName } from "@/lib/algorithms";
 
 // Mock the next/navigation module
 jest.mock("next/navigation", () => ({
@@ -11,8 +10,8 @@ jest.mock("next/navigation", () => ({
 }));
 
 // Mock the algorithms module
-jest.mock("@/lib/algorithms", () => ({
-  getAlgorithmByName: jest.fn().mockReturnValue(() => ({
+jest.mock("@/lib/algorithms", () => {
+  const mockGetAlgorithmByName = jest.fn().mockReturnValue(() => ({
     steps: [
       { array: [5, 3, 8], comparing: [], swapped: false, completed: [] },
       { array: [3, 5, 8], comparing: [], swapped: false, completed: [2] },
@@ -25,17 +24,21 @@ jest.mock("@/lib/algorithms", () => ({
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Bubble_sort",
     pseudoCode: ["procedure bubbleSort(A: list of sortable items)"],
-  })),
-  availableAlgorithms: [
-    {
-      name: "Bubble Sort",
-      key: "bubbleSort",
-      category: "sorting",
-      description: "A simple sorting algorithm",
-      difficulty: "easy",
-    },
-  ],
-}));
+  }));
+
+  return {
+    getAlgorithmByName: mockGetAlgorithmByName,
+    availableAlgorithms: [
+      {
+        name: "Bubble Sort",
+        key: "bubbleSort",
+        category: "sorting",
+        description: "A simple sorting algorithm",
+        difficulty: "easy",
+      },
+    ],
+  };
+});
 
 // Mock the PageLayout component
 jest.mock("@/components/layout/PageLayout", () => {
@@ -124,8 +127,10 @@ describe("AlgorithmPage", () => {
       },
     ];
 
-    // Clear previous calls
-    getAlgorithmByName.mockClear();
+    // Get the mock function and clear it
+    const mockedGetAlgorithmByName =
+      require("@/lib/algorithms").getAlgorithmByName;
+    mockedGetAlgorithmByName.mockClear();
 
     render(
       <AlgorithmProvider>
@@ -134,6 +139,6 @@ describe("AlgorithmPage", () => {
     );
 
     // Check that getAlgorithmByName was called with the right algorithm key
-    expect(getAlgorithmByName).toHaveBeenCalledWith("bubbleSort");
+    expect(mockedGetAlgorithmByName).toHaveBeenCalledWith("bubbleSort");
   });
 });

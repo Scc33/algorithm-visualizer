@@ -13,6 +13,13 @@ export const size = {
   height: 630,
 };
 
+type DifficultyColors = {
+  easy: string;
+  medium: string;
+  hard: string;
+  [key: string]: string; // Index signature for any string key
+};
+
 export default async function Image({
   params,
 }: {
@@ -30,13 +37,15 @@ export default async function Image({
     algorithmInfo?.description || "Interactive algorithm visualization";
   const difficulty = algorithmInfo?.difficulty || "unknown";
 
-  // Create difficulty badge color
-  const badgeColor =
-    {
-      easy: "#16a34a", // Green
-      medium: "#ca8a04", // Yellow
-      hard: "#dc2626", // Red
-    }[difficulty] || "#6b7280";
+  // Create difficulty badge color with proper type
+  const difficultyColors: DifficultyColors = {
+    easy: "#16a34a", // Green
+    medium: "#ca8a04", // Yellow
+    hard: "#dc2626", // Red
+  };
+
+  // Default to gray if not found
+  const badgeColor = difficultyColors[difficulty] || "#6b7280";
 
   return new ImageResponse(
     (
