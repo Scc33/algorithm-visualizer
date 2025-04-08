@@ -1,4 +1,4 @@
-import { AlgorithmVisualization, SearchStep } from "../types";
+import { AlgorithmVisualization, SearchStep } from "../../types";
 
 export function linearSearch(
   array: number[],

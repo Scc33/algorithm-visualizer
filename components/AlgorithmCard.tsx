@@ -15,7 +15,7 @@ export default function AlgorithmCard({ algorithm }: AlgorithmCardProps) {
           <h3 className="heading-md">{name}</h3>
           <Link
             className={`badge badge-${difficulty} capitalize`}
-            href={`/${difficulty}`}
+            href={`/difficulty/${difficulty}`}
           >
             {difficulty}
           </Link>
