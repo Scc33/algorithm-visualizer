@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 import JsonLd from "../seo/JsonLd";
 import { AlgorithmVisualization } from "@/lib/types";
+import { APP_URL } from "@/constants/URL";
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -35,9 +36,7 @@ export default function PageLayout({
   }
 
   // Base URL for the site
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://algorithm-visualizer.seancoughlin.me";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || APP_URL;
   const fullUrl = `${baseUrl}${pathname}`;
 
   return (

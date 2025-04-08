@@ -1,10 +1,9 @@
 import { MetadataRoute } from "next";
 import { availableAlgorithms } from "@/lib/algorithms";
+import { APP_URL } from "@/constants/URL";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://algorithm-visualizer.seancoughlin.me";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || APP_URL;
 
   // Base/static pages
   const staticPages = [
