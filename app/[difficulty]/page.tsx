@@ -46,7 +46,7 @@ export default async function DifficultyPage(props: DifficultyParams) {
             No algorithms found with {difficulty} difficulty.
           </h2>
           <p className="mt-4 text-gray-500">
-            We're working on adding more algorithms soon!
+            We&apos;re working on adding more algorithms soon!
           </p>
         </div>
       )}
