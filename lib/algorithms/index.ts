@@ -6,9 +6,7 @@ import { mergeSort } from "./mergeSort";
 import { quickSort } from "./quickSort";
 import { heapSort } from "./heapSort";
 import { linearSearch } from "./linearSearch";
-
-// Default target value for search algorithms
-const DEFAULT_TARGET = 42;
+import { binarySearch } from "./binarySearch";
 
 // Map algorithm names to their implementation functions
 const algorithms: Record<
@@ -21,8 +19,8 @@ const algorithms: Record<
   mergeSort,
   quickSort,
   heapSort,
-  linearSearch: (array: number[]) => linearSearch(array, DEFAULT_TARGET),
-  // Add more algorithms as they are implemented
+  linearSearch,
+  binarySearch,
 };
 
 // Get algorithm function by name
@@ -90,6 +88,14 @@ export const availableAlgorithms: AlgorithmInfo[] = [
       "Linear search sequentially checks each element of the list until it finds an element that matches the target value.",
     difficulty: "easy",
   },
+  {
+    name: "Binary Search",
+    key: "binarySearch",
+    category: "searching",
+    description:
+      "Binary search finds the position of a target value within a sorted array by repeatedly dividing the search interval in half.",
+    difficulty: "medium",
+  },
 ];
 
 // Export all algorithms
@@ -101,4 +107,5 @@ export {
   quickSort,
   heapSort,
   linearSearch,
+  binarySearch,
 };

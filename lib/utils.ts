@@ -18,6 +18,7 @@ export function getAlgorithmLabel(algorithmKey: string): string {
     quickSort: "Quick Sort",
     heapSort: "Heap Sort",
     linearSearch: "Linear Search",
+    binarySearch: "Binary Search",
   };
 
   return labels[algorithmKey] || algorithmKey;
@@ -32,6 +33,7 @@ export function getDifficulty(algorithmKey: string): string {
     quickSort: "Medium",
     heapSort: "Hard",
     linearSearch: "Easy",
+    binarySearch: "Medium",
   };
 
   return difficulties[algorithmKey] || "Unknown";
