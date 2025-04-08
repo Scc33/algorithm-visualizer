@@ -13,7 +13,7 @@ type CardProps = {
 export default function DifficultiesPage() {
   // Get unique difficulties and count algorithms per difficulty
   const difficultyData = Object.entries(
-    Object.entries(availableAlgorithms).reduce((acc, [_, algorithm]) => {
+    Object.entries(availableAlgorithms).reduce((acc, [, algorithm]) => {
       const { difficulty } = algorithm;
       if (!acc[difficulty]) {
         acc[difficulty] = {
@@ -25,7 +25,6 @@ export default function DifficultiesPage() {
       return acc;
     }, {} as Record<string, { count: number; label: string }>)
   );
-  console.log(difficultyData[0][1]);
 
   // Define colors and descriptions for each difficulty
   const difficultyCardProps: Record<string, CardProps> = {
