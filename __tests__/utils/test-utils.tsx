@@ -22,13 +22,6 @@ export * from "@testing-library/react";
 // Override the render method
 export { customRender as render };
 
-// Mock for window.fs.readFile
-export const mockReadFile = (content: string | ArrayBuffer) => {
-  window.fs = {
-    readFile: jest.fn().mockResolvedValue(content),
-  };
-};
-
 // Helper to generate random test arrays
 export const generateTestArray = (length: number) => {
   return Array.from({ length }, (_, i) => i + 1);
