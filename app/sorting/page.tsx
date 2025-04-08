@@ -7,7 +7,6 @@ export default function SortingAlgorithms() {
   const sortingAlgorithms = Object.entries(availableAlgorithms).filter(
     ([, algo]) => algo.category === "sorting"
   );
-  console.log(sortingAlgorithms);
 
   return (
     <PageLayout

@@ -17,8 +17,6 @@ export default function Home() {
     }, {} as Record<string, AlgorithmInfo[]>)
   );
 
-  console.log(algorithmsByCategory);
-
   return (
     <PageLayout
       title="Algorithm Visualizer"

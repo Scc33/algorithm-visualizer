@@ -1,8 +1,4 @@
-import {
-  generateRandomArray,
-  getAlgorithmLabel,
-  getDifficulty,
-} from "@/lib/utils";
+import { generateRandomArray } from "@/lib/utils";
 
 // We need to mock localStorage before importing the module
 const localStorageMock = (() => {
@@ -51,30 +47,6 @@ describe("Utils Functions", () => {
       const array2 = generateRandomArray(1, 1000, 10);
 
       expect(array1).not.toEqual(array2);
-    });
-  });
-
-  describe("getAlgorithmLabel", () => {
-    it("should return the correct label for known algorithms", () => {
-      expect(getAlgorithmLabel("bubbleSort")).toBe("Bubble Sort");
-      expect(getAlgorithmLabel("quickSort")).toBe("Quick Sort");
-      expect(getAlgorithmLabel("mergeSort")).toBe("Merge Sort");
-    });
-
-    it("should return the algorithm key for unknown algorithms", () => {
-      expect(getAlgorithmLabel("unknownAlgorithm")).toBe("unknownAlgorithm");
-    });
-  });
-
-  describe("getDifficulty", () => {
-    it("should return the correct difficulty for known algorithms", () => {
-      expect(getDifficulty("bubbleSort")).toBe("Easy");
-      expect(getDifficulty("mergeSort")).toBe("Medium");
-      expect(getDifficulty("heapSort")).toBe("Hard");
-    });
-
-    it('should return "Unknown" for unknown algorithms', () => {
-      expect(getDifficulty("unknownAlgorithm")).toBe("Unknown");
     });
   });
 });

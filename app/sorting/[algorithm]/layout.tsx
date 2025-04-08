@@ -3,7 +3,6 @@ import { AlgorithmProvider } from "@/context/AlgorithmContext";
 import { Metadata } from "next";
 import { availableAlgorithms } from "@/lib/algorithms/metadata";
 import { constructMetadata } from "@/lib/seo/metadata";
-import { getAlgorithmLabel } from "@/lib/utils";
 
 type Props = {
   params: { algorithm: string };
@@ -22,19 +21,18 @@ export function generateMetadata({ params }: Props): Metadata {
     });
   }
 
-  const title = getAlgorithmLabel(algorithm);
-  const { description, difficulty, category } = algorithmInfo;
+  const { name, description, difficulty, category } = algorithmInfo;
 
   return constructMetadata({
-    title,
+    title: name,
     description,
     path: `/sorting/${algorithm}`,
     keywords: [
       algorithm,
-      title.toLowerCase(),
-      `${title.toLowerCase()} visualization`,
-      `${title.toLowerCase()} explanation`,
-      `${title.toLowerCase()} algorithm`,
+      name.toLowerCase(),
+      `${name.toLowerCase()} visualization`,
+      `${name.toLowerCase()} explanation`,
+      `${name.toLowerCase()} algorithm`,
       `${difficulty} algorithm`,
       `${category} algorithm`,
     ],

@@ -6,7 +6,6 @@ import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmVisualizer from "@/components/visualizer/AlgorithmVisualizer";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 import { getAlgorithmByName } from "@/lib/algorithms";
-import { getAlgorithmLabel } from "@/lib/utils";
 import { availableAlgorithms } from "@/lib/algorithms/metadata";
 
 export default function AlgorithmPage() {
@@ -54,7 +53,7 @@ export default function AlgorithmPage() {
 
   return (
     <PageLayout
-      title={getAlgorithmLabel(algorithmKey)}
+      title={algorithmInfo.name}
       subtitle={algorithmInfo.subtitle}
       algorithmData={state.visualizationData || undefined}
     >
