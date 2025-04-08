@@ -164,8 +164,6 @@ describe("AlgorithmContext", () => {
   });
 
   it("should initialize with the correct values from localStorage", async () => {
-    const user = userEvent.setup({ delay: null });
-
     render(
       <AlgorithmProvider>
         <TestComponent />
