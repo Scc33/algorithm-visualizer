@@ -1,4 +1,5 @@
 import { AlgorithmVisualization, SearchStep } from "../../types";
+import { createVisualization } from "../utils";
 
 export function binarySearch(
   array: number[],
@@ -69,13 +70,7 @@ export function binarySearch(
     });
   }
 
-  return {
-    steps,
-    name: "Binary Search",
-    key: "binarySearch",
-    category: "searching",
-    description:
-      "Binary search is an efficient algorithm for finding a target value within a sorted array. It works by repeatedly dividing the search interval in half until the target is found or the interval is empty.",
+  return createVisualization("binarySearch", steps, {
     timeComplexity: "O(log n)",
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Binary_search_algorithm",
@@ -96,5 +91,5 @@ export function binarySearch(
       "  return -1            // Target not found",
       "end procedure",
     ],
-  };
+  });
 }

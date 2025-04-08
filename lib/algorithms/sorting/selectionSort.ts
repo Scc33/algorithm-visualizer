@@ -1,4 +1,5 @@
 import { AlgorithmVisualization, SortingStep } from "../../types";
+import { createVisualization } from "../utils";
 
 export function selectionSort(array: number[]): AlgorithmVisualization {
   const steps: SortingStep[] = [];
@@ -74,13 +75,7 @@ export function selectionSort(array: number[]): AlgorithmVisualization {
     completed: [...completed],
   });
 
-  return {
-    steps,
-    name: "Selection Sort",
-    key: "selectionSort",
-    category: "sorting",
-    description:
-      "The selection sort algorithm sorts an array by repeatedly finding the minimum element from the unsorted part and putting it at the beginning.",
+  return createVisualization("selectionSort", steps, {
     timeComplexity: "O(n²)",
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Selection_sort",
@@ -100,5 +95,5 @@ export function selectionSort(array: number[]): AlgorithmVisualization {
       "  end for",
       "end procedure",
     ],
-  };
+  });
 }

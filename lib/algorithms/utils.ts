@@ -26,6 +26,7 @@ export function createVisualization(
     name: metadata.name,
     key: metadata.key,
     category: metadata.category,
+    difficulty: metadata.difficulty,
     description: metadata.description,
     ...details,
   };

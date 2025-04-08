@@ -1,4 +1,5 @@
 import { AlgorithmVisualization, SortingStep } from "../../types";
+import { createVisualization } from "../utils";
 
 export function insertionSort(array: number[]): AlgorithmVisualization {
   const steps: SortingStep[] = [];
@@ -64,13 +65,7 @@ export function insertionSort(array: number[]): AlgorithmVisualization {
     });
   }
 
-  return {
-    steps,
-    name: "Insertion Sort",
-    key: "insertionSort",
-    category: "sorting",
-    description:
-      "Insertion sort iterates through an array and at each iteration it removes one element, finds the location where it belongs and inserts it there.",
+  return createVisualization("insertionSort", steps, {
     timeComplexity: "O(n²)",
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Insertion_sort",
@@ -88,5 +83,5 @@ export function insertionSort(array: number[]): AlgorithmVisualization {
       " end for",
       "end procedure",
     ],
-  };
+  });
 }

@@ -1,4 +1,5 @@
 import { AlgorithmVisualization, SortingStep } from "../../types";
+import { createVisualization } from "../utils";
 
 export function quickSort(array: number[]): AlgorithmVisualization {
   const steps: SortingStep[] = [];
@@ -26,13 +27,7 @@ export function quickSort(array: number[]): AlgorithmVisualization {
     completed: finalCompleted,
   });
 
-  return {
-    steps,
-    name: "Quick Sort",
-    key: "quickSort",
-    category: "sorting",
-    description:
-      "A divide and conquer algorithm that picks an element as a pivot and partitions the array around the chosen pivot.",
+  return createVisualization("quickSort", steps, {
     timeComplexity: "O(n log n) - average, O(n²) - worst case",
     spaceComplexity: "O(log n)",
     reference: "https://en.wikipedia.org/wiki/Quicksort",
@@ -58,7 +53,7 @@ export function quickSort(array: number[]): AlgorithmVisualization {
       "  return i + 1",
       "end procedure",
     ],
-  };
+  });
 }
 
 function quickSortHelper(

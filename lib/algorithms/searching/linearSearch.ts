@@ -1,4 +1,5 @@
 import { AlgorithmVisualization, SearchStep } from "../../types";
+import { createVisualization } from "../utils";
 
 export function linearSearch(
   array: number[],
@@ -56,13 +57,7 @@ export function linearSearch(
     });
   }
 
-  return {
-    steps,
-    name: "Linear Search",
-    key: "linearSearch",
-    category: "searching",
-    description:
-      "Linear search is a simple search algorithm that finds the position of a target value within a list by checking each element sequentially until a match is found or the end of the list is reached.",
+  return createVisualization("linearSearch", steps, {
     timeComplexity: "O(n)",
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Linear_search",
@@ -76,5 +71,5 @@ export function linearSearch(
       "  return -1  // Target not found",
       "end procedure",
     ],
-  };
+  });
 }
