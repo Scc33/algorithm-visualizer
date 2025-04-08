@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Algorithm Visualizer
 
-## Getting Started
+An interactive web application for learning algorithms through step-by-step visual explanations. This project helps make abstract computer science concepts concrete and intuitive.
 
-First, run the development server:
+## 🔍 Overview
 
+Algorithm Visualizer is designed to help users understand how various algorithms work through interactive visualizations. The platform covers:
+
+- **Sorting Algorithms**: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort
+- **Searching Algorithms**: Linear Search, Binary Search
+- **Future Expansion**: Graph algorithms and data structure operations
+
+Each algorithm includes:
+- Step-by-step visualization
+- Color-coded states to show comparisons, swaps, and progress
+- Detailed pseudocode explanation
+- Time and space complexity information
+- Interactive controls for playback
+
+## ✨ Features
+
+- **Interactive Controls**: Play, pause, step forward/back, and adjust animation speed
+- **Color-coded Visualization**: See elements change as they're compared, swapped, and sorted
+- **Algorithm Information**: Detailed explanations of how each algorithm works
+- **Customizable Input**: Generate new arrays to see how algorithms handle different data
+- **Responsive Design**: Works on desktop and mobile devices
+- **Client-side Only**: Runs entirely in the browser with no server requirements
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 20.x or higher
+- npm, yarn, or pnpm
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/Scc33/algorithm-visualizer.git
+cd algorithm-visualizer
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. Start the development server:
 ```bash
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧩 How It Works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application is built using:
 
-## Learn More
+- **Next.js**: For the application framework and routing
+- **React**: For building the user interface components
+- **TypeScript**: For type safety and better developer experience
+- **Tailwind CSS**: For styling
+- **React Context**: For state management
 
-To learn more about Next.js, take a look at the following resources:
+The visualization process works by:
+1. Generating step-by-step snapshots of algorithm execution
+2. Rendering the current state of the algorithm
+3. Allowing users to navigate through these steps at their own pace
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📖 Learning Path
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The platform organizes algorithms by:
 
-## Deploy on Vercel
+1. **Categories**: Sorting, Searching, Graph Algorithms
+2. **Difficulty Levels**: Easy, Medium, Hard
+3. **Complexity**: Algorithms are labeled with their time and space complexity
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧪 Testing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Run the test suite:
+
+```bash
+npm test
+# or
+npm run test:watch
+# or
+npm run test:coverage
+```
+
+## 🚢 Deployment
+
+This application is set up for easy deployment to Vercel or any other Next.js-compatible hosting service.
+
+```bash
+npm run build
+npm run start
+```
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- Built and maintained by [Sean Coughlin](https://seancoughlin.me)
+- Inspired by the need for better visual learning tools for computer science education
