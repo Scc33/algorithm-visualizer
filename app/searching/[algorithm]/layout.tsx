@@ -1,6 +1,6 @@
 import { AlgorithmProvider } from "@/context/AlgorithmContext";
 import { Metadata } from "next";
-import { availableAlgorithms } from "@/lib/algorithms";
+import { availableAlgorithms } from "@/lib/algorithms/metadata";
 import { constructMetadata } from "@/lib/seo/metadata";
 import { getAlgorithmLabel } from "@/lib/utils";
 

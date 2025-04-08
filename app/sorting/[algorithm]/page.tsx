@@ -5,8 +5,9 @@ import { useParams } from "next/navigation";
 import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmVisualizer from "@/components/visualizer/AlgorithmVisualizer";
 import { useAlgorithm } from "@/context/AlgorithmContext";
-import { getAlgorithmByName, availableAlgorithms } from "@/lib/algorithms";
+import { getAlgorithmByName } from "@/lib/algorithms";
 import { getAlgorithmLabel } from "@/lib/utils";
+import { availableAlgorithms } from "@/lib/algorithms/metadata";
 
 export default function AlgorithmPage() {
   const params = useParams();

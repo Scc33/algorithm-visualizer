@@ -1,6 +1,6 @@
 import Link from "next/link";
 import PageLayout from "@/components/layout/PageLayout";
-import { availableAlgorithms } from "@/lib/algorithms";
+import { availableAlgorithms } from "@/lib/algorithms/metadata";
 
 // Define type for card properties
 type CardProps = {

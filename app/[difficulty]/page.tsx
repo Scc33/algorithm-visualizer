@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmCard from "@/components/AlgorithmCard";
-import { availableAlgorithms } from "@/lib/algorithms";
+import { availableAlgorithms } from "@/lib/algorithms/metadata";
 
 type DifficultyParams = {
   params: Promise<{

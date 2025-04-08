@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { availableAlgorithms } from "@/lib/algorithms";
+import { availableAlgorithms } from "@/lib/algorithms/metadata";
 import { APP_URL } from "@/constants/URL";
 
 export default function sitemap(): MetadataRoute.Sitemap {

@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getAlgorithmLabel } from "@/lib/utils";
-import { availableAlgorithms } from "@/lib/algorithms";
+import { availableAlgorithms } from "@/lib/algorithms/metadata";
 import { APP_URL } from "@/constants/URL";
 
 export const runtime = "edge";

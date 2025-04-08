@@ -5,12 +5,9 @@ import { useParams, notFound } from "next/navigation";
 import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmVisualizer from "@/components/visualizer/AlgorithmVisualizer";
 import { useAlgorithm } from "@/context/AlgorithmContext";
-import { getAlgorithmByName, availableAlgorithms } from "@/lib/algorithms";
-import {
-  getAlgorithmLabel,
-  getRandomValueFromArray,
-  ensureTargetInArray,
-} from "@/lib/utils";
+import { getAlgorithmByName } from "@/lib/algorithms";
+import { getAlgorithmLabel, getRandomValueFromArray } from "@/lib/utils";
+import { availableAlgorithms } from "@/lib/algorithms/metadata";
 
 export default function SearchingAlgorithmPage() {
   const params = useParams();
