@@ -1,4 +1,3 @@
-// context/AlgorithmContext.tsx
 "use client";
 
 import React, {
@@ -9,7 +8,7 @@ import React, {
   ReactNode,
 } from "react";
 import { VisualizationState, VisualizationAction } from "@/lib/types";
-import { generateRandomArray, saveState, loadState } from "@/lib/utils";
+import { generateRandomArray } from "@/lib/utils";
 import { getAlgorithmByName } from "@/lib/algorithms";
 
 // Initial state
@@ -79,52 +78,6 @@ function reducer(
 // Provider component
 export function AlgorithmProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  // Initialize with saved state and generate visualization
-  useEffect(() => {
-    // Try to load saved state from localStorage
-    const savedState = loadState();
-    let initialData = state.data;
-    let initialAlgorithm = state.algorithm;
-    let initialTarget = state.target;
-
-    if (savedState) {
-      if (savedState.data) {
-        initialData = savedState.data;
-        dispatch({ type: "SET_DATA", payload: initialData });
-      }
-      if (savedState.speed) {
-        dispatch({ type: "SET_SPEED", payload: savedState.speed });
-      }
-      if (savedState.algorithm) {
-        initialAlgorithm = savedState.algorithm;
-        dispatch({ type: "SET_ALGORITHM", payload: initialAlgorithm });
-      }
-      if (savedState.target) {
-        initialTarget = savedState.target;
-        dispatch({ type: "SET_TARGET", payload: initialTarget });
-      }
-    }
-
-    // Generate initial visualization
-    const algorithmFunction = getAlgorithmByName(initialAlgorithm);
-    if (algorithmFunction) {
-      const viz = initialAlgorithm.includes("search")
-        ? algorithmFunction(initialData, initialTarget)
-        : algorithmFunction(initialData);
-      dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
-    }
-  }, []);
-
-  // Save state changes to localStorage
-  useEffect(() => {
-    saveState({
-      data: state.data,
-      speed: state.speed,
-      algorithm: state.algorithm,
-      target: state.target,
-    });
-  }, [state.data, state.speed, state.algorithm, state.target]);
 
   // Handle playing animation
   useEffect(() => {

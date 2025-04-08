@@ -1,4 +1,3 @@
-import React from "react";
 import { notFound } from "next/navigation";
 import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmCard from "@/components/AlgorithmCard";

@@ -1,4 +1,3 @@
-import React from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmCard from "@/components/AlgorithmCard";
 import { availableAlgorithms } from "@/lib/algorithms";
@@ -19,17 +18,6 @@ export default function SearchingAlgorithms() {
           <AlgorithmCard key={algorithm.key} algorithm={algorithm} />
         ))}
       </div>
-
-      {searchingAlgorithms.length === 0 && (
-        <div className="text-center py-12">
-          <h2 className="heading-md text-gray-600">
-            No searching algorithms found.
-          </h2>
-          <p className="mt-4 text-gray-500">
-            We&apos;re working on adding more algorithms soon!
-          </p>
-        </div>
-      )}
     </PageLayout>
   );
 }

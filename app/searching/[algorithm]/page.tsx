@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmVisualizer from "@/components/visualizer/AlgorithmVisualizer";

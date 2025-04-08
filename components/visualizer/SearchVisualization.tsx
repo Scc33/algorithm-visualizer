@@ -1,4 +1,3 @@
-// components/visualizer/SearchVisualization.tsx
 import { SearchStep } from "@/lib/types";
 
 interface SearchVisualizationProps {
@@ -8,7 +7,6 @@ interface SearchVisualizationProps {
 
 export default function SearchVisualization({
   step,
-  maxValue,
 }: SearchVisualizationProps) {
   const { array, current, target, found, visited } = step;
 
