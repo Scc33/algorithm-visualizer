@@ -11,10 +11,7 @@ export default function AlgorithmPseudocode({
         <h3 className="heading-sm">Pseudocode</h3>
       </div>
 
-      <div
-        className="p-4 bg-white overflow-auto"
-        style={{ maxHeight: "500px" }}
-      >
+      <div className="p-4 bg-white overflow-auto">
         <pre className="font-mono text-sm text-gray-800 whitespace-pre-wrap">
           {code.map((line, index) => {
             // Calculate indentation to display nested blocks properly
