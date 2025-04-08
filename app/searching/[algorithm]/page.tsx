@@ -1,12 +1,16 @@
 "use client";
 
 import { useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmVisualizer from "@/components/visualizer/AlgorithmVisualizer";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 import { getAlgorithmByName, availableAlgorithms } from "@/lib/algorithms";
-import { getAlgorithmLabel, getRandomValueFromArray } from "@/lib/utils";
+import {
+  getAlgorithmLabel,
+  getRandomValueFromArray,
+  ensureTargetInArray,
+} from "@/lib/utils";
 
 export default function SearchingAlgorithmPage() {
   const params = useParams();
@@ -25,19 +29,30 @@ export default function SearchingAlgorithmPage() {
 
       // Generate a new target value if none exists or when algorithm changes
       const target =
-        state.data.length > 0
-          ? state.target || getRandomValueFromArray(state.data)
-          : 42;
+        state.target ||
+        (state.data.length > 0 ? getRandomValueFromArray(state.data) : 42);
 
       dispatch({ type: "SET_TARGET", payload: target });
+
+      // For binary search, ensure the array is sorted and the target exists
+      let data = [...state.data];
+      if (algorithmKey === "binarySearch") {
+        // Sort the array for binary search
+        data.sort((a, b) => a - b);
+
+        // Ensure target is in array (for demo purposes)
+        data = ensureTargetInArray(data, target);
+
+        // Update the data
+        dispatch({ type: "SET_DATA", payload: data });
+      }
 
       // Generate visualization if not already generated OR if algorithm changed
       if (!state.visualizationData || algorithmKey !== state.algorithm) {
         const algorithmFunction = getAlgorithmByName(algorithmKey);
         if (algorithmFunction) {
           try {
-            console.log("Generating visualization with target:", target);
-            const viz = algorithmFunction(state.data, target);
+            const viz = algorithmFunction(data, target);
             dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
           } catch (error) {
             console.error("Error generating visualization:", error);
@@ -55,17 +70,7 @@ export default function SearchingAlgorithmPage() {
   ]);
 
   if (!algorithmInfo) {
-    return (
-      <PageLayout title="Algorithm Not Found">
-        <div className="text-center py-12">
-          <h2 className="heading-lg text-red-600">Algorithm Not Found</h2>
-          <p className="mt-4 text-gray-600">
-            The algorithm you are looking for does not exist or is not
-            available.
-          </p>
-        </div>
-      </PageLayout>
-    );
+    return notFound();
   }
 
   return (

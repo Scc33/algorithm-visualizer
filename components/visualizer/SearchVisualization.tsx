@@ -32,17 +32,14 @@ export default function SearchVisualization({
   };
 
   const updateTarget = (newTarget: number) => {
-    console.log(newTarget);
     // Update the target value
     dispatch({ type: "SET_TARGET", payload: newTarget });
 
     // Regenerate visualization with the new target
     const algorithmFunction = getAlgorithmByName(state.algorithm);
-    console.log(algorithmFunction);
     if (algorithmFunction) {
       try {
         const viz = algorithmFunction(state.data, newTarget);
-        console.log(viz);
         dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
       } catch (error) {
         console.error("Error generating visualization:", error);
@@ -114,8 +111,13 @@ export default function SearchVisualization({
                 Index: {index}
               </div>
               {index === current && (
-                <div className="absolute -top-7 left-1/2 transform -translate-x-1/2 text-xs font-medium px-2 py-1 rounded-full bg-yellow-100 border border-yellow-300">
+                <div className="absolute -top-7 left-1/2 transform -translate-x-1/2 text-xs font-medium px-2 py-1 rounded-full bg-yellow-100 border border-yellow-300 text-yellow-900">
                   Current
+                </div>
+              )}
+              {value === target && (
+                <div className="absolute -bottom-7 left-1/2 transform -translate-x-1/2 text-xs font-medium px-2 py-1 rounded-full bg-green-100 border border-green-300 text-green-900">
+                  Target
                 </div>
               )}
             </div>

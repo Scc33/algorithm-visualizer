@@ -30,8 +30,8 @@ export default function Home() {
             .filter(
               (algo) =>
                 algo.key === "bubbleSort" ||
-                algo.key === "selectionSort" ||
-                algo.key === "insertionSort"
+                algo.key === "linearSearch" ||
+                algo.key === "binarySearch"
             )
             .map((algorithm) => (
               <AlgorithmCard key={algorithm.key} algorithm={algorithm} />
