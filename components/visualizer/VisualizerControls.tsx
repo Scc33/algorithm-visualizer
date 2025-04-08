@@ -160,7 +160,7 @@ export default function VisualizerControls({
         <div className="flex items-center space-x-4">
           <button
             onClick={handleReset}
-            className="btn btn-secondary  w-full flex items-center justify-center space-x-2 cursor-pointer"
+            className="btn btn-secondary w-full flex items-center justify-center space-x-2 cursor-pointer"
           >
             <svg
               className="w-5 h-5"

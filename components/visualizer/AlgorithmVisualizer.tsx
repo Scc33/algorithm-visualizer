@@ -1,6 +1,6 @@
 "use client";
 
-import SortingVisualization from "../SortingVisualization";
+import SortingVisualization from "./SortingVisualization";
 import VisualizerControls from "./VisualizerControls";
 import AlgorithmInfo from "./AlgorithmInfo";
 import AlgorithmPseudocode from "./AlgorithmPseudocode";
