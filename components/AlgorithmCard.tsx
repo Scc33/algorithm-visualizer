@@ -8,12 +8,9 @@ interface AlgorithmCardProps {
 export default function AlgorithmCard({ algorithm }: AlgorithmCardProps) {
   const { name, key, category, description, difficulty } = algorithm;
 
-  // Determine badge color based on difficulty
-  const badgeClass = {
-    easy: "badge-easy",
-    medium: "badge-medium",
-    hard: "badge-hard",
-  }[difficulty];
+  // Determine badge classes for difficulty and category
+  const difficultyClass = `badge-${difficulty}`;
+  const categoryClass = "badge-info";
 
   return (
     <div className="card hover:shadow-lg transition-shadow">
@@ -21,7 +18,7 @@ export default function AlgorithmCard({ algorithm }: AlgorithmCardProps) {
         <div className="flex justify-between items-start">
           <h3 className="heading-md">{name}</h3>
           <Link
-            className={`badge ${badgeClass} capitalize`}
+            className={`badge ${difficultyClass} capitalize`}
             href={`/${difficulty}`}
           >
             {difficulty}
@@ -31,7 +28,10 @@ export default function AlgorithmCard({ algorithm }: AlgorithmCardProps) {
         <p className="mt-2 text-gray-600 line-clamp-2">{description}</p>
 
         <div className="mt-4 flex justify-between items-center">
-          <Link className="badge badge-info capitalize" href={`/${category}`}>
+          <Link
+            className={`badge ${categoryClass} capitalize`}
+            href={`/${category}`}
+          >
             {category}
           </Link>
 
