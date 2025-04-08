@@ -24,7 +24,7 @@ export default function Home() {
       subtitle="Interactive visualizations to help you understand how algorithms work step-by-step."
     >
       <section className="mb-12">
-        <h2 className="heading-lg mb-6">Featured Algorithms</h2>
+        <h2 className="heading-lg mb-6 text-white">Featured Algorithms</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {availableAlgorithms
@@ -43,7 +43,9 @@ export default function Home() {
       {categories.map((category) => (
         <section key={category} className="mb-12">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="heading-lg capitalize">{category} Algorithms</h2>
+            <h2 className="heading-lg capitalize text-white">
+              {category} Algorithms
+            </h2>
             <Link href={`/${category}`} className="btn btn-primary text-sm">
               View All
             </Link>
