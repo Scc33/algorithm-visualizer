@@ -68,7 +68,22 @@ export function getDifficulty(algorithmKey: string): string {
 }
 
 export function getRandomValueFromArray(array: number[]): number {
-  if (array.length === 0) return 0;
+  if (array.length === 0) return 42;
   const randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];
+}
+
+// Ensure the target value exists in the array for demo purposes
+export function ensureTargetInArray(array: number[], target: number): number[] {
+  if (array.length === 0) return [target];
+
+  // If target is not in the array, replace a random element with it
+  if (!array.includes(target)) {
+    const newArray = [...array];
+    const randomIndex = Math.floor(Math.random() * newArray.length);
+    newArray[randomIndex] = target;
+    return newArray;
+  }
+
+  return array;
 }

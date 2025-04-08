@@ -32,10 +32,14 @@ export default function AlgorithmVisualizer() {
     // Regenerate visualization with the new data/target
     const algorithmFunction = getAlgorithmByName(algorithm);
     if (algorithmFunction) {
-      const viz = algorithm.includes("search")
-        ? algorithmFunction(data, target)
-        : algorithmFunction(data);
-      dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+      try {
+        const viz = algorithm.includes("search")
+          ? algorithmFunction(data, target)
+          : algorithmFunction(data);
+        dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+      } catch (error) {
+        console.error("Error generating visualization:", error);
+      }
     }
   };
 

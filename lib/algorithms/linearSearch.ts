@@ -1,18 +1,22 @@
+// lib/algorithms/linearSearch.ts
 import { AlgorithmVisualization, SearchStep } from "../types";
 
 export function linearSearch(
   array: number[],
-  target: number
+  target: number = 42
 ): AlgorithmVisualization {
   const steps: SearchStep[] = [];
   const arr = [...array];
   const visited: number[] = [];
 
+  // Set a default target if one is not provided or not found in the array
+  const targetValue = target || 42;
+
   // Initial state
   steps.push({
     array: [...arr],
     current: -1,
-    target,
+    target: targetValue,
     found: false,
     visited: [],
   });
@@ -26,18 +30,18 @@ export function linearSearch(
     steps.push({
       array: [...arr],
       current: i,
-      target,
+      target: targetValue,
       found: false,
       visited: [...visited],
     });
 
     // Check if current element equals target
-    if (arr[i] === target) {
+    if (arr[i] === targetValue) {
       // Found the target, record final step
       steps.push({
         array: [...arr],
         current: i,
-        target,
+        target: targetValue,
         found: true,
         visited: [...visited],
       });
@@ -50,7 +54,7 @@ export function linearSearch(
     steps.push({
       array: [...arr],
       current: -1,
-      target,
+      target: targetValue,
       found: false,
       visited: [...visited],
     });

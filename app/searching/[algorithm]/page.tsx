@@ -20,22 +20,32 @@ export default function SearchingAlgorithmPage() {
 
   // Set the current algorithm and generate visualization
   useEffect(() => {
-    if (algorithmKey && algorithmKey !== state.algorithm) {
+    if (algorithmKey) {
       dispatch({ type: "SET_ALGORITHM", payload: algorithmKey });
 
-      // Set a random target value from the data array
-      if (state.data.length > 0) {
-        const target = getRandomValueFromArray(state.data);
-        dispatch({ type: "SET_TARGET", payload: target });
-      }
+      // Generate a new target value if none exists or when algorithm changes
+      const target =
+        state.data.length > 0
+          ? state.target || getRandomValueFromArray(state.data)
+          : 42;
 
-      const algorithmFunction = getAlgorithmByName(algorithmKey);
-      if (algorithmFunction) {
-        const viz = algorithmFunction(state.data, state.target);
-        dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
-      }
+      dispatch({ type: "SET_TARGET", payload: target });
+
+      // Need to delay this slightly to ensure the target is set
+      setTimeout(() => {
+        const algorithmFunction = getAlgorithmByName(algorithmKey);
+        if (algorithmFunction) {
+          try {
+            console.log("Generating visualization with target:", target);
+            const viz = algorithmFunction(state.data, target);
+            dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+          } catch (error) {
+            console.error("Error generating visualization:", error);
+          }
+        }
+      }, 0);
     }
-  }, [algorithmKey, dispatch, state.algorithm, state.data, state.target]);
+  }, [algorithmKey, dispatch]);
 
   if (!algorithmInfo) {
     return (
