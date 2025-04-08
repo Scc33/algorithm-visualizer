@@ -5,10 +5,11 @@ import { availableAlgorithms } from "@/lib/algorithms/metadata";
 import { constructMetadata } from "@/lib/seo/metadata";
 
 type Props = {
-  params: { algorithm: string };
+  params: Promise<{ algorithm: string }>;
 };
 
-export function generateMetadata({ params }: Props): Metadata {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const { algorithm } = params;
 
   const algorithmInfo = availableAlgorithms[algorithm];
