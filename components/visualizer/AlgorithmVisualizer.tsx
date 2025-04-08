@@ -9,11 +9,10 @@ import ColorLegend from "./ColorLegend";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 import { getAlgorithmByName } from "@/lib/algorithms";
 import { SearchStep, SortingStep } from "@/lib/types";
-import { getRandomValueFromArray } from "@/lib/utils";
 
 export default function AlgorithmVisualizer() {
   const { state, dispatch } = useAlgorithm();
-  const { currentStep, algorithm, data, target, visualizationData } = state;
+  const { currentStep, algorithm, data, visualizationData } = state;
 
   // Generate a new random array
   const handleGenerateNewArray = () => {
@@ -22,20 +21,12 @@ export default function AlgorithmVisualizer() {
       payload: { min: 5, max: 95, length: 15 },
     });
 
-    // Set a new random target for search algorithms
-    if (algorithm.includes("search")) {
-      const newData = data.slice();
-      const newTarget = getRandomValueFromArray(newData);
-      dispatch({ type: "SET_TARGET", payload: newTarget });
-    }
-
-    // Regenerate visualization with the new data/target
+    // Regenerate visualization with the new data
     const algorithmFunction = getAlgorithmByName(algorithm);
     if (algorithmFunction) {
       try {
-        const viz = algorithm.includes("search")
-          ? algorithmFunction(data, target)
-          : algorithmFunction(data);
+        // For search algorithms, the target will be set in the reducer
+        const viz = algorithmFunction(data, state.target);
         dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
       } catch (error) {
         console.error("Error generating visualization:", error);
@@ -43,31 +34,9 @@ export default function AlgorithmVisualizer() {
     }
   };
 
-  // Set a new target value for search algorithms
-  const handleSetTarget = () => {
-    // Only show for search algorithms
-    if (!algorithm.includes("search")) return;
-
-    const newTarget = prompt(
-      "Enter a target value to search for:",
-      target?.toString()
-    );
-    if (newTarget === null) return; // User canceled
-
-    const parsedTarget = parseInt(newTarget);
-    if (isNaN(parsedTarget)) {
-      alert("Please enter a valid number");
-      return;
-    }
-
-    dispatch({ type: "SET_TARGET", payload: parsedTarget });
-
-    // Regenerate visualization with the new target
-    const algorithmFunction = getAlgorithmByName(algorithm);
-    if (algorithmFunction) {
-      const viz = algorithmFunction(data, parsedTarget);
-      dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
-    }
+  // Check if the current algorithm is a search algorithm
+  const isSearchAlgorithm = () => {
+    return visualizationData?.category === "searching";
   };
 
   // Find the maximum value in the array for scaling
@@ -84,8 +53,7 @@ export default function AlgorithmVisualizer() {
     );
   }
 
-  const isSearchAlgorithm = algorithm.toLowerCase().includes("search");
-  console.log(algorithm, isSearchAlgorithm);
+  const isSearching = isSearchAlgorithm();
 
   return (
     <div className="space-y-8">
@@ -94,7 +62,7 @@ export default function AlgorithmVisualizer() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <div className="card">
-            {isSearchAlgorithm ? (
+            {isSearching ? (
               <SearchVisualization
                 step={visualizationData.steps[currentStep] as SearchStep}
                 maxValue={maxValue}
@@ -111,10 +79,9 @@ export default function AlgorithmVisualizer() {
             currentStep={currentStep}
             totalSteps={visualizationData.steps.length}
             onGenerateNewArray={handleGenerateNewArray}
-            onSetTarget={isSearchAlgorithm ? handleSetTarget : undefined}
           />
 
-          <ColorLegend isSearchAlgorithm={isSearchAlgorithm} />
+          <ColorLegend isSearchAlgorithm={isSearching} />
         </div>
 
         <div className="lg:col-span-1">

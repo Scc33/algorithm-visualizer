@@ -1,4 +1,7 @@
 import { SearchStep } from "@/lib/types";
+import { useAlgorithm } from "@/context/AlgorithmContext";
+import { getAlgorithmByName } from "@/lib/algorithms";
+import { useState } from "react";
 
 interface SearchVisualizationProps {
   step: SearchStep;
@@ -9,13 +12,64 @@ export default function SearchVisualization({
   step,
 }: SearchVisualizationProps) {
   const { array, current, target, found, visited } = step;
+  const { state, dispatch } = useAlgorithm();
+  const [inputTarget, setInputTarget] = useState(target.toString());
+
+  const handleTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputTarget(e.target.value);
+  };
+
+  const handleTargetSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newTarget = parseInt(inputTarget);
+
+    if (isNaN(newTarget)) {
+      alert("Please enter a valid number");
+      setInputTarget(target.toString());
+      return;
+    }
+
+    // If target hasn't changed, do nothing
+    if (newTarget === target) return;
+
+    // Update the target value
+    dispatch({ type: "SET_TARGET", payload: newTarget });
+
+    // Regenerate visualization with the new target
+    const algorithmFunction = getAlgorithmByName(state.algorithm);
+    if (algorithmFunction) {
+      try {
+        const viz = algorithmFunction(state.data, newTarget);
+        dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+      } catch (error) {
+        console.error("Error generating visualization:", error);
+      }
+    }
+  };
 
   return (
     <div className="flex flex-col items-center space-y-8 w-full p-6 bg-white">
-      <div className="flex items-center space-x-2 mb-4">
-        <div className="font-medium text-gray-600">Searching for value:</div>
-        <div className="text-lg font-bold text-purple-600">{target}</div>
-        <div className="font-medium ml-4 text-gray-600">
+      <div className="flex flex-wrap items-center gap-4 mb-4 w-full">
+        <form onSubmit={handleTargetSubmit} className="flex items-center gap-2">
+          <label htmlFor="target-input" className="font-medium text-gray-600">
+            Target Value:
+          </label>
+          <input
+            id="target-input"
+            type="number"
+            value={inputTarget}
+            onChange={handleTargetChange}
+            className="w-16 px-2 py-1 border border-gray-300 rounded text-center text-gray-600"
+          />
+          <button
+            type="submit"
+            className="btn btn-primary text-sm py-1 cursor-pointer"
+          >
+            Set Target
+          </button>
+        </form>
+
+        <div className="font-medium ml-auto text-gray-600">
           Status:
           <span
             className={`ml-2 font-bold ${
