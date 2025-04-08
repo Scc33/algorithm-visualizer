@@ -1,5 +1,5 @@
 // __tests__/lib/algorithms/bubbleSort.test.ts
-import { bubbleSort } from "@/lib/algorithms/bubbleSort";
+import { bubbleSort } from "@/lib/algorithms/sorting/bubbleSort";
 
 describe("Bubble Sort Algorithm", () => {
   it("should return the correct visualization structure", () => {

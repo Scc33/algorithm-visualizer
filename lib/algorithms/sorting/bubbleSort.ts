@@ -1,4 +1,4 @@
-import { AlgorithmVisualization, SortingStep } from "../types";
+import { AlgorithmVisualization, SortingStep } from "../../types";
 
 export function bubbleSort(array: number[]): AlgorithmVisualization {
   const steps: SortingStep[] = [];

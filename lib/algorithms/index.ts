@@ -1,12 +1,12 @@
 import { AlgorithmVisualization, AlgorithmInfo } from "../types";
-import { bubbleSort } from "./bubbleSort";
-import { selectionSort } from "./selectionSort";
-import { insertionSort } from "./insertionSort";
-import { mergeSort } from "./mergeSort";
-import { quickSort } from "./quickSort";
-import { heapSort } from "./heapSort";
-import { linearSearch } from "./linearSearch";
-import { binarySearch } from "./binarySearch";
+import { bubbleSort } from "./sorting/bubbleSort";
+import { selectionSort } from "./sorting/selectionSort";
+import { insertionSort } from "./sorting/insertionSort";
+import { mergeSort } from "./sorting/mergeSort";
+import { quickSort } from "./sorting/quickSort";
+import { heapSort } from "./sorting/heapSort";
+import { linearSearch } from "./searching/linearSearch";
+import { binarySearch } from "./searching/binarySearch";
 
 // Map algorithm names to their implementation functions
 const algorithms: Record<

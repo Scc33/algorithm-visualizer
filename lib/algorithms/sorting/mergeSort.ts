@@ -1,4 +1,4 @@
-import { AlgorithmVisualization, SortingStep } from "../types";
+import { AlgorithmVisualization, SortingStep } from "../../types";
 
 export function mergeSort(array: number[]): AlgorithmVisualization {
   const steps: SortingStep[] = [];
