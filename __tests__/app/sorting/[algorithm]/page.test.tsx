@@ -1,9 +1,8 @@
-// __tests__/app/sorting/[algorithm]/page.test.tsx
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import AlgorithmPage from "@/app/sorting/[algorithm]/page";
 import { AlgorithmProvider } from "@/context/AlgorithmContext";
-import { getAlgorithmByName, availableAlgorithms } from "@/lib/algorithms";
+import { getAlgorithmByName } from "@/lib/algorithms";
 
 // Mock the next/navigation module
 jest.mock("next/navigation", () => ({
@@ -90,6 +89,9 @@ describe("AlgorithmPage", () => {
       algorithm: "invalidAlgorithm",
     });
 
+    // Mock the getAlgorithmByName to return null for invalid algorithm
+    require("@/lib/algorithms").getAlgorithmByName.mockReturnValue(null);
+
     // Mock the availableAlgorithms to not include the invalid algorithm
     require("@/lib/algorithms").availableAlgorithms = [];
 
@@ -99,10 +101,32 @@ describe("AlgorithmPage", () => {
       </AlgorithmProvider>
     );
 
-    expect(screen.getByText("Algorithm Not Found")).toBeInTheDocument();
+    // Use queryAllByText to handle multiple matches and check the first occurrence
+    const notFoundElements = screen.queryAllByText("Algorithm Not Found");
+    expect(notFoundElements.length).toBeGreaterThan(0);
+    expect(notFoundElements[0]).toBeInTheDocument();
   });
 
   it("should call getAlgorithmByName with the correct algorithm key", () => {
+    // Reset the useParams mock to return bubbleSort
+    require("next/navigation").useParams.mockReturnValue({
+      algorithm: "bubbleSort",
+    });
+
+    // Reset algorithm mock data
+    require("@/lib/algorithms").availableAlgorithms = [
+      {
+        name: "Bubble Sort",
+        key: "bubbleSort",
+        category: "sorting",
+        description: "A simple sorting algorithm",
+        difficulty: "easy",
+      },
+    ];
+
+    // Clear previous calls
+    getAlgorithmByName.mockClear();
+
     render(
       <AlgorithmProvider>
         <AlgorithmPage />

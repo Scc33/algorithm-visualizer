@@ -31,7 +31,11 @@ Object.defineProperty(window, "localStorage", {
 // Mock the algorithms module
 jest.mock("@/lib/algorithms", () => ({
   getAlgorithmByName: jest.fn().mockReturnValue(() => ({
-    steps: [{ array: [1, 2, 3], comparing: [], swapped: false, completed: [] }],
+    steps: [
+      { array: [1, 2, 3], comparing: [], swapped: false, completed: [] },
+      { array: [1, 2, 3], comparing: [0, 1], swapped: false, completed: [] },
+      { array: [1, 2, 3], comparing: [], swapped: false, completed: [0] },
+    ],
     name: "Test Algorithm",
     key: "testAlgorithm",
     category: "sorting",
@@ -62,11 +66,6 @@ jest.mock("@/lib/utils", () => {
 // Test component that uses the algorithm context
 const TestComponent = () => {
   const { state, dispatch } = useAlgorithm();
-
-  // Quick visualization component to show state
-  React.useEffect(() => {
-    console.log("Current state in TestComponent:", state);
-  }, [state]);
 
   return (
     <div>
@@ -210,8 +209,10 @@ describe("AlgorithmContext", () => {
     // Click the next button to increment the step
     await user.click(screen.getByTestId("next-btn"));
 
-    // Check step updated
-    expect(screen.getByTestId("current-step")).toHaveTextContent("1");
+    // Wait for the state update to be processed
+    await waitFor(() => {
+      expect(screen.getByTestId("current-step")).toHaveTextContent("1");
+    });
   });
 
   it("should toggle playing state", async () => {
@@ -233,11 +234,19 @@ describe("AlgorithmContext", () => {
 
     // Click play
     await user.click(screen.getByTestId("play-btn"));
-    expect(screen.getByTestId("is-playing")).toHaveTextContent("playing");
+
+    // Wait for state update
+    await waitFor(() => {
+      expect(screen.getByTestId("is-playing")).toHaveTextContent("playing");
+    });
 
     // Click pause
     await user.click(screen.getByTestId("pause-btn"));
-    expect(screen.getByTestId("is-playing")).toHaveTextContent("paused");
+
+    // Wait for state update
+    await waitFor(() => {
+      expect(screen.getByTestId("is-playing")).toHaveTextContent("paused");
+    });
   });
 
   it("should reset to step 0", async () => {
@@ -256,11 +265,19 @@ describe("AlgorithmContext", () => {
 
     // Move to step 1
     await user.click(screen.getByTestId("next-btn"));
-    expect(screen.getByTestId("current-step")).toHaveTextContent("1");
+
+    // Wait for the state update to be processed
+    await waitFor(() => {
+      expect(screen.getByTestId("current-step")).toHaveTextContent("1");
+    });
 
     // Reset to step 0
     await user.click(screen.getByTestId("reset-btn"));
-    expect(screen.getByTestId("current-step")).toHaveTextContent("0");
+
+    // Wait for the state update to be processed
+    await waitFor(() => {
+      expect(screen.getByTestId("current-step")).toHaveTextContent("0");
+    });
   });
 
   it("should automatically advance steps when playing", async () => {
@@ -279,7 +296,11 @@ describe("AlgorithmContext", () => {
 
     // Start playing
     await user.click(screen.getByTestId("play-btn"));
-    expect(screen.getByTestId("is-playing")).toHaveTextContent("playing");
+
+    // Wait for state update
+    await waitFor(() => {
+      expect(screen.getByTestId("is-playing")).toHaveTextContent("playing");
+    });
 
     // Fast-forward time to trigger the interval
     act(() => {
@@ -287,7 +308,9 @@ describe("AlgorithmContext", () => {
     });
 
     // Check that the step has advanced
-    expect(screen.getByTestId("current-step")).toHaveTextContent("1");
+    await waitFor(() => {
+      expect(screen.getByTestId("current-step")).toHaveTextContent("1");
+    });
   });
 
   it("should generate new random data", async () => {
