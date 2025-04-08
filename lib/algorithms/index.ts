@@ -36,6 +36,7 @@ export const availableAlgorithms: AlgorithmInfo[] = [
     name: "Bubble Sort",
     key: "bubbleSort",
     category: "sorting",
+    subtitle: "Simple but inefficient comparison sort",
     description:
       "A simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order.",
     difficulty: "easy",
@@ -44,6 +45,7 @@ export const availableAlgorithms: AlgorithmInfo[] = [
     name: "Selection Sort",
     key: "selectionSort",
     category: "sorting",
+    subtitle: "In-place comparison sort with O(n²) complexity",
     description:
       "The selection sort algorithm sorts an array by repeatedly finding the minimum element from the unsorted part and putting it at the beginning.",
     difficulty: "easy",
@@ -52,6 +54,7 @@ export const availableAlgorithms: AlgorithmInfo[] = [
     name: "Insertion Sort",
     key: "insertionSort",
     category: "sorting",
+    subtitle: "Efficient for small data sets and nearly sorted arrays",
     description:
       "Insertion sort iterates through an array and at each iteration it removes one element, finds the location where it belongs and inserts it there.",
     difficulty: "easy",
@@ -60,6 +63,7 @@ export const availableAlgorithms: AlgorithmInfo[] = [
     name: "Merge Sort",
     key: "mergeSort",
     category: "sorting",
+    subtitle: "Stable, divide-and-conquer algorithm with O(n log n) complexity",
     description:
       "Merge sort is a divide and conquer algorithm that divides the input array into two halves, recursively sorts them, and then merges the sorted halves.",
     difficulty: "medium",
@@ -68,6 +72,7 @@ export const availableAlgorithms: AlgorithmInfo[] = [
     name: "Quick Sort",
     key: "quickSort",
     category: "sorting",
+    subtitle: "Fast, in-place sorting with average O(n log n) performance",
     description:
       "Quick sort is a divide and conquer algorithm that picks an element as a pivot and partitions the array around the pivot.",
     difficulty: "medium",
@@ -76,6 +81,7 @@ export const availableAlgorithms: AlgorithmInfo[] = [
     name: "Heap Sort",
     key: "heapSort",
     category: "sorting",
+    subtitle: "Comparison-based sort using binary heap structure",
     description:
       "Heap sort is a comparison-based sorting algorithm that uses a binary heap data structure to build a max-heap and then extract elements in order.",
     difficulty: "hard",
@@ -84,6 +90,7 @@ export const availableAlgorithms: AlgorithmInfo[] = [
     name: "Linear Search",
     key: "linearSearch",
     category: "searching",
+    subtitle: "Simple O(n) search through unsorted collections",
     description:
       "Linear search sequentially checks each element of the list until it finds an element that matches the target value.",
     difficulty: "easy",
@@ -92,6 +99,7 @@ export const availableAlgorithms: AlgorithmInfo[] = [
     name: "Binary Search",
     key: "binarySearch",
     category: "searching",
+    subtitle: "Efficient O(log n) search for sorted collections",
     description:
       "Binary search finds the position of a target value within a sorted array by repeatedly dividing the search interval in half.",
     difficulty: "medium",

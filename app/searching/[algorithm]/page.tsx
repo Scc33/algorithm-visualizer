@@ -66,7 +66,7 @@ export default function SearchingAlgorithmPage() {
   return (
     <PageLayout
       title={getAlgorithmLabel(algorithmKey)}
-      subtitle={algorithmInfo.description}
+      subtitle={algorithmInfo.subtitle}
       algorithmData={state.visualizationData || undefined}
     >
       <AlgorithmVisualizer />

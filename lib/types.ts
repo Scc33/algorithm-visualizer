@@ -35,6 +35,7 @@ export interface AlgorithmInfo {
   name: string;
   key: string;
   category: AlgorithmCategory;
+  subtitle: string;
   description: string;
   difficulty: "easy" | "medium" | "hard";
 }
