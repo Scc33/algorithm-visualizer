@@ -35,17 +35,7 @@ export default function SearchingAlgorithmPage() {
       dispatch({ type: "SET_TARGET", payload: target });
 
       // For binary search, ensure the array is sorted and the target exists
-      let data = [...state.data];
-      if (algorithmKey === "binarySearch") {
-        // Sort the array for binary search
-        data.sort((a, b) => a - b);
-
-        // Ensure target is in array (for demo purposes)
-        data = ensureTargetInArray(data, target);
-
-        // Update the data
-        dispatch({ type: "SET_DATA", payload: data });
-      }
+      const data = [...state.data];
 
       // Generate visualization if not already generated OR if algorithm changed
       if (!state.visualizationData || algorithmKey !== state.algorithm) {

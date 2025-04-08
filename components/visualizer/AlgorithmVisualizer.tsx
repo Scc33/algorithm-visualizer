@@ -9,7 +9,6 @@ import ColorLegend from "./ColorLegend";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 import { getAlgorithmByName } from "@/lib/algorithms";
 import { SearchStep, SortingStep } from "@/lib/types";
-import { ensureTargetInArray } from "@/lib/utils";
 
 export default function AlgorithmVisualizer() {
   const { state, dispatch } = useAlgorithm();
@@ -26,15 +25,11 @@ export default function AlgorithmVisualizer() {
     const algorithmFunction = getAlgorithmByName(algorithm);
     if (algorithmFunction) {
       try {
-        let newData = [...state.data];
+        const newData = [...state.data];
 
         // Special handling for binary search - ensure sorted array and target exists
         if (algorithm === "binarySearch") {
           newData.sort((a, b) => a - b);
-          if (target) {
-            newData = ensureTargetInArray(newData, target);
-          }
-          dispatch({ type: "SET_DATA", payload: newData });
         }
 
         const viz = algorithmFunction(newData, target);
