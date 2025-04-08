@@ -1,6 +1,6 @@
 "use client";
 
-import React, {
+import {
   createContext,
   useContext,
   useReducer,
@@ -9,7 +9,6 @@ import React, {
 } from "react";
 import { VisualizationState, VisualizationAction } from "@/lib/types";
 import { generateRandomArray } from "@/lib/utils";
-import { getAlgorithmByName } from "@/lib/algorithms";
 
 // Initial state
 const initialState: VisualizationState = {
