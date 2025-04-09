@@ -13,8 +13,16 @@ export interface SearchStep {
   visited: number[]; // Indices already visited
 }
 
+export interface GraphStep {
+  adjacencyList: number[][]; // Adjacency list representation
+  current: number; // Current vertex index
+  visited: number[]; // Visited vertices
+  stack: number[]; // Stack for DFS traversal
+  path: number[]; // Path taken so far
+}
+
 export interface AlgorithmVisualization {
-  steps: SortingStep[] | SearchStep[];
+  steps: SortingStep[] | SearchStep[] | GraphStep[];
   name: string;
   description: string;
   timeComplexity: string;

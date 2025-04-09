@@ -1,0 +1,100 @@
+import { AlgorithmVisualization, GraphStep } from "../../types";
+import { createVisualization } from "../utils";
+
+export function dfs(startVertex: number = 0): AlgorithmVisualization {
+  // Create a sample graph as an adjacency list
+  // This represents connections between vertices (0-5)
+  const adjacencyList: number[][] = [
+    [1, 2], // Vertex 0 connected to 1, 2
+    [0, 3, 4], // Vertex 1 connected to 0, 3, 4
+    [0, 5], // Vertex 2 connected to 0, 5
+    [1], // Vertex 3 connected to 1
+    [1, 5], // Vertex 4 connected to 1, 5
+    [2, 4], // Vertex 5 connected to 2, 4
+  ];
+
+  const steps: GraphStep[] = [];
+  const visited: number[] = [];
+  const stack: number[] = [startVertex];
+  const path: number[] = [];
+
+  // Initial state
+  steps.push({
+    adjacencyList: adjacencyList.map((row) => [...row]), // Deep copy
+    current: -1,
+    visited: [...visited],
+    stack: [...stack],
+    path: [...path],
+  });
+
+  while (stack.length > 0) {
+    // Get the next vertex from the stack
+    const current = stack.pop()!;
+
+    // Skip if already visited
+    if (visited.includes(current)) continue;
+
+    // Mark as visited
+    visited.push(current);
+    path.push(current);
+
+    // Add step for current vertex visit
+    steps.push({
+      adjacencyList: adjacencyList.map((row) => [...row]),
+      current,
+      visited: [...visited],
+      stack: [...stack],
+      path: [...path],
+    });
+
+    // Get all adjacent vertices in reverse order (so they come off the stack in correct order)
+    const neighbors = [...adjacencyList[current]].reverse();
+
+    // For each neighbor
+    for (const neighbor of neighbors) {
+      // If not visited, add to stack
+      if (!visited.includes(neighbor)) {
+        stack.push(neighbor);
+
+        // Add step showing stack update
+        steps.push({
+          adjacencyList: adjacencyList.map((row) => [...row]),
+          current,
+          visited: [...visited],
+          stack: [...stack],
+          path: [...path],
+        });
+      }
+    }
+  }
+
+  // Final state
+  steps.push({
+    adjacencyList: adjacencyList.map((row) => [...row]),
+    current: -1,
+    visited: [...visited],
+    stack: [],
+    path: [...path],
+  });
+
+  return createVisualization("dfs", steps, {
+    timeComplexity: "O(V + E)", // Vertices + Edges
+    spaceComplexity: "O(V)", // Vertices for stack and visited set
+    reference: "https://en.wikipedia.org/wiki/Depth-first_search",
+    pseudoCode: [
+      "procedure DFS(G, start_v)",
+      "  let S be a stack",
+      "  S.push(start_v)",
+      "  while S is not empty do",
+      "    v = S.pop()",
+      "    if v is not visited then",
+      "      mark v as visited",
+      "      for all neighbors w of v do",
+      "        S.push(w)",
+      "      end for",
+      "    end if",
+      "  end while",
+      "end procedure",
+    ],
+  });
+}

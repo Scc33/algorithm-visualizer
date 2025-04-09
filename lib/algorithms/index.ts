@@ -7,6 +7,7 @@ import { quickSort } from "./sorting/quickSort";
 import { heapSort } from "./sorting/heapSort";
 import { linearSearch } from "./searching/linearSearch";
 import { binarySearch } from "./searching/binarySearch";
+import { dfs } from "./graph/dfs";
 
 // Map algorithm names to their implementation functions
 const algorithms: Record<
@@ -21,6 +22,7 @@ const algorithms: Record<
   heapSort,
   linearSearch,
   binarySearch,
+  dfs,
 };
 
 // Get algorithm function by name
@@ -40,4 +42,5 @@ export {
   heapSort,
   linearSearch,
   binarySearch,
+  dfs,
 };

@@ -73,4 +73,14 @@ export const availableAlgorithms: Record<string, AlgorithmInfo> = {
       "Binary search finds the position of a target value within a sorted array by repeatedly dividing the search interval in half. With a logarithmic time complexity of O(log n), it's dramatically more efficient than linear search for large datasets. Binary search requires the array to be sorted beforehand, making it ideal for situations where searching occurs frequently on relatively static data. This algorithm is the foundation for many efficient data structures like binary search trees and is widely used in database systems, dictionaries, and numerous programming applications.",
     difficulty: "medium",
   },
+  dfs: {
+    name: "Depth-First Search",
+    key: "dfs",
+    category: "graph",
+    subtitle:
+      "Graph traversal algorithm that explores as far as possible along each branch before backtracking",
+    description:
+      "Depth-First Search (DFS) is a graph traversal algorithm that explores as far as possible along each branch before backtracking. It uses a stack data structure (often implemented using recursion) to keep track of vertices to visit next. DFS has applications in topological sorting, finding connected components, solving mazes, and detecting cycles in graphs.",
+    difficulty: "medium",
+  },
 };

@@ -1,4 +1,9 @@
-import { AlgorithmVisualization, SearchStep, SortingStep } from "../types";
+import {
+  AlgorithmVisualization,
+  GraphStep,
+  SearchStep,
+  SortingStep,
+} from "../types";
 import { availableAlgorithms } from "./metadata";
 
 /**
@@ -7,7 +12,7 @@ import { availableAlgorithms } from "./metadata";
  */
 export function createVisualization(
   key: keyof typeof availableAlgorithms,
-  steps: SortingStep[] | SearchStep[],
+  steps: SortingStep[] | SearchStep[] | GraphStep[],
   details: {
     timeComplexity: string;
     spaceComplexity: string;

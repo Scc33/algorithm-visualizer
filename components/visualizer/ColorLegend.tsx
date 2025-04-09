@@ -1,9 +1,11 @@
 interface ColorLegendProps {
   isSearchAlgorithm?: boolean;
+  isGraphAlgorithm?: boolean;
 }
 
 export default function ColorLegend({
   isSearchAlgorithm = false,
+  isGraphAlgorithm = false,
 }: ColorLegendProps) {
   const sortingLegendItems = [
     { color: "bg-blue-400", label: "Unsorted" },
@@ -19,9 +21,20 @@ export default function ColorLegend({
     { color: "bg-green-500", label: "Found" },
   ];
 
-  const legendItems = isSearchAlgorithm
-    ? searchLegendItems
-    : sortingLegendItems;
+  const graphLegendItems = [
+    { color: "bg-blue-300", label: "Unvisited Vertex" },
+    { color: "bg-yellow-300", label: "Current Vertex" },
+    { color: "bg-green-300", label: "Visited Vertex" },
+    { color: "bg-red-400", label: "Path Edge" },
+  ];
+
+  let legendItems = sortingLegendItems;
+
+  if (isSearchAlgorithm) {
+    legendItems = searchLegendItems;
+  } else if (isGraphAlgorithm) {
+    legendItems = graphLegendItems;
+  }
 
   return (
     <div className="card p-4">

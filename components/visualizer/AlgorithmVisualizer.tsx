@@ -2,13 +2,14 @@
 
 import SortingVisualization from "./SortingVisualization";
 import SearchVisualization from "./SearchVisualization";
+import GraphVisualization from "./GraphVisualization";
 import VisualizerControls from "./VisualizerControls";
 import AlgorithmInfo from "./AlgorithmInfo";
 import AlgorithmPseudocode from "./AlgorithmPseudocode";
 import ColorLegend from "./ColorLegend";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 import { getAlgorithmByName } from "@/lib/algorithms";
-import { SearchStep, SortingStep } from "@/lib/types";
+import { GraphStep, SearchStep, SortingStep } from "@/lib/types";
 
 export default function AlgorithmVisualizer() {
   const { state, dispatch } = useAlgorithm();
@@ -40,9 +41,9 @@ export default function AlgorithmVisualizer() {
     }
   };
 
-  // Check if the current algorithm is a search algorithm
-  const isSearchAlgorithm = () => {
-    return visualizationData?.category === "searching";
+  // Check the algorithm category
+  const getAlgorithmCategory = () => {
+    return visualizationData?.category || "";
   };
 
   // Find the maximum value in the array for scaling
@@ -59,7 +60,7 @@ export default function AlgorithmVisualizer() {
     );
   }
 
-  const isSearching = isSearchAlgorithm();
+  const category = getAlgorithmCategory();
 
   return (
     <div className="space-y-8">
@@ -68,15 +69,21 @@ export default function AlgorithmVisualizer() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <div className="card">
-            {isSearching ? (
+            {category === "sorting" && (
+              <SortingVisualization
+                step={visualizationData.steps[currentStep] as SortingStep}
+                maxValue={maxValue}
+              />
+            )}
+            {category === "searching" && (
               <SearchVisualization
                 step={visualizationData.steps[currentStep] as SearchStep}
                 maxValue={maxValue}
               />
-            ) : (
-              <SortingVisualization
-                step={visualizationData.steps[currentStep] as SortingStep}
-                maxValue={maxValue}
+            )}
+            {category === "graph" && (
+              <GraphVisualization
+                step={visualizationData.steps[currentStep] as GraphStep}
               />
             )}
           </div>
@@ -87,7 +94,10 @@ export default function AlgorithmVisualizer() {
             onGenerateNewArray={handleGenerateNewArray}
           />
 
-          <ColorLegend isSearchAlgorithm={isSearching} />
+          <ColorLegend
+            isSearchAlgorithm={category === "searching"}
+            isGraphAlgorithm={category === "graph"}
+          />
         </div>
 
         <div className="lg:col-span-1">
