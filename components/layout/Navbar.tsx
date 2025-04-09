@@ -61,6 +61,7 @@ const navLinks = [
   { href: "/searching", label: "Searching" },
   { href: "/graph", label: "Graph" },
   { href: "/difficulty", label: "Difficulty" },
+  { href: "/glossary", label: "Glossary" },
 ];
 
 export default function Navbar() {
