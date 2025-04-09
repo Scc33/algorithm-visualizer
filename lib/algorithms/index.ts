@@ -7,12 +7,20 @@ import { quickSort } from "./sorting/quickSort";
 import { heapSort } from "./sorting/heapSort";
 import { linearSearch } from "./searching/linearSearch";
 import { binarySearch } from "./searching/binarySearch";
+import { dfs } from "./graph/dfs";
+
+// Define types for different algorithm categories
+type SortingOrSearchFunction = (
+  array: number[],
+  target?: number
+) => AlgorithmVisualization;
+type GraphFunction = (
+  array: number[],
+  startVertex?: number
+) => AlgorithmVisualization;
 
 // Map algorithm names to their implementation functions
-const algorithms: Record<
-  string,
-  (array: number[], target?: number) => AlgorithmVisualization
-> = {
+const algorithms: Record<string, SortingOrSearchFunction | GraphFunction> = {
   bubbleSort,
   selectionSort,
   insertionSort,
@@ -21,6 +29,7 @@ const algorithms: Record<
   heapSort,
   linearSearch,
   binarySearch,
+  dfs,
 };
 
 // Get algorithm function by name
@@ -40,4 +49,5 @@ export {
   heapSort,
   linearSearch,
   binarySearch,
+  dfs,
 };
