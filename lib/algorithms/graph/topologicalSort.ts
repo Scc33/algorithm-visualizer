@@ -3,7 +3,8 @@ import { createVisualization } from "../utils";
 
 export function topologicalSort(
   array: number[],
-  target: number = 0
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _target: number = 0
 ): AlgorithmVisualization {
   // Create a directed acyclic graph (DAG) for topological sorting
   // For visualization purposes, we'll create a specific DAG example

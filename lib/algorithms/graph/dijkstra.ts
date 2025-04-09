@@ -23,7 +23,7 @@ export function dijkstra(
   const V = graph.length;
 
   // Create adjacency list representation for visualization
-  const adjacencyList: number[][] = graph.map((row, i) =>
+  const adjacencyList: number[][] = graph.map((row) =>
     row.reduce((neighbors, weight, j) => {
       if (weight !== Infinity && weight !== 0) {
         neighbors.push(j);
