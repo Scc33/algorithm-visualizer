@@ -26,14 +26,23 @@ export default function AlgorithmVisualizer() {
     const algorithmFunction = getAlgorithmByName(algorithm);
     if (algorithmFunction) {
       try {
-        const newData = [...state.data];
+        let viz;
 
-        // Special handling for binary search - ensure sorted array and target exists
-        if (algorithm === "binarySearch") {
-          newData.sort((a, b) => a - b);
+        // Handle different algorithm categories differently
+        if (algorithm === "dfs") {
+          // For graph algorithms, we might want to use a different approach
+          // The startVertex can be a random number between 0-5 for our predefined graph
+          const startVertex = Math.floor(Math.random() * 6); // Random vertex from 0-5
+          viz = algorithmFunction([], startVertex);
+        } else if (algorithm === "binarySearch") {
+          // For binary search - ensure sorted array and target exists
+          const newData = [...state.data].sort((a, b) => a - b);
+          viz = algorithmFunction(newData, target);
+        } else {
+          // For other algorithms like sorting
+          viz = algorithmFunction(state.data, target);
         }
 
-        const viz = algorithmFunction(newData, target);
         dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
       } catch (error) {
         console.error("Error generating visualization:", error);

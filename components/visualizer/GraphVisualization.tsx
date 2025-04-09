@@ -22,6 +22,19 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
+  // Check if adjacencyList is valid
+  if (
+    !adjacencyList ||
+    !Array.isArray(adjacencyList) ||
+    adjacencyList.length === 0
+  ) {
+    return (
+      <div className="flex items-center justify-center p-6 bg-white text-red-500">
+        Invalid graph data. Please check the adjacency list.
+      </div>
+    );
+  }
+
   // Calculate coordinates for each vertex in a circular layout
   const vertexPositions = adjacencyList.map((_, index) => {
     const angle = (2 * Math.PI * index) / adjacencyList.length;
@@ -111,7 +124,7 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
         <div className="text-sm font-medium text-gray-700 mb-2">
           Current State:
         </div>
-        <div className="bg-gray-50 p-3 rounded-md text-sm">
+        <div className="bg-gray-50 p-3 text-gray-700 rounded-md text-sm">
           {current >= 0 ? (
             <p>Exploring vertex {current} and its unvisited neighbors.</p>
           ) : stack.length > 0 ? (

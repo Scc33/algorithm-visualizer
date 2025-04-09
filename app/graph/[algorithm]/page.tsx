@@ -24,8 +24,15 @@ export default function GraphPage() {
       if (!state.visualizationData || algorithmKey !== state.algorithm) {
         const algorithmFunction = getAlgorithmByName(algorithmKey);
         if (algorithmFunction) {
-          const viz = algorithmFunction(state.data);
-          dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+          try {
+            // For graph algorithms, we need to handle the function call differently
+            // For DFS, the first parameter is ignored, and the second is the start vertex
+            const startVertex = state.target || 0;
+            const viz = algorithmFunction([], startVertex);
+            dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+          } catch (error) {
+            console.error("Error generating visualization:", error);
+          }
         }
       }
     }
@@ -35,6 +42,7 @@ export default function GraphPage() {
     state.algorithm,
     state.data,
     state.visualizationData,
+    state.target,
   ]);
 
   if (!algorithmInfo) {

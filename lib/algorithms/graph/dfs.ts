@@ -1,7 +1,14 @@
 import { AlgorithmVisualization, GraphStep } from "../../types";
 import { createVisualization } from "../utils";
 
-export function dfs(startVertex: number = 0): AlgorithmVisualization {
+export function dfs(
+  array: number[],
+  target: number = 0
+): AlgorithmVisualization {
+  // Ignore the input array and use a predefined adjacency list for graph visualization
+  // The target parameter will be used as the starting vertex
+  const startVertex = target;
+
   // Create a sample graph as an adjacency list
   // This represents connections between vertices (0-5)
   const adjacencyList: number[][] = [
@@ -34,6 +41,9 @@ export function dfs(startVertex: number = 0): AlgorithmVisualization {
     // Skip if already visited
     if (visited.includes(current)) continue;
 
+    // Make sure current vertex is valid
+    if (current < 0 || current >= adjacencyList.length) continue;
+
     // Mark as visited
     visited.push(current);
     path.push(current);
@@ -48,6 +58,7 @@ export function dfs(startVertex: number = 0): AlgorithmVisualization {
     });
 
     // Get all adjacent vertices in reverse order (so they come off the stack in correct order)
+    // Ensure the current index is valid in the adjacency list
     const neighbors = [...adjacencyList[current]].reverse();
 
     // For each neighbor
