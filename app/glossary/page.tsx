@@ -103,13 +103,13 @@ export default function GlossaryPage() {
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer ${
+                  className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer capitalize ${
                     activeCategory === category
                       ? "bg-blue-100 text-blue-800"
                       : "bg-gray-100 text-gray-800 hover:bg-gray-200"
                   }`}
                 >
-                  {category.charAt(0) + category.slice(1)}
+                  {category}
                 </button>
               ))}
             </div>
@@ -132,7 +132,7 @@ export default function GlossaryPage() {
         </div>
 
         {/* Results count */}
-        <div className="text-gray-600 mb-8 text-center">
+        <div className="text-gray-200 mb-8 text-center">
           {filteredTerms.length === 0 ? (
             <p>No terms found matching your search.</p>
           ) : (
