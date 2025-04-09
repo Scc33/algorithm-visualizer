@@ -8,6 +8,9 @@ import { heapSort } from "./sorting/heapSort";
 import { linearSearch } from "./searching/linearSearch";
 import { binarySearch } from "./searching/binarySearch";
 import { dfs } from "./graph/dfs";
+import { bfs } from "./graph/bfs";
+import { dijkstra } from "./graph/dijkstra";
+import { topologicalSort } from "./graph/topologicalSort";
 
 // Define types for different algorithm categories
 type SortingOrSearchFunction = (
@@ -30,6 +33,9 @@ const algorithms: Record<string, SortingOrSearchFunction | GraphFunction> = {
   linearSearch,
   binarySearch,
   dfs,
+  bfs,
+  dijkstra,
+  topologicalSort,
 };
 
 // Get algorithm function by name
@@ -50,4 +56,7 @@ export {
   linearSearch,
   binarySearch,
   dfs,
+  bfs,
+  dijkstra,
+  topologicalSort,
 };

@@ -83,4 +83,34 @@ export const availableAlgorithms: Record<string, AlgorithmInfo> = {
       "Depth-First Search (DFS) is a graph traversal algorithm that explores as far as possible along each branch before backtracking. It uses a stack data structure (often implemented using recursion) to keep track of vertices to visit next. DFS has applications in topological sorting, finding connected components, solving mazes, and detecting cycles in graphs.",
     difficulty: "medium",
   },
+  bfs: {
+    name: "Breadth-First Search",
+    key: "bfs",
+    category: "graph",
+    subtitle:
+      "Graph traversal algorithm that explores all neighbors at the current depth before moving deeper",
+    description:
+      "Breadth-First Search (BFS) is a graph traversal algorithm that explores all vertices at the present depth level before moving on to vertices at the next depth level. It uses a queue to keep track of the next vertices to visit, ensuring that vertices are visited in order of their distance from the source vertex. BFS is commonly used for finding the shortest path in unweighted graphs, connected components, and solving puzzles with the fewest possible moves.",
+    difficulty: "medium",
+  },
+  dijkstra: {
+    name: "Dijkstra's Algorithm",
+    key: "dijkstra",
+    category: "graph",
+    subtitle:
+      "Shortest path algorithm for weighted graphs with non-negative edge weights",
+    description:
+      "Dijkstra's Algorithm is a graph search algorithm that solves the single-source shortest path problem for a graph with non-negative edge weights. It works by maintaining a set of vertices whose shortest distance from the source is already known and repeatedly selecting the vertex with the minimum distance value, updating the distance values of its adjacent vertices. Dijkstra's algorithm is widely used in network routing protocols and as a subroutine in other graph algorithms.",
+    difficulty: "hard",
+  },
+  topologicalSort: {
+    name: "Topological Sort",
+    key: "topologicalSort",
+    category: "graph",
+    subtitle:
+      "Linear ordering of vertices in a directed acyclic graph where directed edges are respected",
+    description:
+      "Topological Sort is an algorithm for ordering the vertices of a directed acyclic graph (DAG) such that for every directed edge (u,v), vertex u comes before vertex v in the ordering. This algorithm is essential for scheduling tasks with dependencies, course prerequisites planning, and compilation sequence determination. A graph must have no directed cycles to have a valid topological ordering, making this algorithm a useful tool for cycle detection as well.",
+    difficulty: "medium",
+  },
 };
