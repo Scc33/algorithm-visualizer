@@ -15,8 +15,25 @@ export default function AlgorithmVisualizer() {
   const { state, dispatch } = useAlgorithm();
   const { currentStep, algorithm, data, visualizationData, target } = state;
 
-  // Generate a new random array
-  const handleGenerateNewArray = () => {
+  // Function to generate new data based on algorithm type
+  const handleGenerateNewData = () => {
+    // For graph algorithms, we just need to regenerate with a new starting vertex
+    if (category === "graph") {
+      const algorithmFunction = getAlgorithmByName(algorithm);
+      if (algorithmFunction) {
+        try {
+          // Generate a random starting vertex between 0-5
+          const startVertex = Math.floor(Math.random() * 6);
+          const viz = algorithmFunction([], startVertex);
+          dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+        } catch (error) {
+          console.error("Error generating graph visualization:", error);
+        }
+      }
+      return;
+    }
+
+    // For array-based algorithms, generate a new random array
     dispatch({
       type: "GENERATE_RANDOM_DATA",
       payload: { min: 5, max: 95, length: 15 },
@@ -28,13 +45,7 @@ export default function AlgorithmVisualizer() {
       try {
         let viz;
 
-        // Handle different algorithm categories differently
-        if (algorithm === "dfs") {
-          // For graph algorithms, we might want to use a different approach
-          // The startVertex can be a random number between 0-5 for our predefined graph
-          const startVertex = Math.floor(Math.random() * 6); // Random vertex from 0-5
-          viz = algorithmFunction([], startVertex);
-        } else if (algorithm === "binarySearch") {
+        if (algorithm === "binarySearch") {
           // For binary search - ensure sorted array and target exists
           const newData = [...state.data].sort((a, b) => a - b);
           viz = algorithmFunction(newData, target);
@@ -100,7 +111,8 @@ export default function AlgorithmVisualizer() {
           <VisualizerControls
             currentStep={currentStep}
             totalSteps={visualizationData.steps.length}
-            onGenerateNewArray={handleGenerateNewArray}
+            onGenerateNewArray={handleGenerateNewData}
+            algorithmCategory={category}
           />
 
           <ColorLegend

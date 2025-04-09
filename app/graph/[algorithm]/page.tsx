@@ -25,9 +25,13 @@ export default function GraphPage() {
         const algorithmFunction = getAlgorithmByName(algorithmKey);
         if (algorithmFunction) {
           try {
-            // For graph algorithms, we need to handle the function call differently
-            // For DFS, the first parameter is ignored, and the second is the start vertex
-            const startVertex = state.target || 0;
+            // For graph algorithms, ensure we're using a valid start vertex
+            // Our graph only has vertices 0-5, so ensure the start vertex is in this range
+            // If there's no valid target set, use vertex 0 as default
+            const startVertex =
+              state.target >= 0 && state.target < 6 ? state.target : 0;
+            // Set the target so it's properly displayed in the UI
+            dispatch({ type: "SET_TARGET", payload: startVertex });
             const viz = algorithmFunction([], startVertex);
             dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
           } catch (error) {

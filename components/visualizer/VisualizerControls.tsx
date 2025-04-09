@@ -6,12 +6,14 @@ interface VisualizerControlsProps {
   currentStep: number;
   totalSteps: number;
   onGenerateNewArray: () => void;
+  algorithmCategory?: string;
 }
 
 export default function VisualizerControls({
   currentStep,
   totalSteps,
   onGenerateNewArray,
+  algorithmCategory = "sorting",
 }: VisualizerControlsProps) {
   const { state, dispatch } = useAlgorithm();
   const { isPlaying, speed } = state;
@@ -27,6 +29,10 @@ export default function VisualizerControls({
     dispatch({ type: "SET_SPEED", payload: parseInt(e.target.value) });
   const handleStepChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     dispatch({ type: "SET_CURRENT_STEP", payload: parseInt(e.target.value) });
+
+  // Determine button text based on algorithm category
+  const newDataButtonText =
+    algorithmCategory === "graph" ? "New Graph" : "New Array";
 
   return (
     <div className="card p-6 space-y-6">
@@ -204,7 +210,7 @@ export default function VisualizerControls({
                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
               />
             </svg>
-            <span>New Array</span>
+            <span>{newDataButtonText}</span>
           </button>
         </div>
       </div>

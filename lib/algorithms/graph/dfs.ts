@@ -6,11 +6,8 @@ export function dfs(
   target: number = 0
 ): AlgorithmVisualization {
   // Ignore the input array and use a predefined adjacency list for graph visualization
-  // The target parameter will be used as the starting vertex
-  const startVertex = target;
-
-  // Create a sample graph as an adjacency list
-  // This represents connections between vertices (0-5)
+  // The target parameter will be used as the starting vertex, but ensure it's valid
+  // Create a sample graph as an adjacency list first
   const adjacencyList: number[][] = [
     [1, 2], // Vertex 0 connected to 1, 2
     [0, 3, 4], // Vertex 1 connected to 0, 3, 4
@@ -19,6 +16,11 @@ export function dfs(
     [1, 5], // Vertex 4 connected to 1, 5
     [2, 4], // Vertex 5 connected to 2, 4
   ];
+
+  // Ensure startVertex is valid (0 to 5)
+  const startVertex = target >= 0 && target < adjacencyList.length ? target : 0;
+
+  // We've already defined the adjacencyList above
 
   const steps: GraphStep[] = [];
   const visited: number[] = [];

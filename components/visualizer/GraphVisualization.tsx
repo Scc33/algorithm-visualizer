@@ -128,9 +128,11 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
           {current >= 0 ? (
             <p>Exploring vertex {current} and its unvisited neighbors.</p>
           ) : stack.length > 0 ? (
-            <p>Starting exploration from vertex {stack[stack.length - 1]}.</p>
-          ) : (
+            <p>Starting exploration from vertex {stack[0] || 0}.</p>
+          ) : path.length > 0 ? (
             <p>DFS traversal complete. Path: {path.join(" → ")}</p>
+          ) : (
+            <p>DFS traversal will start from a selected vertex.</p>
           )}
         </div>
       </div>
