@@ -29,7 +29,11 @@ export default function GraphPage() {
             // Our graph only has vertices 0-5, so ensure the start vertex is in this range
             // If there's no valid target set, use vertex 0 as default
             const startVertex =
-              state.target >= 0 && state.target < 6 ? state.target : 0;
+              state.target === undefined
+                ? 0
+                : state.target >= 0 && state.target < 6
+                ? state.target
+                : 0;
             // Set the target so it's properly displayed in the UI
             dispatch({ type: "SET_TARGET", payload: startVertex });
             const viz = algorithmFunction([], startVertex);
