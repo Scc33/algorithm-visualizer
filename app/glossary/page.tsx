@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import Link from "next/link";
 import { glossaryTerms } from "@/lib/glossary/glossary";
-import { sortByAlphabet, groupTermsByFirstLetter } from "@/lib/utils";
+import { groupTermsByFirstLetter } from "@/lib/utils";
 
 export default function GlossaryPage() {
   const [searchTerm, setSearchTerm] = useState("");
