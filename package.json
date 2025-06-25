@@ -30,7 +30,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.0",
     "jest": "^30.0.3",
-    "jest-environment-jsdom": "^29.7.0",
+    "jest-environment-jsdom": "^30.0.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
