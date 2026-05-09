@@ -10,6 +10,7 @@ const __dirname = dirname(__filename);
 const compat = new FlatCompat({ baseDirectory: __dirname });
 
 export default tseslint.config(
+  { ignores: ["coverage/**", ".next/**", "node_modules/**"] },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   sonarjs.configs.recommended,
   {

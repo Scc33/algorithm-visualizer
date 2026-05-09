@@ -5,7 +5,15 @@ import { createContext, useContext, useReducer, useEffect } from "react";
 import type { VisualizationState, VisualizationAction } from "@/lib/types";
 import { generateRandomArray } from "@/lib/utils";
 
-// Initial state
+// Animation timing: speed 1-10 maps to delay 1000ms-100ms.
+// delay = ANIMATION_BASE_DELAY_MS - speed * ANIMATION_STEP_DELAY_MS
+const ANIMATION_BASE_DELAY_MS = 1100;
+const ANIMATION_STEP_DELAY_MS = 100;
+
+export function computeAnimationDelay(speed: number): number {
+  return ANIMATION_BASE_DELAY_MS - speed * ANIMATION_STEP_DELAY_MS;
+}
+
 const initialState: VisualizationState = {
   currentStep: 0,
   isPlaying: false,
@@ -64,7 +72,7 @@ function applySetAction(
   }
 }
 
-function reducer(
+export function reducer(
   state: VisualizationState,
   action: VisualizationAction
 ): VisualizationState {
@@ -97,15 +105,11 @@ function reducer(
 export function AlgorithmProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // Handle playing animation
   useEffect(() => {
     if (state.isPlaying) {
-      const playInterval = setInterval(
-        () => {
-          dispatch({ type: "NEXT_STEP" });
-        },
-        1100 - state.speed * 100
-      ); // Speed 1-10 maps to delay 1000ms - 100ms
+      const playInterval = setInterval(() => {
+        dispatch({ type: "NEXT_STEP" });
+      }, computeAnimationDelay(state.speed));
 
       return () => {
         clearInterval(playInterval);

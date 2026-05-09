@@ -12,18 +12,12 @@ import { bfs } from "./graph/bfs";
 import { dijkstra } from "./graph/dijkstra";
 import { topologicalSort } from "./graph/topologicalSort";
 
-// Define types for different algorithm categories
-type SortingOrSearchFunction = (
+export type AlgorithmFn = (
   array: number[],
-  target?: number
-) => AlgorithmVisualization;
-type GraphFunction = (
-  array: number[],
-  startVertex?: number
+  targetOrStart?: number
 ) => AlgorithmVisualization;
 
-// Map algorithm names to their implementation functions
-const algorithms: Record<string, SortingOrSearchFunction | GraphFunction> = {
+const algorithms = {
   bubbleSort,
   selectionSort,
   insertionSort,
@@ -36,16 +30,18 @@ const algorithms: Record<string, SortingOrSearchFunction | GraphFunction> = {
   bfs,
   dijkstra,
   topologicalSort,
-};
+} as const satisfies Record<string, AlgorithmFn>;
 
-// Get algorithm function by name
-export function getAlgorithmByName(
-  name: string
-): ((array: number[], target?: number) => AlgorithmVisualization) | null {
-  return algorithms[name] || null;
+export type AlgorithmName = keyof typeof algorithms;
+
+export function isAlgorithmName(name: string): name is AlgorithmName {
+  return name in algorithms;
 }
 
-// Export all algorithms
+export function getAlgorithmByName(name: string): AlgorithmFn | null {
+  return isAlgorithmName(name) ? algorithms[name] : null;
+}
+
 export {
   bubbleSort,
   selectionSort,
