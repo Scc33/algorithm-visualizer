@@ -40,7 +40,7 @@ export default function AlgorithmPage() {
   if (!algorithmInfo) {
     return (
       <PageLayout title="Algorithm Not Found">
-        <div className="text-center py-12">
+        <div className="py-12 text-center">
           <h2 className="heading-lg text-red-600">Algorithm Not Found</h2>
           <p className="mt-4 text-gray-600">
             The algorithm you are looking for does not exist or is not

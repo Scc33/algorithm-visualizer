@@ -51,7 +51,7 @@ export default function GlossaryTermPage({ params }: TermPageProps) {
 
   return (
     <PageLayout title={term.term} subtitle={term.shortDefinition}>
-      <div className="max-w-4xl mx-auto">
+      <div className="mx-auto max-w-4xl">
         <nav className="mb-8 text-sm">
           <ol className="flex items-center space-x-2">
             <li>
@@ -69,12 +69,12 @@ export default function GlossaryTermPage({ params }: TermPageProps) {
               </Link>
             </li>
             <li className="text-gray-500">/</li>
-            <li className="text-blue-600 font-medium">{term.term}</li>
+            <li className="font-medium text-blue-600">{term.term}</li>
           </ol>
         </nav>
 
-        <div className="card p-8 mb-8">
-          <div className="flex justify-between items-start mb-6">
+        <div className="card mb-8 p-8">
+          <div className="mb-6 flex items-start justify-between">
             <div>
               <span className="badge badge-info capitalize">
                 {term.category}
@@ -87,7 +87,7 @@ export default function GlossaryTermPage({ params }: TermPageProps) {
               className="btn btn-secondary flex items-center"
             >
               <svg
-                className="w-4 h-4 mr-2"
+                className="mr-2 h-4 w-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -113,8 +113,8 @@ export default function GlossaryTermPage({ params }: TermPageProps) {
           {term.examples && (
             <div className="mt-8">
               <h2 className="heading-lg mb-4">Examples</h2>
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-                <ul className="list-disc pl-6 space-y-3 text-gray-700">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+                <ul className="list-disc space-y-3 pl-6 text-gray-700">
                   {term.examples.map((example, index) => (
                     <li key={index}>{example}</li>
                   ))}
@@ -126,7 +126,7 @@ export default function GlossaryTermPage({ params }: TermPageProps) {
           {term.codeExample && (
             <div className="mt-8">
               <h2 className="heading-lg mb-4">Code Example</h2>
-              <div className="bg-gray-900 text-white rounded-lg p-6 overflow-x-auto">
+              <div className="overflow-x-auto rounded-lg bg-gray-900 p-6 text-white">
                 <pre className="text-sm">
                   <code>{term.codeExample}</code>
                 </pre>
@@ -137,7 +137,7 @@ export default function GlossaryTermPage({ params }: TermPageProps) {
           {term.visualAid && (
             <div className="mt-8">
               <h2 className="heading-lg mb-4">Visual Explanation</h2>
-              <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <div className="rounded-lg border border-gray-200 bg-white p-6">
                 <div dangerouslySetInnerHTML={{ __html: term.visualAid }} />
               </div>
             </div>
@@ -145,17 +145,17 @@ export default function GlossaryTermPage({ params }: TermPageProps) {
         </div>
 
         {relatedTerms.length > 0 && (
-          <div className="card p-6 mb-8">
+          <div className="card mb-8 p-6">
             <h2 className="heading-md mb-4">Related Terms</h2>
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid gap-4 md:grid-cols-2">
               {relatedTerms.map((relatedTerm) => (
                 <Link
                   key={relatedTerm.slug}
                   href={`/glossary/${relatedTerm.slug}`}
-                  className="bg-gray-50 border border-gray-200 rounded-lg p-4 hover:bg-gray-100 hover:border-gray-300 transition duration-200"
+                  className="rounded-lg border border-gray-200 bg-gray-50 p-4 transition duration-200 hover:border-gray-300 hover:bg-gray-100"
                 >
                   <h3 className="heading-sm">{relatedTerm.term}</h3>
-                  <p className="text-sm text-gray-600 line-clamp-2 mt-1">
+                  <p className="mt-1 line-clamp-2 text-sm text-gray-600">
                     {relatedTerm.shortDefinition}
                   </p>
                 </Link>
@@ -164,9 +164,9 @@ export default function GlossaryTermPage({ params }: TermPageProps) {
           </div>
         )}
 
-        <div className="card p-6 mb-8">
+        <div className="card mb-8 p-6">
           <h2 className="heading-md mb-4">Further Learning</h2>
-          <p className="text-gray-600 mb-4">
+          <p className="mb-4 text-gray-600">
             Want to see these concepts in action?
           </p>
           <div className="flex flex-wrap gap-4">

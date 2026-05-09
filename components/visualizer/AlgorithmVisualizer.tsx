@@ -71,9 +71,9 @@ export default function AlgorithmVisualizer() {
 
   if (!visualizationData) {
     return (
-      <div className="flex items-center justify-center h-64">
+      <div className="flex h-64 items-center justify-center">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-blue-500"></div>
           <p className="mt-2">Loading visualization...</p>
         </div>
       </div>
@@ -86,8 +86,8 @@ export default function AlgorithmVisualizer() {
     <div className="space-y-8">
       <AlgorithmInfo algorithm={visualizationData} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="space-y-6 lg:col-span-2">
           <div className="card">
             {category === "sorting" && (
               <SortingVisualization

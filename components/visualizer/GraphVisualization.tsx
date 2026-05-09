@@ -44,7 +44,7 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
     adjacencyList.length === 0
   ) {
     return (
-      <div className="flex items-center justify-center p-6 bg-white text-red-500">
+      <div className="flex items-center justify-center bg-white p-6 text-red-500">
         Invalid graph data. Please check the adjacency list.
       </div>
     );
@@ -81,8 +81,8 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
   };
 
   return (
-    <div className="flex flex-col items-center w-full p-6 bg-white">
-      <div className="mb-6 w-full flex flex-wrap justify-between items-center">
+    <div className="flex w-full flex-col items-center bg-white p-6">
+      <div className="mb-6 flex w-full flex-wrap items-center justify-between">
         <div className="text-sm font-medium text-gray-700">
           Visited: {visited.map((v) => v).join(" → ")}
         </div>
@@ -92,7 +92,7 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
       </div>
 
       <div
-        className="relative border rounded-lg bg-gray-50"
+        className="relative rounded-lg border bg-gray-50"
         style={{ width: graphSize.width, height: graphSize.height }}
       >
         {/* Draw edges */}
@@ -120,7 +120,7 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
         {vertexPositions.map((pos, index) => (
           <div
             key={index}
-            className="absolute flex items-center justify-center text-white font-bold rounded-full transition-all duration-300"
+            className="absolute flex items-center justify-center rounded-full font-bold text-white transition-all duration-300"
             style={{
               width: 40,
               height: 40,
@@ -136,10 +136,10 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
       </div>
 
       <div className="mt-6 w-full">
-        <div className="text-sm font-medium text-gray-700 mb-2">
+        <div className="mb-2 text-sm font-medium text-gray-700">
           Current State:
         </div>
-        <div className="bg-gray-50 p-3 text-gray-700 rounded-md text-sm">
+        <div className="rounded-md bg-gray-50 p-3 text-sm text-gray-700">
           {getStatusMessage(current, stack, path)}
         </div>
       </div>

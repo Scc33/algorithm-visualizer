@@ -5,15 +5,15 @@ function PhilosophicalApproach() {
   return (
     <section className="mb-12">
       <h2 className="heading-lg mb-4 text-white">Our Philosophical Approach</h2>
-      <p className="text-white mb-4">
+      <p className="mb-4 text-white">
         At its essence, Algorithm Visualizer serves as an intellectual bridge
         between abstract computational theory and tangible comprehension.
         We&apos;ve architected this platform upon the fundamental principle that
         algorithmic reasoning—a cornerstone of computational thinking—becomes
-        profoundly more accessible when cognitive processing is augmented through
-        visual perception and interactive engagement.
+        profoundly more accessible when cognitive processing is augmented
+        through visual perception and interactive engagement.
       </p>
-      <p className="text-white mb-4">
+      <p className="mb-4 text-white">
         Much like how the Rosetta Stone unlocked ancient linguistic mysteries by
         providing parallel representations of the same content, our
         visualizations decode the cryptic language of algorithms by rendering
@@ -22,7 +22,7 @@ function PhilosophicalApproach() {
         procedures into observable phenomena, making their inner mechanisms
         discernible to both novice learners and seasoned practitioners.
       </p>
-      <p className="text-white mb-4">
+      <p className="mb-4 text-white">
         Whether you&apos;re a student navigating the labyrinthine pathways of
         computer science fundamentals, an educator curating pedagogical
         resources, or a professional developer refining your algorithmic
@@ -37,7 +37,7 @@ function ArchitecturalCornerstones() {
   return (
     <section className="mb-12">
       <h2 className="heading-lg mb-4 text-white">Architectural Cornerstones</h2>
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid gap-6 md:grid-cols-2">
         <div className="card p-6">
           <h3 className="heading-sm mb-2">Dynamic Visual Orchestration</h3>
           <p className="text-gray-700">
@@ -86,7 +86,7 @@ function EngagementMethodology() {
   return (
     <section className="mb-12">
       <h2 className="heading-lg mb-4 text-white">Engagement Methodology</h2>
-      <ol className="list-decimal pl-6 space-y-4">
+      <ol className="list-decimal space-y-4 pl-6">
         <li className="text-white">
           <span className="font-medium text-white">Algorithm Selection:</span>{" "}
           Navigate our taxonomical hierarchy—organized by both functional
@@ -94,7 +94,9 @@ function EngagementMethodology() {
           with your intellectual objectives.
         </li>
         <li className="text-white">
-          <span className="font-medium text-white">Observational Analysis:</span>{" "}
+          <span className="font-medium text-white">
+            Observational Analysis:
+          </span>{" "}
           Witness the algorithm&apos;s procedural logic manifest through data
           transformations, with each operational stage delineated through
           chromatic encoding to elucidate its functional significance.
@@ -107,14 +109,18 @@ function EngagementMethodology() {
           processing rate.
         </li>
         <li className="text-white">
-          <span className="font-medium text-white">Permutational Exploration:</span>{" "}
+          <span className="font-medium text-white">
+            Permutational Exploration:
+          </span>{" "}
           Generate diverse datasets to examine how algorithmic behavior adapts
-          across variable input configurations—revealing both consistent patterns
-          and edge-case behaviors that illuminate the algorithm&apos;s robust
-          properties and potential vulnerabilities.
+          across variable input configurations—revealing both consistent
+          patterns and edge-case behaviors that illuminate the algorithm&apos;s
+          robust properties and potential vulnerabilities.
         </li>
         <li className="text-white">
-          <span className="font-medium text-white">Theoretical Integration:</span>{" "}
+          <span className="font-medium text-white">
+            Theoretical Integration:
+          </span>{" "}
           Complement empirical observation with analytical understanding by
           consulting the algorithm&apos;s formal specification (pseudocode) and
           efficiency metrics (complexity analysis)—establishing connections
@@ -176,7 +182,7 @@ function TechnologicalInfrastructure() {
       <h2 className="heading-lg mb-4 text-white">
         Technological Infrastructure
       </h2>
-      <p className="text-white mb-4">
+      <p className="mb-4 text-white">
         Our platform orchestrates a symphony of contemporary web technologies,
         meticulously integrated to deliver an immersive educational experience
         that balances computational robustness with interface elegance:
@@ -210,7 +216,7 @@ export default function AboutPage() {
       title="About Algorithm Visualizer"
       subtitle="Illuminating computational abstractions through dynamic visual representation"
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="mx-auto max-w-4xl">
         <PhilosophicalApproach />
         <ArchitecturalCornerstones />
         <EngagementMethodology />

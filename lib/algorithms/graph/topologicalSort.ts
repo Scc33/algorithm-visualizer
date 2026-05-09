@@ -48,14 +48,7 @@ export function topologicalSort(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _target: number = 0
 ): AlgorithmVisualization {
-  const adjacencyList: number[][] = [
-    [1, 2],
-    [3],
-    [3, 4],
-    [5],
-    [5],
-    [],
-  ];
+  const adjacencyList: number[][] = [[1, 2], [3], [3, 4], [5], [5], []];
 
   const state: TopoSortState = {
     adjacencyList,

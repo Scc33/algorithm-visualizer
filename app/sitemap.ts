@@ -7,16 +7,66 @@ function buildStaticPages(baseUrl: string): MetadataRoute.Sitemap {
   const monthly = "monthly" as const;
   const weekly = "weekly" as const;
   return [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: weekly, priority: 1.0 },
-    { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: monthly, priority: 0.8 },
-    { url: `${baseUrl}/difficulty`, lastModified: new Date(), changeFrequency: monthly, priority: 0.8 },
-    { url: `${baseUrl}/sorting`, lastModified: new Date(), changeFrequency: weekly, priority: 0.9 },
-    { url: `${baseUrl}/searching`, lastModified: new Date(), changeFrequency: weekly, priority: 0.9 },
-    { url: `${baseUrl}/graph`, lastModified: new Date(), changeFrequency: weekly, priority: 0.9 },
-    { url: `${baseUrl}/glossary`, lastModified: new Date(), changeFrequency: monthly, priority: 0.8 },
-    { url: `${baseUrl}/difficulty/easy`, lastModified: new Date(), changeFrequency: monthly, priority: 0.8 },
-    { url: `${baseUrl}/difficulty/medium`, lastModified: new Date(), changeFrequency: monthly, priority: 0.8 },
-    { url: `${baseUrl}/difficulty/hard`, lastModified: new Date(), changeFrequency: monthly, priority: 0.8 },
+    {
+      url: baseUrl,
+      lastModified: new Date(),
+      changeFrequency: weekly,
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/about`,
+      lastModified: new Date(),
+      changeFrequency: monthly,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/difficulty`,
+      lastModified: new Date(),
+      changeFrequency: monthly,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/sorting`,
+      lastModified: new Date(),
+      changeFrequency: weekly,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/searching`,
+      lastModified: new Date(),
+      changeFrequency: weekly,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/graph`,
+      lastModified: new Date(),
+      changeFrequency: weekly,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/glossary`,
+      lastModified: new Date(),
+      changeFrequency: monthly,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/difficulty/easy`,
+      lastModified: new Date(),
+      changeFrequency: monthly,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/difficulty/medium`,
+      lastModified: new Date(),
+      changeFrequency: monthly,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/difficulty/hard`,
+      lastModified: new Date(),
+      changeFrequency: monthly,
+      priority: 0.8,
+    },
   ];
 }
 

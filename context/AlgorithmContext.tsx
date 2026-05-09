@@ -1,13 +1,7 @@
 "use client";
 
-import type {
-  ReactNode} from "react";
-import {
-  createContext,
-  useContext,
-  useReducer,
-  useEffect
-} from "react";
+import type { ReactNode } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
 import type { VisualizationState, VisualizationAction } from "@/lib/types";
 import { generateRandomArray } from "@/lib/utils";
 
@@ -80,7 +74,11 @@ function reducer(
   switch (action.type) {
     case "GENERATE_RANDOM_DATA": {
       const { min, max, length } = action.payload;
-      return { ...state, data: generateRandomArray(min, max, length), currentStep: 0 };
+      return {
+        ...state,
+        data: generateRandomArray(min, max, length),
+        currentStep: 0,
+      };
     }
     case "GENERATE_VISUALIZATION":
       return { ...state, visualizationData: action.payload, currentStep: 0 };
@@ -102,9 +100,12 @@ export function AlgorithmProvider({ children }: { children: ReactNode }) {
   // Handle playing animation
   useEffect(() => {
     if (state.isPlaying) {
-      const playInterval = setInterval(() => {
-        dispatch({ type: "NEXT_STEP" });
-      }, 1100 - state.speed * 100); // Speed 1-10 maps to delay 1000ms - 100ms
+      const playInterval = setInterval(
+        () => {
+          dispatch({ type: "NEXT_STEP" });
+        },
+        1100 - state.speed * 100
+      ); // Speed 1-10 maps to delay 1000ms - 100ms
 
       return () => {
         clearInterval(playInterval);

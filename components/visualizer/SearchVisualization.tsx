@@ -59,8 +59,8 @@ export default function SearchVisualization({
   }
 
   return (
-    <div className="flex flex-col items-center space-y-8 w-full p-6 bg-white">
-      <div className="flex flex-wrap items-center gap-4 mb-4 w-full">
+    <div className="flex w-full flex-col items-center space-y-8 bg-white p-6">
+      <div className="mb-4 flex w-full flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
           <label htmlFor="target-input" className="font-medium text-gray-600">
             Target Value:
@@ -70,17 +70,17 @@ export default function SearchVisualization({
             type="number"
             value={inputTarget}
             onChange={handleTargetChange}
-            className="w-16 px-2 py-1 border border-gray-300 rounded text-center text-gray-600"
+            className="w-16 rounded border border-gray-300 px-2 py-1 text-center text-gray-600"
           />
         </div>
 
-        <div className="font-medium ml-auto text-gray-600">
+        <div className="ml-auto font-medium text-gray-600">
           Status:
           <span className={`ml-2 font-bold ${statusClass}`}>{statusText}</span>
         </div>
       </div>
 
-      <div className="flex items-center justify-center w-full">
+      <div className="flex w-full items-center justify-center">
         {array.map((value, index) => {
           // Determine the element's state for styling
           let stateClass = "bg-blue-400"; // Default state
@@ -96,7 +96,7 @@ export default function SearchVisualization({
           return (
             <div key={index} className="relative flex flex-col items-center">
               <div
-                className={`mx-1 rounded ${stateClass} px-4 py-6 shadow-md flex flex-col justify-center items-center transition-all duration-300`}
+                className={`mx-1 rounded ${stateClass} flex flex-col items-center justify-center px-4 py-6 shadow-md transition-all duration-300`}
                 style={{
                   width: `${Math.max(100 / array.length - 4, 25)}px`,
                   height: `${Math.max(100 / array.length - 4, 25)}px`,
@@ -108,12 +108,12 @@ export default function SearchVisualization({
                 Index: {index}
               </div>
               {index === current && (
-                <div className="absolute -top-7 left-1/2 transform -translate-x-1/2 text-xs font-medium px-2 py-1 rounded-full bg-yellow-100 border border-yellow-300 text-yellow-900">
+                <div className="absolute -top-7 left-1/2 -translate-x-1/2 transform rounded-full border border-yellow-300 bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-900">
                   Current
                 </div>
               )}
               {value === target && (
-                <div className="absolute -bottom-7 left-1/2 transform -translate-x-1/2 text-xs font-medium px-2 py-1 rounded-full bg-green-100 border border-green-300 text-green-900">
+                <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 transform rounded-full border border-green-300 bg-green-100 px-2 py-1 text-xs font-medium text-green-900">
                   Target
                 </div>
               )}
@@ -122,9 +122,9 @@ export default function SearchVisualization({
         })}
       </div>
 
-      <div className="w-full mt-6 max-w-2xl">
-        <div className="text-sm font-medium mb-2">Progress:</div>
-        <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+      <div className="mt-6 w-full max-w-2xl">
+        <div className="mb-2 text-sm font-medium">Progress:</div>
+        <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
           <div
             className="h-full bg-blue-500 transition-all duration-300"
             style={{

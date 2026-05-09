@@ -119,21 +119,56 @@ function merge(ctx: MergeSortCtx, lo: number, mid: number, hi: number): void {
   for (let k = lo; k <= hi; k++) {
     if (i > mid) {
       arr[k] = aux[j++]!;
-      steps.push({ array: [...arr], comparing: [j - 1], swapped: true, completed: [...completed] });
+      steps.push({
+        array: [...arr],
+        comparing: [j - 1],
+        swapped: true,
+        completed: [...completed],
+      });
     } else if (j > hi) {
       arr[k] = aux[i++]!;
-      steps.push({ array: [...arr], comparing: [i - 1], swapped: true, completed: [...completed] });
+      steps.push({
+        array: [...arr],
+        comparing: [i - 1],
+        swapped: true,
+        completed: [...completed],
+      });
     } else if (aux[i]! <= aux[j]!) {
-      steps.push({ array: [...arr], comparing: [i, j], swapped: false, completed: [...completed] });
+      steps.push({
+        array: [...arr],
+        comparing: [i, j],
+        swapped: false,
+        completed: [...completed],
+      });
       arr[k] = aux[i++]!;
-      steps.push({ array: [...arr], comparing: [k], swapped: true, completed: [...completed] });
+      steps.push({
+        array: [...arr],
+        comparing: [k],
+        swapped: true,
+        completed: [...completed],
+      });
     } else {
-      steps.push({ array: [...arr], comparing: [i, j], swapped: false, completed: [...completed] });
+      steps.push({
+        array: [...arr],
+        comparing: [i, j],
+        swapped: false,
+        completed: [...completed],
+      });
       arr[k] = aux[j++]!;
-      steps.push({ array: [...arr], comparing: [k], swapped: true, completed: [...completed] });
+      steps.push({
+        array: [...arr],
+        comparing: [k],
+        swapped: true,
+        completed: [...completed],
+      });
     }
   }
 
   markCompleted(completed, lo, hi, arr.length);
-  steps.push({ array: [...arr], comparing: [], swapped: false, completed: [...completed] });
+  steps.push({
+    array: [...arr],
+    comparing: [],
+    swapped: false,
+    completed: [...completed],
+  });
 }

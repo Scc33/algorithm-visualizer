@@ -42,7 +42,7 @@ export default function PageLayout({
   const fullUrl = `${baseUrl}${pathname}`;
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex min-h-screen flex-col">
       <JsonLd
         type={jsonLdType}
         url={fullUrl}
@@ -55,11 +55,11 @@ export default function PageLayout({
 
       <main className="flex-grow">
         {(title || subtitle) && (
-          <div className="bg-gray-50 border-b">
+          <div className="border-b bg-gray-50">
             <div className="container-content py-8">
               {title && <h1 className="heading-xl">{title}</h1>}
               {subtitle && (
-                <p className="mt-2 text-gray-600 max-w-3xl">{subtitle}</p>
+                <p className="mt-2 max-w-3xl text-gray-600">{subtitle}</p>
               )}
             </div>
           </div>
