@@ -32,6 +32,7 @@ export interface GraphStep {
   visited: number[];
   stack: number[];
   path: number[];
+  treeEdges?: Edge[];
 }
 
 export interface AlgorithmVisualization {

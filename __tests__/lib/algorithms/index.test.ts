@@ -57,6 +57,9 @@ describe("category guards", () => {
     expect(isSearchAlgorithm("binarySearch")).toBe(true);
     expect(isSearchAlgorithm("dfs")).toBe(false);
     expect(isGraphAlgorithm("dijkstra")).toBe(true);
+    expect(isGraphAlgorithm("bellmanFord")).toBe(true);
+    expect(isGraphAlgorithm("prim")).toBe(true);
+    expect(isGraphAlgorithm("kruskal")).toBe(true);
     expect(isGraphAlgorithm("bubbleSort")).toBe(false);
   });
 
