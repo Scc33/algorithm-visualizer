@@ -13,12 +13,25 @@ export interface SearchStep {
   visited: number[]; // Indices already visited
 }
 
+export interface Edge {
+  from: number;
+  to: number;
+  weight: number;
+}
+
+export interface Graph {
+  numVertices: number;
+  edges: Edge[];
+  adjacency: Edge[][];
+  directed: boolean;
+}
+
 export interface GraphStep {
-  adjacencyList: number[][]; // Adjacency list representation
-  current: number; // Current vertex index
-  visited: number[]; // Visited vertices
-  stack: number[]; // Stack for DFS traversal
-  path: number[]; // Path taken so far
+  graph: Graph;
+  current: number;
+  visited: number[];
+  stack: number[];
+  path: number[];
 }
 
 export interface AlgorithmVisualization {

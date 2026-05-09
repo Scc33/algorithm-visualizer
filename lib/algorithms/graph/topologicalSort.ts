@@ -1,8 +1,9 @@
-import type { AlgorithmVisualization, GraphStep } from "../../types";
+import type { AlgorithmVisualization, Graph, GraphStep } from "../../types";
+import { cloneGraph } from "./sampleGraphs";
 import { createVisualization } from "../utils";
 
 interface TopoSortState {
-  adjacencyList: number[][];
+  graph: Graph;
   steps: GraphStep[];
   visited: number[];
   stack: number[];
@@ -10,19 +11,24 @@ interface TopoSortState {
   tempVisited: number[];
 }
 
+function snapshot(state: TopoSortState, current: number): GraphStep {
+  return {
+    graph: cloneGraph(state.graph),
+    current,
+    visited: [...state.visited],
+    stack: [...state.stack],
+    path: [...state.path],
+  };
+}
+
 function dfsVisit(vertex: number, state: TopoSortState): void {
   state.tempVisited.push(vertex);
   state.path.push(vertex);
 
-  state.steps.push({
-    adjacencyList: state.adjacencyList.map((row) => [...row]),
-    current: vertex,
-    visited: [...state.visited],
-    stack: [...state.stack],
-    path: [...state.path],
-  });
+  state.steps.push(snapshot(state, vertex));
 
-  for (const neighbor of state.adjacencyList[vertex]!) {
+  for (const edge of state.graph.adjacency[vertex]!) {
+    const neighbor = edge.to;
     if (state.visited.includes(neighbor)) continue;
     if (state.tempVisited.includes(neighbor)) continue;
     dfsVisit(neighbor, state);
@@ -34,24 +40,16 @@ function dfsVisit(vertex: number, state: TopoSortState): void {
   state.visited.push(vertex);
   state.stack.unshift(vertex);
 
-  state.steps.push({
-    adjacencyList: state.adjacencyList.map((row) => [...row]),
-    current: vertex,
-    visited: [...state.visited],
-    stack: [...state.stack],
-    path: [...state.path],
-  });
+  state.steps.push(snapshot(state, vertex));
 }
 
 export function topologicalSort(
-  array: number[],
+  graph: Graph,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _target: number = 0
+  _startVertex: number = 0
 ): AlgorithmVisualization {
-  const adjacencyList: number[][] = [[1, 2], [3], [3, 4], [5], [5], []];
-
   const state: TopoSortState = {
-    adjacencyList,
+    graph,
     steps: [],
     visited: [],
     stack: [],
@@ -60,21 +58,21 @@ export function topologicalSort(
   };
 
   state.steps.push({
-    adjacencyList: adjacencyList.map((row) => [...row]),
+    graph: cloneGraph(graph),
     current: -1,
     visited: [],
     stack: [],
     path: [],
   });
 
-  for (let i = 0; i < adjacencyList.length; i++) {
+  for (let i = 0; i < graph.numVertices; i++) {
     if (!state.visited.includes(i) && !state.tempVisited.includes(i)) {
       dfsVisit(i, state);
     }
   }
 
   state.steps.push({
-    adjacencyList: adjacencyList.map((row) => [...row]),
+    graph: cloneGraph(graph),
     current: -1,
     visited: [...state.visited],
     stack: [...state.stack],

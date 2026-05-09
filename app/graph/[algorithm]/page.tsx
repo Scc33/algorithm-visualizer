@@ -5,18 +5,21 @@ import { useParams } from "next/navigation";
 import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmVisualizer from "@/components/visualizer/AlgorithmVisualizer";
 import { useAlgorithm } from "@/context/AlgorithmContext";
-import { getAlgorithmByName } from "@/lib/algorithms";
+import { getGraphAlgorithm, isGraphAlgorithm } from "@/lib/algorithms";
+import { defaultGraphFor } from "@/lib/algorithms/graph/sampleGraphs";
 import { availableAlgorithms } from "@/lib/algorithms/metadata";
 
 function computeGraphViz(algorithmKey: string, target: number | undefined) {
-  let startVertex = 0;
-  if (target !== undefined && target >= 0 && target < 6) {
-    startVertex = target;
-  }
-  const algoFn = getAlgorithmByName(algorithmKey);
+  if (!isGraphAlgorithm(algorithmKey)) return { startVertex: 0, viz: null };
+  const graph = defaultGraphFor(algorithmKey);
+  const startVertex =
+    target !== undefined && target >= 0 && target < graph.numVertices
+      ? target
+      : 0;
+  const algoFn = getGraphAlgorithm(algorithmKey);
   if (!algoFn) return { startVertex, viz: null };
   try {
-    return { startVertex, viz: algoFn([], startVertex) };
+    return { startVertex, viz: algoFn(graph, startVertex) };
   } catch (error) {
     console.error("Error generating visualization:", error);
     return { startVertex, viz: null };

@@ -1,4 +1,5 @@
-import type { AlgorithmVisualization, GraphStep } from "../../types";
+import type { AlgorithmVisualization, Graph, GraphStep } from "../../types";
+import { cloneGraph } from "./sampleGraphs";
 import { createVisualization } from "../utils";
 
 interface DijkstraState {
@@ -7,7 +8,17 @@ interface DijkstraState {
   path: number[];
   queue: number[];
   steps: GraphStep[];
-  adjacencyList: number[][];
+  graph: Graph;
+}
+
+function snapshot(state: DijkstraState, current: number): GraphStep {
+  return {
+    graph: cloneGraph(state.graph),
+    current,
+    visited: [...state.visited],
+    stack: [...state.queue],
+    path: [...state.path],
+  };
 }
 
 function findMinVertex(dist: number[], visited: number[], V: number): number {
@@ -22,40 +33,22 @@ function findMinVertex(dist: number[], visited: number[], V: number): number {
   return minIndex;
 }
 
-function relaxEdgesFrom(
-  graph: number[][],
-  minIndex: number,
-  state: DijkstraState
-): void {
-  const V = graph.length;
-  const graphRow = graph[minIndex]!;
+function relaxEdgesFrom(state: DijkstraState, minIndex: number): void {
   const distMin = state.dist[minIndex]!;
-
-  for (let v = 0; v < V; v++) {
-    const edgeWeight = graphRow[v]!;
+  for (const edge of state.graph.adjacency[minIndex]!) {
+    const v = edge.to;
+    if (state.visited.includes(v)) continue;
     const distV = state.dist[v]!;
-    if (
-      !state.visited.includes(v) &&
-      edgeWeight !== 0 &&
-      edgeWeight !== Infinity &&
-      distMin !== Infinity &&
-      distMin + edgeWeight < distV
-    ) {
-      state.dist[v] = distMin + edgeWeight;
+    if (distMin !== Infinity && distMin + edge.weight < distV) {
+      state.dist[v] = distMin + edge.weight;
       if (!state.queue.includes(v)) state.queue.push(v);
-      state.steps.push({
-        adjacencyList: state.adjacencyList.map((row) => [...row]),
-        current: minIndex,
-        visited: [...state.visited],
-        stack: [...state.queue],
-        path: [...state.path],
-      });
+      state.steps.push(snapshot(state, minIndex));
     }
   }
 }
 
-function runDijkstra(graph: number[][], state: DijkstraState): void {
-  const V = graph.length;
+function runDijkstra(state: DijkstraState): void {
+  const V = state.graph.numVertices;
   for (let count = 0; count < V; count++) {
     const minIndex = findMinVertex(state.dist, state.visited, V);
     if (minIndex === -1) break;
@@ -63,15 +56,9 @@ function runDijkstra(graph: number[][], state: DijkstraState): void {
     state.visited.push(minIndex);
     state.path.push(minIndex);
 
-    state.steps.push({
-      adjacencyList: state.adjacencyList.map((row) => [...row]),
-      current: minIndex,
-      visited: [...state.visited],
-      stack: [...state.queue],
-      path: [...state.path],
-    });
+    state.steps.push(snapshot(state, minIndex));
 
-    relaxEdgesFrom(graph, minIndex, state);
+    relaxEdgesFrom(state, minIndex);
 
     const currentIndex = state.queue.indexOf(minIndex);
     if (currentIndex !== -1) state.queue.splice(currentIndex, 1);
@@ -79,27 +66,11 @@ function runDijkstra(graph: number[][], state: DijkstraState): void {
 }
 
 export function dijkstra(
-  array: number[],
+  graph: Graph,
   source: number = 0
 ): AlgorithmVisualization {
-  const graph: number[][] = [
-    [0, 4, 2, Infinity, Infinity, Infinity],
-    [4, 0, 1, 5, 2, Infinity],
-    [2, 1, 0, Infinity, 3, 6],
-    [Infinity, 5, Infinity, 0, 2, Infinity],
-    [Infinity, 2, 3, 2, 0, 1],
-    [Infinity, Infinity, 6, Infinity, 1, 0],
-  ];
-
-  const startVertex = source >= 0 && source < graph.length ? source : 0;
-  const V = graph.length;
-
-  const adjacencyList: number[][] = graph.map((row) =>
-    row.reduce((neighbors, weight, j) => {
-      if (weight !== Infinity && weight !== 0) neighbors.push(j);
-      return neighbors;
-    }, [] as number[])
-  );
+  const startVertex = source >= 0 && source < graph.numVertices ? source : 0;
+  const V = graph.numVertices;
 
   const dist: number[] = Array(V).fill(Infinity);
   dist[startVertex] = 0;
@@ -110,21 +81,21 @@ export function dijkstra(
     path: [],
     queue: [startVertex],
     steps: [],
-    adjacencyList,
+    graph,
   };
 
   state.steps.push({
-    adjacencyList: adjacencyList.map((row) => [...row]),
+    graph: cloneGraph(graph),
     current: -1,
     visited: [],
     stack: [startVertex],
     path: [],
   });
 
-  runDijkstra(graph, state);
+  runDijkstra(state);
 
   state.steps.push({
-    adjacencyList: adjacencyList.map((row) => [...row]),
+    graph: cloneGraph(graph),
     current: -1,
     visited: [...state.visited],
     stack: [],

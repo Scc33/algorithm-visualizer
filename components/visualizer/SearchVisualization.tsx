@@ -1,6 +1,6 @@
 import type { SearchStep } from "@/lib/types";
 import { useAlgorithm } from "@/context/AlgorithmContext";
-import { getAlgorithmByName } from "@/lib/algorithms";
+import { getSearchAlgorithm } from "@/lib/algorithms";
 import { useState, useEffect } from "react";
 
 interface SearchVisualizationProps {
@@ -36,7 +36,7 @@ export default function SearchVisualization({
     dispatch({ type: "SET_TARGET", payload: newTarget });
 
     // Regenerate visualization with the new target
-    const algorithmFunction = getAlgorithmByName(state.algorithm);
+    const algorithmFunction = getSearchAlgorithm(state.algorithm);
     if (algorithmFunction) {
       try {
         const viz = algorithmFunction(state.data, newTarget);

@@ -1,6 +1,10 @@
-import type { GraphStep } from "@/lib/types";
+import type { Edge, GraphStep } from "@/lib/types";
 import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
+
+const VERTEX_RADIUS = 20;
+const EDGE_COLOR = "#CBD5E1";
+const PATH_EDGE_COLOR = "#F87171";
 
 function getStatusMessage(
   current: number,
@@ -12,8 +16,113 @@ function getStatusMessage(
   if (stack.length > 0)
     return <p>Starting exploration from vertex {stack[0] ?? 0}.</p>;
   if (path.length > 0)
-    return <p>DFS traversal complete. Path: {path.join(" → ")}</p>;
-  return <p>DFS traversal will start from a selected vertex.</p>;
+    return <p>Traversal complete. Path: {path.join(" → ")}</p>;
+  return <p>Traversal will start from a selected vertex.</p>;
+}
+
+function getMarkerEnd(
+  showArrows: boolean,
+  onPath: boolean
+): string | undefined {
+  if (!showArrows) return undefined;
+  return onPath ? "url(#arrowhead-path)" : "url(#arrowhead)";
+}
+
+function ArrowDefs() {
+  return (
+    <defs>
+      <marker
+        id="arrowhead"
+        viewBox="0 0 10 10"
+        refX="10"
+        refY="5"
+        markerWidth="6"
+        markerHeight="6"
+        orient="auto-start-reverse"
+      >
+        <path d="M 0 0 L 10 5 L 0 10 z" fill={EDGE_COLOR} />
+      </marker>
+      <marker
+        id="arrowhead-path"
+        viewBox="0 0 10 10"
+        refX="10"
+        refY="5"
+        markerWidth="6"
+        markerHeight="6"
+        orient="auto-start-reverse"
+      >
+        <path d="M 0 0 L 10 5 L 0 10 z" fill={PATH_EDGE_COLOR} />
+      </marker>
+    </defs>
+  );
+}
+
+interface EdgeShapeProps {
+  edge: Edge;
+  from: { x: number; y: number };
+  to: { x: number; y: number };
+  onPath: boolean;
+  showArrows: boolean;
+  showWeights: boolean;
+}
+
+function EdgeShape({
+  edge,
+  from,
+  to,
+  onPath,
+  showArrows,
+  showWeights,
+}: EdgeShapeProps) {
+  const stroke = onPath ? PATH_EDGE_COLOR : EDGE_COLOR;
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+  const ux = dx / dist;
+  const uy = dy / dist;
+  const x2 = to.x - ux * VERTEX_RADIUS;
+  const y2 = to.y - uy * VERTEX_RADIUS;
+  const x1 = showArrows ? from.x + ux * VERTEX_RADIUS : from.x;
+  const y1 = showArrows ? from.y + uy * VERTEX_RADIUS : from.y;
+  const midX = (from.x + to.x) / 2;
+  const midY = (from.y + to.y) / 2;
+
+  return (
+    <g>
+      <line
+        x1={x1}
+        y1={y1}
+        x2={x2}
+        y2={y2}
+        stroke={stroke}
+        strokeWidth={2}
+        markerEnd={getMarkerEnd(showArrows, onPath)}
+      />
+      {showWeights && (
+        <g>
+          <rect
+            x={midX - 10}
+            y={midY - 9}
+            width={20}
+            height={16}
+            rx={3}
+            fill="white"
+            opacity={0.9}
+          />
+          <text
+            x={midX}
+            y={midY + 3}
+            textAnchor="middle"
+            fontSize={11}
+            fill="#374151"
+            fontWeight={600}
+          >
+            {edge.weight}
+          </text>
+        </g>
+      )}
+    </g>
+  );
 }
 
 interface GraphVisualizationProps {
@@ -21,10 +130,9 @@ interface GraphVisualizationProps {
 }
 
 export default function GraphVisualization({ step }: GraphVisualizationProps) {
-  const { adjacencyList, current, visited, stack, path } = step;
+  const { graph, current, visited, stack, path } = step;
   const [graphSize, setGraphSize] = useState({ width: 0, height: 0 });
 
-  // Calculate layout dimensions based on window size
   useEffect(() => {
     const updateSize = () => {
       const width = Math.min(600, window.innerWidth - 40);
@@ -37,48 +145,41 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
-  // Check if adjacencyList is valid
-  if (
-    !adjacencyList ||
-    !Array.isArray(adjacencyList) ||
-    adjacencyList.length === 0
-  ) {
+  if (!graph || graph.numVertices === 0) {
     return (
       <div className="flex items-center justify-center bg-white p-6 text-red-500">
-        Invalid graph data. Please check the adjacency list.
+        Invalid graph data.
       </div>
     );
   }
 
-  // Calculate coordinates for each vertex in a circular layout
-  const vertexPositions = adjacencyList.map((_, index) => {
-    const angle = (2 * Math.PI * index) / adjacencyList.length;
-    const radius = Math.min(graphSize.width, graphSize.height) * 0.35;
-    return {
-      x: graphSize.width / 2 + radius * Math.cos(angle),
-      y: graphSize.height / 2 + radius * Math.sin(angle),
-    };
-  });
+  const vertexPositions = Array.from(
+    { length: graph.numVertices },
+    (_, index) => {
+      const angle = (2 * Math.PI * index) / graph.numVertices;
+      const radius = Math.min(graphSize.width, graphSize.height) * 0.35;
+      return {
+        x: graphSize.width / 2 + radius * Math.cos(angle),
+        y: graphSize.height / 2 + radius * Math.sin(angle),
+      };
+    }
+  );
 
-  // Function to determine vertex color based on its state
   const getVertexColor = (index: number) => {
-    if (index === current) return "#FCD34D"; // yellow-300
-    if (visited.includes(index)) return "#6EE7B7"; // green-300
-    return "#93C5FD"; // blue-300
+    if (index === current) return "#FCD34D";
+    if (visited.includes(index)) return "#6EE7B7";
+    return "#93C5FD";
   };
 
-  // Function to determine edge color based on whether it's in the path
-  const getEdgeColor = (source: number, target: number) => {
-    // Check if this edge is part of the current path
-    const sourceInPath = path.includes(source);
-    const targetInPath = path.includes(target);
-    const adjacentInPath =
-      sourceInPath &&
-      targetInPath &&
-      Math.abs(path.indexOf(source) - path.indexOf(target)) === 1;
-
-    return adjacentInPath ? "#F87171" : "#CBD5E1"; // red-400 : gray-300
+  const isEdgeOnPath = (from: number, to: number) => {
+    const fromIdx = path.indexOf(from);
+    const toIdx = path.indexOf(to);
+    if (fromIdx === -1 || toIdx === -1) return false;
+    return Math.abs(fromIdx - toIdx) === 1;
   };
+
+  const showWeights = graph.edges.some((e) => e.weight !== 1);
+  const showArrows = graph.directed;
 
   return (
     <div className="flex w-full flex-col items-center bg-white p-6">
@@ -95,38 +196,31 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
         className="relative rounded-lg border bg-gray-50"
         style={{ width: graphSize.width, height: graphSize.height }}
       >
-        {/* Draw edges */}
         <svg width={graphSize.width} height={graphSize.height}>
-          {adjacencyList.map((neighbors, vertex) =>
-            neighbors.map(
-              (neighbor) =>
-                // Only draw each edge once
-                vertex < neighbor && (
-                  <line
-                    key={`${vertex}-${neighbor}`}
-                    x1={vertexPositions[vertex]!.x}
-                    y1={vertexPositions[vertex]!.y}
-                    x2={vertexPositions[neighbor]!.x}
-                    y2={vertexPositions[neighbor]!.y}
-                    stroke={getEdgeColor(vertex, neighbor)}
-                    strokeWidth={2}
-                  />
-                )
-            )
-          )}
+          <ArrowDefs />
+          {graph.edges.map((edge, i) => (
+            <EdgeShape
+              key={i}
+              edge={edge}
+              from={vertexPositions[edge.from]!}
+              to={vertexPositions[edge.to]!}
+              onPath={isEdgeOnPath(edge.from, edge.to)}
+              showArrows={showArrows}
+              showWeights={showWeights}
+            />
+          ))}
         </svg>
 
-        {/* Draw vertices */}
         {vertexPositions.map((pos, index) => (
           <div
             key={index}
             className="absolute flex items-center justify-center rounded-full font-bold text-white transition-all duration-300"
             style={{
-              width: 40,
-              height: 40,
+              width: VERTEX_RADIUS * 2,
+              height: VERTEX_RADIUS * 2,
               backgroundColor: getVertexColor(index),
-              left: pos.x - 20,
-              top: pos.y - 20,
+              left: pos.x - VERTEX_RADIUS,
+              top: pos.y - VERTEX_RADIUS,
               border: index === current ? "3px solid #EF4444" : "none",
             }}
           >

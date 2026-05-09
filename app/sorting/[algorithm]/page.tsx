@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmVisualizer from "@/components/visualizer/AlgorithmVisualizer";
 import { useAlgorithm } from "@/context/AlgorithmContext";
-import { getAlgorithmByName } from "@/lib/algorithms";
+import { getSortingAlgorithm } from "@/lib/algorithms";
 import { availableAlgorithms } from "@/lib/algorithms/metadata";
 
 export default function AlgorithmPage() {
@@ -22,7 +22,7 @@ export default function AlgorithmPage() {
 
       // Generate visualization if not already generated OR if algorithm changed
       if (!state.visualizationData || algorithmKey !== state.algorithm) {
-        const algorithmFunction = getAlgorithmByName(algorithmKey);
+        const algorithmFunction = getSortingAlgorithm(algorithmKey);
         if (algorithmFunction) {
           const viz = algorithmFunction(state.data);
           dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
