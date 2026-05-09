@@ -1,6 +1,6 @@
 import React from "react";
 import { AlgorithmProvider } from "@/context/AlgorithmContext";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { availableAlgorithms } from "@/lib/algorithms/metadata";
 import { constructMetadata } from "@/lib/seo/metadata";
 

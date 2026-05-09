@@ -1,6 +1,8 @@
 // __tests__/utils/test-utils.tsx
-import React, { ReactElement } from "react";
-import { render, RenderOptions } from "@testing-library/react";
+import type { ReactElement } from "react";
+import React from "react";
+import type { RenderOptions } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { AlgorithmProvider } from "@/context/AlgorithmContext";
 
 // Custom render function that includes the AlgorithmProvider

@@ -1,4 +1,4 @@
-import { AlgorithmVisualization, SortingStep } from "../../types";
+import type { AlgorithmVisualization, SortingStep } from "../../types";
 import { createVisualization } from "../utils";
 
 export function bubbleSort(array: number[]): AlgorithmVisualization {
@@ -26,9 +26,9 @@ export function bubbleSort(array: number[]): AlgorithmVisualization {
         completed: [...completed],
       });
 
-      if (arr[j] > arr[j + 1]) {
+      if (arr[j]! > arr[j + 1]!) {
         // Swap elements
-        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+        [arr[j], arr[j + 1]] = [arr[j + 1]!, arr[j]!];
         swapped = true;
 
         // Add step showing swap

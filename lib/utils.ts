@@ -12,7 +12,7 @@ export function generateRandomArray(
 export function getRandomValueFromArray(array: number[]): number {
   if (array.length === 0) return 42;
   const randomIndex = Math.floor(Math.random() * array.length);
-  return array[randomIndex];
+  return array[randomIndex]!;
 }
 
 // Glossary utility functions

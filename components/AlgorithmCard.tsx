@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AlgorithmInfo } from "@/lib/types";
+import type { AlgorithmInfo } from "@/lib/types";
 
 interface AlgorithmCardProps {
   algorithm: AlgorithmInfo;
@@ -9,9 +9,9 @@ export default function AlgorithmCard({ algorithm }: AlgorithmCardProps) {
   const { name, key, category, description, difficulty } = algorithm;
 
   return (
-    <div className="card hover:shadow-lg transition-shadow">
+    <div className="card transition-shadow hover:shadow-lg">
       <div className="p-6">
-        <div className="flex justify-between items-start">
+        <div className="flex items-start justify-between">
           <h3 className="heading-md">{name}</h3>
           <Link
             className={`badge badge-${difficulty} capitalize`}
@@ -21,9 +21,9 @@ export default function AlgorithmCard({ algorithm }: AlgorithmCardProps) {
           </Link>
         </div>
 
-        <p className="mt-2 text-gray-600 line-clamp-2">{description}</p>
+        <p className="mt-2 line-clamp-2 text-gray-600">{description}</p>
 
-        <div className="mt-4 flex justify-between items-center">
+        <div className="mt-4 flex items-center justify-between">
           <Link className="badge badge-info capitalize" href={`/${category}`}>
             {category}
           </Link>
@@ -34,7 +34,7 @@ export default function AlgorithmCard({ algorithm }: AlgorithmCardProps) {
           >
             <span>Visualize</span>
             <svg
-              className="ml-1 w-4 h-4"
+              className="ml-1 h-4 w-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

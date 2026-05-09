@@ -1,5 +1,12 @@
-import { AlgorithmVisualization, SortingStep } from "../../types";
+import type { AlgorithmVisualization, SortingStep } from "../../types";
 import { createVisualization } from "../utils";
+
+interface MergeSortCtx {
+  arr: number[];
+  aux: number[];
+  steps: SortingStep[];
+  completed: number[];
+}
 
 export function mergeSort(array: number[]): AlgorithmVisualization {
   const steps: SortingStep[] = [];
@@ -7,7 +14,6 @@ export function mergeSort(array: number[]): AlgorithmVisualization {
   const n = arr.length;
   const completed: number[] = [];
 
-  // Initial state
   steps.push({
     array: [...arr],
     comparing: [],
@@ -15,13 +21,9 @@ export function mergeSort(array: number[]): AlgorithmVisualization {
     completed: [],
   });
 
-  // Auxiliary array for merging
-  const aux = new Array(n);
+  const ctx: MergeSortCtx = { arr, aux: new Array(n), steps, completed };
+  mergeSortHelper(ctx, 0, n - 1);
 
-  // Call the recursive merge sort function
-  mergeSortHelper(arr, 0, n - 1, aux, steps, completed);
-
-  // Mark all elements as completed in the final step
   const finalCompleted = Array.from({ length: n }, (_, i) => i);
   steps.push({
     array: [...arr],
@@ -73,57 +75,50 @@ export function mergeSort(array: number[]): AlgorithmVisualization {
   });
 }
 
-function mergeSortHelper(
-  arr: number[],
-  lo: number,
-  hi: number,
-  aux: number[],
-  steps: SortingStep[],
-  completed: number[]
-): void {
+function mergeSortHelper(ctx: MergeSortCtx, lo: number, hi: number): void {
   if (lo >= hi) return;
 
   const mid = Math.floor((lo + hi) / 2);
-
-  // Show the current subarray being divided
   const comparing = Array.from({ length: hi - lo + 1 }, (_, i) => lo + i);
-  steps.push({
-    array: [...arr],
+  ctx.steps.push({
+    array: [...ctx.arr],
     comparing: comparing,
     swapped: false,
-    completed: [...completed],
+    completed: [...ctx.completed],
   });
 
-  // Recursively sort the left and right subarrays
-  mergeSortHelper(arr, lo, mid, aux, steps, completed);
-  mergeSortHelper(arr, mid + 1, hi, aux, steps, completed);
-
-  // Merge the two sorted subarrays
-  merge(arr, lo, mid, hi, aux, steps, completed);
+  mergeSortHelper(ctx, lo, mid);
+  mergeSortHelper(ctx, mid + 1, hi);
+  merge(ctx, lo, mid, hi);
 }
 
-function merge(
-  arr: number[],
+function markCompleted(
+  completed: number[],
   lo: number,
-  mid: number,
   hi: number,
-  aux: number[],
-  steps: SortingStep[],
-  completed: number[]
+  arrLength: number
 ): void {
-  // Copy elements to auxiliary array
+  if (lo === 0 && hi === arrLength - 1) {
+    for (let k = lo; k <= hi; k++) completed.push(k);
+  } else if (hi - lo + 1 >= 3) {
+    const midElement = Math.floor((lo + hi) / 2);
+    if (!completed.includes(midElement)) completed.push(midElement);
+  }
+}
+
+function merge(ctx: MergeSortCtx, lo: number, mid: number, hi: number): void {
+  const { arr, aux, steps, completed } = ctx;
+
   for (let k = lo; k <= hi; k++) {
-    aux[k] = arr[k];
+    aux[k] = arr[k]!;
   }
 
-  let i = lo; // Pointer for the left subarray
-  let j = mid + 1; // Pointer for the right subarray
+  let i = lo;
+  let j = mid + 1;
 
-  // Merge process
   for (let k = lo; k <= hi; k++) {
     if (i > mid) {
-      // Left subarray exhausted
-      arr[k] = aux[j++];
+      arr[k] = aux[j++]!;
       steps.push({
         array: [...arr],
         comparing: [j - 1],
@@ -131,23 +126,21 @@ function merge(
         completed: [...completed],
       });
     } else if (j > hi) {
-      // Right subarray exhausted
-      arr[k] = aux[i++];
+      arr[k] = aux[i++]!;
       steps.push({
         array: [...arr],
         comparing: [i - 1],
         swapped: true,
         completed: [...completed],
       });
-    } else if (aux[i] <= aux[j]) {
-      // Elements compared, left element is smaller
+    } else if (aux[i]! <= aux[j]!) {
       steps.push({
         array: [...arr],
         comparing: [i, j],
         swapped: false,
         completed: [...completed],
       });
-      arr[k] = aux[i++];
+      arr[k] = aux[i++]!;
       steps.push({
         array: [...arr],
         comparing: [k],
@@ -155,14 +148,13 @@ function merge(
         completed: [...completed],
       });
     } else {
-      // Elements compared, right element is smaller
       steps.push({
         array: [...arr],
         comparing: [i, j],
         swapped: false,
         completed: [...completed],
       });
-      arr[k] = aux[j++];
+      arr[k] = aux[j++]!;
       steps.push({
         array: [...arr],
         comparing: [k],
@@ -172,20 +164,7 @@ function merge(
     }
   }
 
-  // Mark elements in this range as completed if it's the final merge for this segment
-  if (lo === 0 && hi === arr.length - 1) {
-    for (let k = lo; k <= hi; k++) {
-      completed.push(k);
-    }
-  } else if (hi - lo + 1 >= 3) {
-    // Mark the middle element as completed for intermediate merges
-    const midElement = Math.floor((lo + hi) / 2);
-    if (!completed.includes(midElement)) {
-      completed.push(midElement);
-    }
-  }
-
-  // Show the merged subarray
+  markCompleted(completed, lo, hi, arr.length);
   steps.push({
     array: [...arr],
     comparing: [],

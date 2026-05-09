@@ -1,4 +1,4 @@
-import { AlgorithmInfo } from "../types";
+import type { AlgorithmInfo } from "../types";
 
 export const availableAlgorithms: Record<string, AlgorithmInfo> = {
   bubbleSort: {

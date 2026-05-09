@@ -1,4 +1,4 @@
-import { AlgorithmVisualization, SortingStep } from "../../types";
+import type { AlgorithmVisualization, SortingStep } from "../../types";
 import { createVisualization } from "../utils";
 
 export function selectionSort(array: number[]): AlgorithmVisualization {
@@ -28,7 +28,7 @@ export function selectionSort(array: number[]): AlgorithmVisualization {
         completed: [...completed],
       });
 
-      if (arr[j] < arr[minIndex]) {
+      if (arr[j]! < arr[minIndex]!) {
         minIndex = j;
       }
     }
@@ -43,7 +43,7 @@ export function selectionSort(array: number[]): AlgorithmVisualization {
         completed: [...completed],
       });
 
-      [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
+      [arr[i], arr[minIndex]] = [arr[minIndex]!, arr[i]!];
 
       // Add step showing the swap
       steps.push({

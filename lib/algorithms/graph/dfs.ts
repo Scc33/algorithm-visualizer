@@ -1,4 +1,4 @@
-import { AlgorithmVisualization, GraphStep } from "../../types";
+import type { AlgorithmVisualization, GraphStep } from "../../types";
 import { createVisualization } from "../utils";
 
 export function dfs(
@@ -61,7 +61,7 @@ export function dfs(
 
     // Get all adjacent vertices in reverse order (so they come off the stack in correct order)
     // Ensure the current index is valid in the adjacency list
-    const neighbors = [...adjacencyList[current]].reverse();
+    const neighbors = [...adjacencyList[current]!].reverse();
 
     // For each neighbor
     for (const neighbor of neighbors) {

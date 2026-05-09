@@ -1,4 +1,4 @@
-import { AlgorithmVisualization, GraphStep } from "../../types";
+import type { AlgorithmVisualization, GraphStep } from "../../types";
 import { createVisualization } from "../utils";
 
 export function bfs(
@@ -54,7 +54,7 @@ export function bfs(
     });
 
     // Get all adjacent vertices
-    const neighbors = [...adjacencyList[current]];
+    const neighbors = [...adjacencyList[current]!];
 
     // For each unvisited neighbor
     for (const neighbor of neighbors) {

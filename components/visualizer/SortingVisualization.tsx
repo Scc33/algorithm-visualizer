@@ -1,4 +1,4 @@
-import { SortingStep } from "@/lib/types";
+import type { SortingStep } from "@/lib/types";
 
 interface SortingVisualizationProps {
   step: SortingStep;
@@ -12,7 +12,7 @@ export default function SortingVisualization({
   const { array, comparing, swapped, completed } = step;
 
   return (
-    <div className="flex items-end justify-center w-full h-64 p-6 bg-white">
+    <div className="flex h-64 w-full items-end justify-center bg-white p-6">
       {array.map((value, index) => {
         const height = (value / maxValue) * 100;
 
@@ -27,13 +27,13 @@ export default function SortingVisualization({
         return (
           <div
             key={index}
-            className={`mx-1 rounded-t-sm ${barColor} bar-chart flex flex-col justify-end items-center`}
+            className={`mx-1 rounded-t-sm ${barColor} bar-chart flex flex-col items-center justify-end`}
             style={{
               height: `${height}%`,
               width: `${Math.max(100 / array.length - 4, 6)}%`,
             }}
           >
-            <div className="text-xs font-medium text-white mb-1">{value}</div>
+            <div className="mb-1 text-xs font-medium text-white">{value}</div>
           </div>
         );
       })}

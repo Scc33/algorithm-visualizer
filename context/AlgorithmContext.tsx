@@ -1,13 +1,8 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useReducer,
-  useEffect,
-  ReactNode,
-} from "react";
-import { VisualizationState, VisualizationAction } from "@/lib/types";
+import type { ReactNode } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
+import type { VisualizationState, VisualizationAction } from "@/lib/types";
 import { generateRandomArray } from "@/lib/utils";
 
 // Initial state
@@ -30,11 +25,27 @@ const AlgorithmContext = createContext<{
   dispatch: () => null,
 });
 
-// Reducer for visualization state
-function reducer(
+function handleNextStep(state: VisualizationState): VisualizationState {
+  if (
+    state.visualizationData &&
+    state.currentStep < state.visualizationData.steps.length - 1
+  ) {
+    return { ...state, currentStep: state.currentStep + 1 };
+  }
+  return { ...state, isPlaying: false };
+}
+
+function handlePrevStep(state: VisualizationState): VisualizationState {
+  if (state.currentStep > 0) {
+    return { ...state, currentStep: state.currentStep - 1 };
+  }
+  return state;
+}
+
+function applySetAction(
   state: VisualizationState,
   action: VisualizationAction
-): VisualizationState {
+): VisualizationState | undefined {
   switch (action.type) {
     case "SET_CURRENT_STEP":
       return { ...state, currentStep: action.payload };
@@ -48,25 +59,33 @@ function reducer(
       return { ...state, data: action.payload };
     case "SET_TARGET":
       return { ...state, target: action.payload };
-    case "GENERATE_RANDOM_DATA":
+    default:
+      return undefined;
+  }
+}
+
+function reducer(
+  state: VisualizationState,
+  action: VisualizationAction
+): VisualizationState {
+  const setResult = applySetAction(state, action);
+  if (setResult !== undefined) return setResult;
+
+  switch (action.type) {
+    case "GENERATE_RANDOM_DATA": {
       const { min, max, length } = action.payload;
-      const newData = generateRandomArray(min, max, length);
-      return { ...state, data: newData, currentStep: 0 };
+      return {
+        ...state,
+        data: generateRandomArray(min, max, length),
+        currentStep: 0,
+      };
+    }
     case "GENERATE_VISUALIZATION":
       return { ...state, visualizationData: action.payload, currentStep: 0 };
     case "NEXT_STEP":
-      if (
-        state.visualizationData &&
-        state.currentStep < state.visualizationData.steps.length - 1
-      ) {
-        return { ...state, currentStep: state.currentStep + 1 };
-      }
-      return { ...state, isPlaying: false };
+      return handleNextStep(state);
     case "PREV_STEP":
-      if (state.currentStep > 0) {
-        return { ...state, currentStep: state.currentStep - 1 };
-      }
-      return state;
+      return handlePrevStep(state);
     case "RESET":
       return { ...state, currentStep: 0, isPlaying: false };
     default:
@@ -81,9 +100,12 @@ export function AlgorithmProvider({ children }: { children: ReactNode }) {
   // Handle playing animation
   useEffect(() => {
     if (state.isPlaying) {
-      const playInterval = setInterval(() => {
-        dispatch({ type: "NEXT_STEP" });
-      }, 1100 - state.speed * 100); // Speed 1-10 maps to delay 1000ms - 100ms
+      const playInterval = setInterval(
+        () => {
+          dispatch({ type: "NEXT_STEP" });
+        },
+        1100 - state.speed * 100
+      ); // Speed 1-10 maps to delay 1000ms - 100ms
 
       return () => {
         clearInterval(playInterval);

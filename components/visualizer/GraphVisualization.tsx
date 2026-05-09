@@ -1,5 +1,20 @@
-import { GraphStep } from "@/lib/types";
+import type { GraphStep } from "@/lib/types";
 import { useState, useEffect } from "react";
+import type { ReactNode } from "react";
+
+function getStatusMessage(
+  current: number,
+  stack: number[],
+  path: number[]
+): ReactNode {
+  if (current >= 0)
+    return <p>Exploring vertex {current} and its unvisited neighbors.</p>;
+  if (stack.length > 0)
+    return <p>Starting exploration from vertex {stack[0] ?? 0}.</p>;
+  if (path.length > 0)
+    return <p>DFS traversal complete. Path: {path.join(" → ")}</p>;
+  return <p>DFS traversal will start from a selected vertex.</p>;
+}
 
 interface GraphVisualizationProps {
   step: GraphStep;
@@ -29,7 +44,7 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
     adjacencyList.length === 0
   ) {
     return (
-      <div className="flex items-center justify-center p-6 bg-white text-red-500">
+      <div className="flex items-center justify-center bg-white p-6 text-red-500">
         Invalid graph data. Please check the adjacency list.
       </div>
     );
@@ -66,8 +81,8 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
   };
 
   return (
-    <div className="flex flex-col items-center w-full p-6 bg-white">
-      <div className="mb-6 w-full flex flex-wrap justify-between items-center">
+    <div className="flex w-full flex-col items-center bg-white p-6">
+      <div className="mb-6 flex w-full flex-wrap items-center justify-between">
         <div className="text-sm font-medium text-gray-700">
           Visited: {visited.map((v) => v).join(" → ")}
         </div>
@@ -77,7 +92,7 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
       </div>
 
       <div
-        className="relative border rounded-lg bg-gray-50"
+        className="relative rounded-lg border bg-gray-50"
         style={{ width: graphSize.width, height: graphSize.height }}
       >
         {/* Draw edges */}
@@ -89,10 +104,10 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
                 vertex < neighbor && (
                   <line
                     key={`${vertex}-${neighbor}`}
-                    x1={vertexPositions[vertex].x}
-                    y1={vertexPositions[vertex].y}
-                    x2={vertexPositions[neighbor].x}
-                    y2={vertexPositions[neighbor].y}
+                    x1={vertexPositions[vertex]!.x}
+                    y1={vertexPositions[vertex]!.y}
+                    x2={vertexPositions[neighbor]!.x}
+                    y2={vertexPositions[neighbor]!.y}
                     stroke={getEdgeColor(vertex, neighbor)}
                     strokeWidth={2}
                   />
@@ -105,7 +120,7 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
         {vertexPositions.map((pos, index) => (
           <div
             key={index}
-            className="absolute flex items-center justify-center text-white font-bold rounded-full transition-all duration-300"
+            className="absolute flex items-center justify-center rounded-full font-bold text-white transition-all duration-300"
             style={{
               width: 40,
               height: 40,
@@ -121,19 +136,11 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
       </div>
 
       <div className="mt-6 w-full">
-        <div className="text-sm font-medium text-gray-700 mb-2">
+        <div className="mb-2 text-sm font-medium text-gray-700">
           Current State:
         </div>
-        <div className="bg-gray-50 p-3 text-gray-700 rounded-md text-sm">
-          {current >= 0 ? (
-            <p>Exploring vertex {current} and its unvisited neighbors.</p>
-          ) : stack.length > 0 ? (
-            <p>Starting exploration from vertex {stack[0] || 0}.</p>
-          ) : path.length > 0 ? (
-            <p>DFS traversal complete. Path: {path.join(" → ")}</p>
-          ) : (
-            <p>DFS traversal will start from a selected vertex.</p>
-          )}
+        <div className="rounded-md bg-gray-50 p-3 text-sm text-gray-700">
+          {getStatusMessage(current, stack, path)}
         </div>
       </div>
     </div>
