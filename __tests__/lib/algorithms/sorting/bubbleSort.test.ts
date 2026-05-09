@@ -37,7 +37,7 @@ describe("bubbleSort", () => {
 
   it("handles single-element and empty arrays", () => {
     const single = bubbleSort([42]);
-    expect((lastStep(single.steps as SortingStep[])).array).toEqual([42]);
+    expect(lastStep(single.steps as SortingStep[]).array).toEqual([42]);
 
     const empty = bubbleSort([]);
     expect(empty.steps.length).toBeGreaterThan(0);

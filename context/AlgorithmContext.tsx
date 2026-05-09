@@ -107,12 +107,9 @@ export function AlgorithmProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (state.isPlaying) {
-      const playInterval = setInterval(
-        () => {
-          dispatch({ type: "NEXT_STEP" });
-        },
-        computeAnimationDelay(state.speed)
-      );
+      const playInterval = setInterval(() => {
+        dispatch({ type: "NEXT_STEP" });
+      }, computeAnimationDelay(state.speed));
 
       return () => {
         clearInterval(playInterval);
