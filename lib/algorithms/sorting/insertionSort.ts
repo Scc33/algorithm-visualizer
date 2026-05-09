@@ -1,4 +1,4 @@
-import { AlgorithmVisualization, SortingStep } from "../../types";
+import type { AlgorithmVisualization, SortingStep } from "../../types";
 import { createVisualization } from "../utils";
 
 export function insertionSort(array: number[]): AlgorithmVisualization {
@@ -16,7 +16,7 @@ export function insertionSort(array: number[]): AlgorithmVisualization {
   });
 
   for (let i = 1; i < n; i++) {
-    const key = arr[i];
+    const key = arr[i]!;
     let j = i - 1;
 
     // Add step showing the current element to be inserted
@@ -27,7 +27,7 @@ export function insertionSort(array: number[]): AlgorithmVisualization {
       completed: [...completed],
     });
 
-    while (j >= 0 && arr[j] > key) {
+    while (j >= 0 && arr[j]! > key) {
       // Add step showing comparison
       steps.push({
         array: [...arr],
@@ -37,7 +37,7 @@ export function insertionSort(array: number[]): AlgorithmVisualization {
       });
 
       // Shift elements
-      arr[j + 1] = arr[j];
+      arr[j + 1] = arr[j]!;
 
       // Add step showing the shift
       steps.push({

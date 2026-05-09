@@ -5,7 +5,7 @@ import {
   getGlossaryTermBySlug,
   getRelatedTerms,
 } from "@/lib/glossary/glossary";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 type TermPageProps = {
   params: {

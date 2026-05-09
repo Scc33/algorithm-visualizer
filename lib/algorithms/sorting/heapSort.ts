@@ -1,4 +1,4 @@
-import { AlgorithmVisualization, SortingStep } from "../../types";
+import type { AlgorithmVisualization, SortingStep } from "../../types";
 import { createVisualization } from "../utils";
 
 export function heapSort(array: number[]): AlgorithmVisualization {
@@ -21,7 +21,7 @@ export function heapSort(array: number[]): AlgorithmVisualization {
   // Extract elements from heap one by one
   for (let i = n - 1; i > 0; i--) {
     // Move current root (maximum element) to the end
-    [arr[0], arr[i]] = [arr[i], arr[0]];
+    [arr[0], arr[i]] = [arr[i]!, arr[0]!];
 
     // Show the swap from root to end
     steps.push({
@@ -153,19 +153,19 @@ function heapify(
   });
 
   // If left child is larger than root
-  if (left < n && arr[left] > arr[largest]) {
+  if (left < n && arr[left]! > arr[largest]!) {
     largest = left;
   }
 
   // If right child is larger than largest so far
-  if (right < n && arr[right] > arr[largest]) {
+  if (right < n && arr[right]! > arr[largest]!) {
     largest = right;
   }
 
   // If largest is not root
   if (largest !== i) {
     // Swap
-    [arr[i], arr[largest]] = [arr[largest], arr[i]];
+    [arr[i], arr[largest]] = [arr[largest]!, arr[i]!];
 
     // Show the swap
     steps.push({

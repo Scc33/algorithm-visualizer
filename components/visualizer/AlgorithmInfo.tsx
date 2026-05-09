@@ -1,4 +1,4 @@
-import { AlgorithmVisualization } from "@/lib/types";
+import type { AlgorithmVisualization } from "@/lib/types";
 import Link from "next/link";
 
 interface AlgorithmInfoProps {

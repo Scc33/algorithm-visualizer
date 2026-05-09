@@ -1,4 +1,4 @@
-import { AlgorithmVisualization, SortingStep } from "../../types";
+import type { AlgorithmVisualization, SortingStep } from "../../types";
 import { createVisualization } from "../utils";
 
 export function quickSort(array: number[]): AlgorithmVisualization {
@@ -113,7 +113,7 @@ function partition(
   completed: number[]
 ): number {
   // Choose the rightmost element as the pivot
-  const pivot = arr[hi];
+  const pivot = arr[hi]!;
 
   // Show pivot selection
   steps.push({
@@ -136,12 +136,12 @@ function partition(
     });
 
     // If current element is smaller than or equal to the pivot
-    if (arr[j] <= pivot) {
+    if (arr[j]! <= pivot) {
       i++;
 
       // Swap arr[i] and arr[j]
       if (i !== j) {
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+        [arr[i], arr[j]] = [arr[j]!, arr[i]!];
         steps.push({
           array: [...arr],
           comparing: [i, j],
@@ -155,7 +155,7 @@ function partition(
   // Swap arr[i+1] and arr[hi] (put the pivot in its correct position)
   const pivotPos = i + 1;
   if (pivotPos !== hi) {
-    [arr[pivotPos], arr[hi]] = [arr[hi], arr[pivotPos]];
+    [arr[pivotPos], arr[hi]] = [arr[hi]!, arr[pivotPos]!];
     steps.push({
       array: [...arr],
       comparing: [pivotPos, hi],

@@ -1,4 +1,4 @@
-import { AlgorithmVisualization, SearchStep } from "../../types";
+import type { AlgorithmVisualization, SearchStep } from "../../types";
 import { createVisualization } from "../utils";
 
 export function linearSearch(
@@ -47,7 +47,7 @@ export function linearSearch(
   }
 
   // If we've gone through the entire array without finding the target
-  if (!steps[steps.length - 1].found) {
+  if (!steps[steps.length - 1]!.found) {
     steps.push({
       array: [...arr],
       current: -1,

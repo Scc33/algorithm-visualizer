@@ -1,5 +1,20 @@
-import { GraphStep } from "@/lib/types";
+import type { GraphStep } from "@/lib/types";
 import { useState, useEffect } from "react";
+import type { ReactNode } from "react";
+
+function getStatusMessage(
+  current: number,
+  stack: number[],
+  path: number[]
+): ReactNode {
+  if (current >= 0)
+    return <p>Exploring vertex {current} and its unvisited neighbors.</p>;
+  if (stack.length > 0)
+    return <p>Starting exploration from vertex {stack[0] ?? 0}.</p>;
+  if (path.length > 0)
+    return <p>DFS traversal complete. Path: {path.join(" → ")}</p>;
+  return <p>DFS traversal will start from a selected vertex.</p>;
+}
 
 interface GraphVisualizationProps {
   step: GraphStep;
@@ -89,10 +104,10 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
                 vertex < neighbor && (
                   <line
                     key={`${vertex}-${neighbor}`}
-                    x1={vertexPositions[vertex].x}
-                    y1={vertexPositions[vertex].y}
-                    x2={vertexPositions[neighbor].x}
-                    y2={vertexPositions[neighbor].y}
+                    x1={vertexPositions[vertex]!.x}
+                    y1={vertexPositions[vertex]!.y}
+                    x2={vertexPositions[neighbor]!.x}
+                    y2={vertexPositions[neighbor]!.y}
                     stroke={getEdgeColor(vertex, neighbor)}
                     strokeWidth={2}
                   />
@@ -125,15 +140,7 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
           Current State:
         </div>
         <div className="bg-gray-50 p-3 text-gray-700 rounded-md text-sm">
-          {current >= 0 ? (
-            <p>Exploring vertex {current} and its unvisited neighbors.</p>
-          ) : stack.length > 0 ? (
-            <p>Starting exploration from vertex {stack[0] || 0}.</p>
-          ) : path.length > 0 ? (
-            <p>DFS traversal complete. Path: {path.join(" → ")}</p>
-          ) : (
-            <p>DFS traversal will start from a selected vertex.</p>
-          )}
+          {getStatusMessage(current, stack, path)}
         </div>
       </div>
     </div>

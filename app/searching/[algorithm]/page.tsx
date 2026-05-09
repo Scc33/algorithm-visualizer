@@ -61,7 +61,9 @@ export default function SearchingAlgorithmPage() {
     <PageLayout
       title={algorithmInfo.name}
       subtitle={algorithmInfo.subtitle}
-      algorithmData={state.visualizationData || undefined}
+      {...(state.visualizationData !== null
+        ? { algorithmData: state.visualizationData }
+        : {})}
     >
       <AlgorithmVisualizer />
     </PageLayout>

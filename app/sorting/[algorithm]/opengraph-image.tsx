@@ -105,7 +105,7 @@ export default async function Image({
               marginBottom: 20,
             }}
           >
-            {algorithmInfo.name}
+            {algorithmInfo?.name ?? algorithm}
           </h1>
 
           <div

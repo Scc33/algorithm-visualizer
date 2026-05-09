@@ -2,7 +2,7 @@ import Link from "next/link";
 import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmCard from "@/components/AlgorithmCard";
 import { availableAlgorithms } from "@/lib/algorithms/metadata";
-import { AlgorithmInfo } from "@/lib/types";
+import type { AlgorithmInfo } from "@/lib/types";
 
 export default function Home() {
   // Group algorithms by category

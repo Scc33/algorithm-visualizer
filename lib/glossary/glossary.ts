@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 export interface GlossaryTerm {
   slug: string;
   term: string;

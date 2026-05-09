@@ -1,4 +1,4 @@
-import { SearchStep } from "@/lib/types";
+import type { SearchStep } from "@/lib/types";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 import { getAlgorithmByName } from "@/lib/algorithms";
 import { useState, useEffect } from "react";
@@ -47,6 +47,17 @@ export default function SearchVisualization({
     }
   };
 
+  const isNotFound = current === -1 && visited.length > 0;
+  let statusClass = "text-gray-600";
+  let statusText = "Searching...";
+  if (found) {
+    statusClass = "text-green-600";
+    statusText = "Found!";
+  } else if (isNotFound) {
+    statusClass = "text-red-600";
+    statusText = "Not found";
+  }
+
   return (
     <div className="flex flex-col items-center space-y-8 w-full p-6 bg-white">
       <div className="flex flex-wrap items-center gap-4 mb-4 w-full">
@@ -65,21 +76,7 @@ export default function SearchVisualization({
 
         <div className="font-medium ml-auto text-gray-600">
           Status:
-          <span
-            className={`ml-2 font-bold ${
-              found
-                ? "text-green-600"
-                : current === -1 && visited.length > 0
-                ? "text-red-600"
-                : "text-gray-600"
-            }`}
-          >
-            {found
-              ? "Found!"
-              : current === -1 && visited.length > 0
-              ? "Not found"
-              : "Searching..."}
-          </span>
+          <span className={`ml-2 font-bold ${statusClass}`}>{statusText}</span>
         </div>
       </div>
 

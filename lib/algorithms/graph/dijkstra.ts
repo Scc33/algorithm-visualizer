@@ -1,12 +1,87 @@
-import { AlgorithmVisualization, GraphStep } from "../../types";
+import type { AlgorithmVisualization, GraphStep } from "../../types";
 import { createVisualization } from "../utils";
+
+interface DijkstraState {
+  dist: number[];
+  visited: number[];
+  path: number[];
+  queue: number[];
+  steps: GraphStep[];
+  adjacencyList: number[][];
+}
+
+function findMinVertex(dist: number[], visited: number[], V: number): number {
+  let minDist = Infinity;
+  let minIndex = -1;
+  for (let v = 0; v < V; v++) {
+    if (!visited.includes(v) && dist[v]! <= minDist) {
+      minDist = dist[v]!;
+      minIndex = v;
+    }
+  }
+  return minIndex;
+}
+
+function relaxEdgesFrom(
+  graph: number[][],
+  minIndex: number,
+  state: DijkstraState
+): void {
+  const V = graph.length;
+  const graphRow = graph[minIndex]!;
+  const distMin = state.dist[minIndex]!;
+
+  for (let v = 0; v < V; v++) {
+    const edgeWeight = graphRow[v]!;
+    const distV = state.dist[v]!;
+    if (
+      !state.visited.includes(v) &&
+      edgeWeight !== 0 &&
+      edgeWeight !== Infinity &&
+      distMin !== Infinity &&
+      distMin + edgeWeight < distV
+    ) {
+      state.dist[v] = distMin + edgeWeight;
+      if (!state.queue.includes(v)) state.queue.push(v);
+      state.steps.push({
+        adjacencyList: state.adjacencyList.map((row) => [...row]),
+        current: minIndex,
+        visited: [...state.visited],
+        stack: [...state.queue],
+        path: [...state.path],
+      });
+    }
+  }
+}
+
+function runDijkstra(graph: number[][], state: DijkstraState): void {
+  const V = graph.length;
+  for (let count = 0; count < V; count++) {
+    const minIndex = findMinVertex(state.dist, state.visited, V);
+    if (minIndex === -1) break;
+
+    state.visited.push(minIndex);
+    state.path.push(minIndex);
+
+    state.steps.push({
+      adjacencyList: state.adjacencyList.map((row) => [...row]),
+      current: minIndex,
+      visited: [...state.visited],
+      stack: [...state.queue],
+      path: [...state.path],
+    });
+
+    relaxEdgesFrom(graph, minIndex, state);
+
+    const currentIndex = state.queue.indexOf(minIndex);
+    if (currentIndex !== -1) state.queue.splice(currentIndex, 1);
+  }
+}
 
 export function dijkstra(
   array: number[],
   source: number = 0
 ): AlgorithmVisualization {
-  // Create a weighted graph using an adjacency matrix where [i][j] is the weight of edge from i to j
-  // Using Infinity to represent no connection between vertices
   const graph: number[][] = [
     [0, 4, 2, Infinity, Infinity, Infinity],
     [4, 0, 1, 5, 2, Infinity],
@@ -16,127 +91,49 @@ export function dijkstra(
     [Infinity, Infinity, 6, Infinity, 1, 0],
   ];
 
-  // Ensure source vertex is valid (0 to 5)
   const startVertex = source >= 0 && source < graph.length ? source : 0;
-
-  // Number of vertices
   const V = graph.length;
 
-  // Create adjacency list representation for visualization
   const adjacencyList: number[][] = graph.map((row) =>
     row.reduce((neighbors, weight, j) => {
-      if (weight !== Infinity && weight !== 0) {
-        neighbors.push(j);
-      }
+      if (weight !== Infinity && weight !== 0) neighbors.push(j);
       return neighbors;
     }, [] as number[])
   );
 
-  const steps: GraphStep[] = [];
-
-  // Distance array to store shortest distance from source to i
   const dist: number[] = Array(V).fill(Infinity);
   dist[startVertex] = 0;
 
-  // Visited array to keep track of vertices included in the shortest path tree
-  const visited: number[] = [];
+  const state: DijkstraState = {
+    dist,
+    visited: [],
+    path: [],
+    queue: [startVertex],
+    steps: [],
+    adjacencyList,
+  };
 
-  // Path to store the actual path taken
-  const path: number[] = [];
-
-  // Queue to visualize the current frontier (for visual purposes)
-  const queue: number[] = [startVertex];
-
-  // Initial state
-  steps.push({
+  state.steps.push({
     adjacencyList: adjacencyList.map((row) => [...row]),
     current: -1,
-    visited: [...visited],
-    stack: [...queue], // Use stack to represent the priority queue visually
-    path: [...path],
+    visited: [],
+    stack: [startVertex],
+    path: [],
   });
 
-  // Find shortest path for all vertices
-  for (let count = 0; count < V; count++) {
-    // Find the minimum distance vertex from the set of vertices not yet visited
-    let minDist = Infinity;
-    let minIndex = -1;
+  runDijkstra(graph, state);
 
-    for (let v = 0; v < V; v++) {
-      if (!visited.includes(v) && dist[v] <= minDist) {
-        minDist = dist[v];
-        minIndex = v;
-      }
-    }
-
-    // If no valid vertex is found, break
-    if (minIndex === -1) break;
-
-    // Add the selected vertex to the visited set
-    visited.push(minIndex);
-
-    // Add to path
-    path.push(minIndex);
-
-    // Add a step showing the current vertex being visited
-    steps.push({
-      adjacencyList: adjacencyList.map((row) => [...row]),
-      current: minIndex,
-      visited: [...visited],
-      stack: [...queue],
-      path: [...path],
-    });
-
-    // Update the distance value of adjacent vertices of the picked vertex
-    for (let v = 0; v < V; v++) {
-      // Update dist[v] only if:
-      // 1. There's an edge from minIndex to v
-      // 2. v is not in visited
-      // 3. The total path distance is smaller than the current dist[v]
-      if (
-        !visited.includes(v) &&
-        graph[minIndex][v] !== 0 &&
-        graph[minIndex][v] !== Infinity &&
-        dist[minIndex] !== Infinity &&
-        dist[minIndex] + graph[minIndex][v] < dist[v]
-      ) {
-        dist[v] = dist[minIndex] + graph[minIndex][v];
-
-        // Add unvisited neighbor to queue for visualization
-        if (!queue.includes(v)) {
-          queue.push(v);
-        }
-
-        // Add a step showing the distance update
-        steps.push({
-          adjacencyList: adjacencyList.map((row) => [...row]),
-          current: minIndex,
-          visited: [...visited],
-          stack: [...queue],
-          path: [...path],
-        });
-      }
-    }
-
-    // Remove current vertex from queue for visualization
-    const currentIndex = queue.indexOf(minIndex);
-    if (currentIndex !== -1) {
-      queue.splice(currentIndex, 1);
-    }
-  }
-
-  // Final state
-  steps.push({
+  state.steps.push({
     adjacencyList: adjacencyList.map((row) => [...row]),
     current: -1,
-    visited: [...visited],
+    visited: [...state.visited],
     stack: [],
-    path: [...path],
+    path: [...state.path],
   });
 
-  return createVisualization("dijkstra", steps, {
-    timeComplexity: "O(V²)", // For simple implementation, can be O(E + V log V) with a priority queue
-    spaceComplexity: "O(V)", // For distance array and visited set
+  return createVisualization("dijkstra", state.steps, {
+    timeComplexity: "O(V²)",
+    spaceComplexity: "O(V)",
     reference: "https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm",
     pseudoCode: [
       "procedure Dijkstra(G, source)",

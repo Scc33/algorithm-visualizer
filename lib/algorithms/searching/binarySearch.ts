@@ -1,4 +1,4 @@
-import { AlgorithmVisualization, SearchStep } from "../../types";
+import type { AlgorithmVisualization, SearchStep } from "../../types";
 import { createVisualization } from "../utils";
 
 export function binarySearch(
@@ -39,7 +39,7 @@ export function binarySearch(
     });
 
     // Check if middle element is the target
-    if (arr[mid] === target) {
+    if (arr[mid]! === target) {
       // Found the target
       steps.push({
         array: [...arr],
@@ -50,7 +50,7 @@ export function binarySearch(
       });
       found = true;
       break;
-    } else if (arr[mid] < target) {
+    } else if (arr[mid]! < target) {
       // Target is in the right half
       left = mid + 1;
     } else {

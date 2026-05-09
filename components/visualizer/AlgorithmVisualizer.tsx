@@ -9,7 +9,7 @@ import AlgorithmPseudocode from "./AlgorithmPseudocode";
 import ColorLegend from "./ColorLegend";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 import { getAlgorithmByName } from "@/lib/algorithms";
-import { GraphStep, SearchStep, SortingStep } from "@/lib/types";
+import type { GraphStep, SearchStep, SortingStep } from "@/lib/types";
 
 export default function AlgorithmVisualizer() {
   const { state, dispatch } = useAlgorithm();

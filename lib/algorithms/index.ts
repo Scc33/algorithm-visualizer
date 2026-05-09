@@ -1,4 +1,4 @@
-import { AlgorithmVisualization } from "../types";
+import type { AlgorithmVisualization } from "../types";
 import { bubbleSort } from "./sorting/bubbleSort";
 import { selectionSort } from "./sorting/selectionSort";
 import { insertionSort } from "./sorting/insertionSort";

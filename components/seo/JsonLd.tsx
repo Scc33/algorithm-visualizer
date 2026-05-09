@@ -1,4 +1,4 @@
-import { AlgorithmVisualization } from "@/lib/types";
+import type { AlgorithmVisualization } from "@/lib/types";
 
 interface BaseJsonLd {
   "@context": string;
@@ -73,7 +73,7 @@ export default function JsonLd({
       url: "https://seancoughlin.me",
     },
     datePublished: "2023-01-01", // Update with the actual date
-    dateModified: new Date().toISOString().split("T")[0],
+    dateModified: new Date().toISOString().slice(0, 10),
     inLanguage: "en-US",
   };
 

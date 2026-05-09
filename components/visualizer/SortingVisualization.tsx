@@ -1,4 +1,4 @@
-import { SortingStep } from "@/lib/types";
+import type { SortingStep } from "@/lib/types";
 
 interface SortingVisualizationProps {
   step: SortingStep;

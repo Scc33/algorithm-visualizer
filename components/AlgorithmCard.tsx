@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AlgorithmInfo } from "@/lib/types";
+import type { AlgorithmInfo } from "@/lib/types";
 
 interface AlgorithmCardProps {
   algorithm: AlgorithmInfo;
