@@ -1,26 +1,69 @@
 import { describe, it, expect } from "vitest";
-import { getAlgorithmByName, isAlgorithmName } from "@/lib/algorithms";
+import {
+  getGraphAlgorithm,
+  getSearchAlgorithm,
+  getSortingAlgorithm,
+  isAlgorithmName,
+  isGraphAlgorithm,
+  isSearchAlgorithm,
+  isSortingAlgorithm,
+} from "@/lib/algorithms";
+import { sampleUndirectedGraph } from "@/lib/algorithms/graph/sampleGraphs";
 
-describe("getAlgorithmByName", () => {
-  it("returns the function for a known algorithm name", () => {
-    const fn = getAlgorithmByName("bubbleSort");
+describe("getSortingAlgorithm", () => {
+  it("returns the function for a known sorting algorithm", () => {
+    const fn = getSortingAlgorithm("bubbleSort");
     expect(fn).toBeTypeOf("function");
     const viz = fn!([3, 1, 2]);
     expect(viz.key).toBe("bubbleSort");
   });
 
-  it("returns null for an unknown name", () => {
-    expect(getAlgorithmByName("madeUpAlgorithm")).toBeNull();
+  it("returns null for non-sorting names", () => {
+    expect(getSortingAlgorithm("dfs")).toBeNull();
+    expect(getSortingAlgorithm("madeUp")).toBeNull();
   });
 });
 
-describe("isAlgorithmName", () => {
-  it("recognizes known algorithm names", () => {
-    expect(isAlgorithmName("dijkstra")).toBe(true);
-    expect(isAlgorithmName("topologicalSort")).toBe(true);
+describe("getSearchAlgorithm", () => {
+  it("returns the function for a known search algorithm", () => {
+    const fn = getSearchAlgorithm("linearSearch");
+    expect(fn).toBeTypeOf("function");
+    const viz = fn!([1, 2, 3], 2);
+    expect(viz.key).toBe("linearSearch");
   });
 
-  it("rejects unknown names", () => {
+  it("returns null for non-search names", () => {
+    expect(getSearchAlgorithm("bubbleSort")).toBeNull();
+  });
+});
+
+describe("getGraphAlgorithm", () => {
+  it("returns the function for a known graph algorithm", () => {
+    const fn = getGraphAlgorithm("dfs");
+    expect(fn).toBeTypeOf("function");
+    const viz = fn!(sampleUndirectedGraph(), 0);
+    expect(viz.key).toBe("dfs");
+  });
+
+  it("returns null for non-graph names", () => {
+    expect(getGraphAlgorithm("bubbleSort")).toBeNull();
+  });
+});
+
+describe("category guards", () => {
+  it("classify known algorithm keys correctly", () => {
+    expect(isSortingAlgorithm("bubbleSort")).toBe(true);
+    expect(isSortingAlgorithm("dfs")).toBe(false);
+    expect(isSearchAlgorithm("binarySearch")).toBe(true);
+    expect(isSearchAlgorithm("dfs")).toBe(false);
+    expect(isGraphAlgorithm("dijkstra")).toBe(true);
+    expect(isGraphAlgorithm("bubbleSort")).toBe(false);
+  });
+
+  it("isAlgorithmName accepts all categories and rejects unknown", () => {
+    expect(isAlgorithmName("dfs")).toBe(true);
+    expect(isAlgorithmName("bubbleSort")).toBe(true);
+    expect(isAlgorithmName("linearSearch")).toBe(true);
     expect(isAlgorithmName("nope")).toBe(false);
     expect(isAlgorithmName("")).toBe(false);
   });

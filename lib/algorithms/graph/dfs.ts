@@ -1,89 +1,54 @@
-import type { AlgorithmVisualization, GraphStep } from "../../types";
+import type { AlgorithmVisualization, Graph, GraphStep } from "../../types";
+import { cloneGraph } from "./sampleGraphs";
 import { createVisualization } from "../utils";
 
 export function dfs(
-  array: number[],
-  target: number = 0
+  graph: Graph,
+  startVertex: number = 0
 ): AlgorithmVisualization {
-  // Ignore the input array and use a predefined adjacency list for graph visualization
-  // The target parameter will be used as the starting vertex, but ensure it's valid
-  // Create a sample graph as an adjacency list first
-  const adjacencyList: number[][] = [
-    [1, 2], // Vertex 0 connected to 1, 2
-    [0, 3, 4], // Vertex 1 connected to 0, 3, 4
-    [0, 5], // Vertex 2 connected to 0, 5
-    [1], // Vertex 3 connected to 1
-    [1, 5], // Vertex 4 connected to 1, 5
-    [2, 4], // Vertex 5 connected to 2, 4
-  ];
-
-  // Ensure startVertex is valid (0 to 5)
-  const startVertex = target >= 0 && target < adjacencyList.length ? target : 0;
-
-  // We've already defined the adjacencyList above
+  const start =
+    startVertex >= 0 && startVertex < graph.numVertices ? startVertex : 0;
 
   const steps: GraphStep[] = [];
   const visited: number[] = [];
-  const stack: number[] = [startVertex];
+  const stack: number[] = [start];
   const path: number[] = [];
 
-  // Initial state
-  steps.push({
-    adjacencyList: adjacencyList.map((row) => [...row]), // Deep copy
-    current: -1,
+  const snapshot = (current: number): GraphStep => ({
+    graph: cloneGraph(graph),
+    current,
     visited: [...visited],
     stack: [...stack],
     path: [...path],
   });
 
+  steps.push(snapshot(-1));
+
   while (stack.length > 0) {
-    // Get the next vertex from the stack
     const current = stack.pop()!;
 
-    // Skip if already visited
     if (visited.includes(current)) continue;
+    if (current < 0 || current >= graph.numVertices) continue;
 
-    // Make sure current vertex is valid
-    if (current < 0 || current >= adjacencyList.length) continue;
-
-    // Mark as visited
     visited.push(current);
     path.push(current);
 
-    // Add step for current vertex visit
-    steps.push({
-      adjacencyList: adjacencyList.map((row) => [...row]),
-      current,
-      visited: [...visited],
-      stack: [...stack],
-      path: [...path],
-    });
+    steps.push(snapshot(current));
 
-    // Get all adjacent vertices in reverse order (so they come off the stack in correct order)
-    // Ensure the current index is valid in the adjacency list
-    const neighbors = [...adjacencyList[current]!].reverse();
+    const neighbors = [...graph.adjacency[current]!]
+      .map((edge) => edge.to)
+      .reverse();
 
-    // For each neighbor
     for (const neighbor of neighbors) {
-      // If not visited, add to stack
       if (!visited.includes(neighbor)) {
         stack.push(neighbor);
-
-        // Add step showing stack update
-        steps.push({
-          adjacencyList: adjacencyList.map((row) => [...row]),
-          current,
-          visited: [...visited],
-          stack: [...stack],
-          path: [...path],
-        });
+        steps.push(snapshot(current));
       }
     }
   }
 
-  // Final state
   steps.push({
-    adjacencyList: adjacencyList.map((row) => [...row]),
+    graph: cloneGraph(graph),
     current: -1,
     visited: [...visited],
     stack: [],
@@ -91,8 +56,8 @@ export function dfs(
   });
 
   return createVisualization("dfs", steps, {
-    timeComplexity: "O(V + E)", // Vertices + Edges
-    spaceComplexity: "O(V)", // Vertices for stack and visited set
+    timeComplexity: "O(V + E)",
+    spaceComplexity: "O(V)",
     reference: "https://en.wikipedia.org/wiki/Depth-first_search",
     pseudoCode: [
       "procedure DFS(G, start_v)",
