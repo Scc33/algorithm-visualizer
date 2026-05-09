@@ -86,11 +86,21 @@ export function sampleDAG(): Graph {
   });
 }
 
-export type GraphAlgorithmKey = "dfs" | "bfs" | "dijkstra" | "topologicalSort";
+export type GraphAlgorithmKey =
+  | "dfs"
+  | "bfs"
+  | "dijkstra"
+  | "topologicalSort"
+  | "bellmanFord"
+  | "prim"
+  | "kruskal";
 
 export function defaultGraphFor(key: GraphAlgorithmKey): Graph {
   switch (key) {
     case "dijkstra":
+    case "bellmanFord":
+    case "prim":
+    case "kruskal":
       return sampleWeightedGraph();
     case "topologicalSort":
       return sampleDAG();

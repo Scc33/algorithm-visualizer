@@ -11,6 +11,9 @@ import { dfs } from "./graph/dfs";
 import { bfs } from "./graph/bfs";
 import { dijkstra } from "./graph/dijkstra";
 import { topologicalSort } from "./graph/topologicalSort";
+import { bellmanFord } from "./graph/bellmanFord";
+import { prim } from "./graph/prim";
+import { kruskal } from "./graph/kruskal";
 
 export type SortingFn = (array: number[]) => AlgorithmVisualization;
 export type SearchFn = (
@@ -41,6 +44,9 @@ const graphAlgorithms = {
   bfs,
   dijkstra,
   topologicalSort,
+  bellmanFord,
+  prim,
+  kruskal,
 } as const satisfies Record<string, GraphFn>;
 
 export type SortingAlgorithmName = keyof typeof sortingAlgorithms;
@@ -96,4 +102,7 @@ export {
   bfs,
   dijkstra,
   topologicalSort,
+  bellmanFord,
+  prim,
+  kruskal,
 };

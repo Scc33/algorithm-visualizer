@@ -113,4 +113,32 @@ export const availableAlgorithms: Record<string, AlgorithmInfo> = {
       "Topological Sort is an algorithm for ordering the vertices of a directed acyclic graph (DAG) such that for every directed edge (u,v), vertex u comes before vertex v in the ordering. This algorithm is essential for scheduling tasks with dependencies, course prerequisites planning, and compilation sequence determination. A graph must have no directed cycles to have a valid topological ordering, making this algorithm a useful tool for cycle detection as well.",
     difficulty: "medium",
   },
+  bellmanFord: {
+    name: "Bellman-Ford",
+    key: "bellmanFord",
+    category: "graph",
+    subtitle:
+      "Single-source shortest paths that tolerates negative edge weights",
+    description:
+      "Bellman-Ford computes shortest paths from a single source to every other vertex in a weighted graph, even when some edge weights are negative. It works by relaxing all edges repeatedly: after V-1 passes the distances are guaranteed correct if no negative cycle is reachable from the source. Slower than Dijkstra at O(V·E) but more general — and a single extra pass detects negative cycles. Used in distance-vector routing protocols and as the inner loop of Johnson's algorithm.",
+    difficulty: "hard",
+  },
+  prim: {
+    name: "Prim's Algorithm",
+    key: "prim",
+    category: "graph",
+    subtitle: "Minimum spanning tree by greedy vertex growth",
+    description:
+      "Prim's algorithm builds a minimum spanning tree (MST) by starting at an arbitrary vertex and repeatedly adding the cheapest edge that connects the existing tree to a vertex outside it. Each step strictly grows the tree by one vertex until every vertex is included. The greedy choice is provably optimal because of the cut property of MSTs. Common applications include network design, clustering, and approximation algorithms for the traveling salesman problem.",
+    difficulty: "medium",
+  },
+  kruskal: {
+    name: "Kruskal's Algorithm",
+    key: "kruskal",
+    category: "graph",
+    subtitle: "Minimum spanning tree by sorting edges and union-find",
+    description:
+      "Kruskal's algorithm builds a minimum spanning tree (MST) by sorting all edges by weight and adding them one at a time, skipping any edge that would form a cycle. A disjoint-set (union-find) data structure makes the cycle check efficient. Unlike Prim's, Kruskal's grows the tree as a forest of components that gradually merge, making it well-suited to sparse graphs. It's used in network design, image segmentation, and as a building block for clustering algorithms.",
+    difficulty: "medium",
+  },
 };

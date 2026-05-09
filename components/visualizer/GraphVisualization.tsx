@@ -1,10 +1,7 @@
-import type { Edge, GraphStep } from "@/lib/types";
+import type { GraphStep } from "@/lib/types";
 import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
-
-const VERTEX_RADIUS = 20;
-const EDGE_COLOR = "#CBD5E1";
-const PATH_EDGE_COLOR = "#F87171";
+import { ArrowDefs, EdgeShape, VERTEX_RADIUS, edgeKey } from "./graphEdge";
 
 function getStatusMessage(
   current: number,
@@ -20,117 +17,12 @@ function getStatusMessage(
   return <p>Traversal will start from a selected vertex.</p>;
 }
 
-function getMarkerEnd(
-  showArrows: boolean,
-  onPath: boolean
-): string | undefined {
-  if (!showArrows) return undefined;
-  return onPath ? "url(#arrowhead-path)" : "url(#arrowhead)";
-}
-
-function ArrowDefs() {
-  return (
-    <defs>
-      <marker
-        id="arrowhead"
-        viewBox="0 0 10 10"
-        refX="10"
-        refY="5"
-        markerWidth="6"
-        markerHeight="6"
-        orient="auto-start-reverse"
-      >
-        <path d="M 0 0 L 10 5 L 0 10 z" fill={EDGE_COLOR} />
-      </marker>
-      <marker
-        id="arrowhead-path"
-        viewBox="0 0 10 10"
-        refX="10"
-        refY="5"
-        markerWidth="6"
-        markerHeight="6"
-        orient="auto-start-reverse"
-      >
-        <path d="M 0 0 L 10 5 L 0 10 z" fill={PATH_EDGE_COLOR} />
-      </marker>
-    </defs>
-  );
-}
-
-interface EdgeShapeProps {
-  edge: Edge;
-  from: { x: number; y: number };
-  to: { x: number; y: number };
-  onPath: boolean;
-  showArrows: boolean;
-  showWeights: boolean;
-}
-
-function EdgeShape({
-  edge,
-  from,
-  to,
-  onPath,
-  showArrows,
-  showWeights,
-}: EdgeShapeProps) {
-  const stroke = onPath ? PATH_EDGE_COLOR : EDGE_COLOR;
-  const dx = to.x - from.x;
-  const dy = to.y - from.y;
-  const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-  const ux = dx / dist;
-  const uy = dy / dist;
-  const x2 = to.x - ux * VERTEX_RADIUS;
-  const y2 = to.y - uy * VERTEX_RADIUS;
-  const x1 = showArrows ? from.x + ux * VERTEX_RADIUS : from.x;
-  const y1 = showArrows ? from.y + uy * VERTEX_RADIUS : from.y;
-  const midX = (from.x + to.x) / 2;
-  const midY = (from.y + to.y) / 2;
-
-  return (
-    <g>
-      <line
-        x1={x1}
-        y1={y1}
-        x2={x2}
-        y2={y2}
-        stroke={stroke}
-        strokeWidth={2}
-        markerEnd={getMarkerEnd(showArrows, onPath)}
-      />
-      {showWeights && (
-        <g>
-          <rect
-            x={midX - 10}
-            y={midY - 9}
-            width={20}
-            height={16}
-            rx={3}
-            fill="white"
-            opacity={0.9}
-          />
-          <text
-            x={midX}
-            y={midY + 3}
-            textAnchor="middle"
-            fontSize={11}
-            fill="#374151"
-            fontWeight={600}
-          >
-            {edge.weight}
-          </text>
-        </g>
-      )}
-    </g>
-  );
-}
-
 interface GraphVisualizationProps {
   step: GraphStep;
 }
 
 export default function GraphVisualization({ step }: GraphVisualizationProps) {
-  const { graph, current, visited, stack, path } = step;
+  const { graph, current, visited, stack, path, treeEdges } = step;
   const [graphSize, setGraphSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
@@ -178,6 +70,12 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
     return Math.abs(fromIdx - toIdx) === 1;
   };
 
+  const treeEdgeKeys = new Set(
+    (treeEdges ?? []).map((e) => edgeKey(e.from, e.to, graph.directed))
+  );
+  const isEdgeInTree = (from: number, to: number) =>
+    treeEdgeKeys.has(edgeKey(from, to, graph.directed));
+
   const showWeights = graph.edges.some((e) => e.weight !== 1);
   const showArrows = graph.directed;
 
@@ -187,9 +85,16 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
         <div className="text-sm font-medium text-gray-700">
           Visited: {visited.map((v) => v).join(" → ")}
         </div>
-        <div className="text-sm font-medium text-gray-700">
-          Stack: [{stack.join(", ")}]
-        </div>
+        {stack.length > 0 && (
+          <div className="text-sm font-medium text-gray-700">
+            Stack: [{stack.join(", ")}]
+          </div>
+        )}
+        {treeEdges && treeEdges.length > 0 && (
+          <div className="text-sm font-medium text-gray-700">
+            Tree edges: {treeEdges.length}
+          </div>
+        )}
       </div>
 
       <div
@@ -205,6 +110,7 @@ export default function GraphVisualization({ step }: GraphVisualizationProps) {
               from={vertexPositions[edge.from]!}
               to={vertexPositions[edge.to]!}
               onPath={isEdgeOnPath(edge.from, edge.to)}
+              inTree={isEdgeInTree(edge.from, edge.to)}
               showArrows={showArrows}
               showWeights={showWeights}
             />
