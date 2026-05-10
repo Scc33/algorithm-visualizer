@@ -23,8 +23,7 @@ export function renderPrimitive(
   switch (viz.primitive) {
     case "array-bars": {
       const step = viz.steps[currentStep]!;
-      const maxValue =
-        step.array.length > 0 ? Math.max(...step.array) : 100;
+      const maxValue = step.array.length > 0 ? Math.max(...step.array) : 100;
       return createElement(ArrayBars, { step, maxValue });
     }
     case "array-cells": {
