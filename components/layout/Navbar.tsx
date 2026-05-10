@@ -60,6 +60,8 @@ const navLinks = [
   { href: "/sorting", label: "Sorting" },
   { href: "/searching", label: "Searching" },
   { href: "/graph", label: "Graph" },
+  { href: "/datastructure", label: "Data Structures" },
+  { href: "/dp", label: "DP" },
   { href: "/difficulty", label: "Difficulty" },
   { href: "/glossary", label: "Glossary" },
 ];
@@ -109,10 +111,10 @@ export default function Navbar() {
 
   return (
     <header className="bg-white shadow">
-      <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 flex items-center justify-between lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center space-x-2">
           <svg
-            className="w-8 h-8 text-blue-600"
+            className="h-8 w-8 text-blue-600"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -129,7 +131,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <nav className="hidden md:flex space-x-8">
+        <nav className="hidden space-x-8 md:flex">
           {navLinks.map((link) => (
             <NavLink
               key={link.label}
@@ -153,7 +155,7 @@ export default function Navbar() {
             href="https://github.com/Scc33/algorithm-visualizer"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-500 hover:text-gray-700 mr-4"
+            className="mr-4 text-gray-500 hover:text-gray-700"
           >
             <span className="sr-only">GitHub</span>
             <GitHubIcon />
@@ -161,7 +163,7 @@ export default function Navbar() {
           <button
             id="mobile-menu-button"
             type="button"
-            className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 cursor-pointer"
+            className="inline-flex cursor-pointer items-center justify-center rounded-md p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-inset"
             aria-controls="mobile-menu"
             aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -179,12 +181,12 @@ export default function Navbar() {
         className={`${isMenuOpen ? "block" : "hidden"} md:hidden`}
         aria-labelledby="mobile-menu-button"
       >
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg border-t">
+        <div className="space-y-1 border-t bg-white px-2 pt-2 pb-3 shadow-lg sm:px-3">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`block px-3 py-2 rounded-md text-base font-medium ${
+              className={`block rounded-md px-3 py-2 text-base font-medium ${
                 isActive(link.href)
                   ? "bg-blue-50 text-blue-700"
                   : "text-gray-700 hover:bg-gray-50"
@@ -212,7 +214,7 @@ function NavLink({
     <Link
       href={href}
       className={`py-2 text-sm font-medium transition-colors hover:text-blue-600 ${
-        active ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-700"
+        active ? "border-b-2 border-blue-600 text-blue-600" : "text-gray-700"
       }`}
     >
       {children}
