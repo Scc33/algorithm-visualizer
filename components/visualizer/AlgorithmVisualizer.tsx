@@ -7,9 +7,11 @@ import ArrayInputPanel from "./ArrayInputPanel";
 import { CodeView, renderPrimitive } from "@/components/primitives";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 import {
+  getDataStructureAlgorithm,
   getGraphAlgorithm,
   getSearchAlgorithm,
   getSortingAlgorithm,
+  isDataStructureAlgorithm,
   isGraphAlgorithm,
 } from "@/lib/algorithms";
 import { defaultGraphFor } from "@/lib/algorithms/graph/sampleGraphs";
@@ -67,6 +69,32 @@ function regenerateSort(
   }
 }
 
+function regenerateDataStructure(
+  algorithm: string,
+  data: number[]
+): AlgorithmVisualization | null {
+  if (!isDataStructureAlgorithm(algorithm)) return null;
+  const fn = getDataStructureAlgorithm(algorithm);
+  if (!fn) return null;
+  try {
+    return fn(data);
+  } catch (error) {
+    console.error("Error generating visualization:", error);
+    return null;
+  }
+}
+
+function regenerateForArrayCategory(
+  category: string,
+  algorithm: string,
+  data: number[],
+  target: number
+): AlgorithmVisualization | null {
+  if (category === "searching") return regenerateSearch(algorithm, data, target);
+  if (category === "datastructure") return regenerateDataStructure(algorithm, data);
+  return regenerateSort(algorithm, data);
+}
+
 export default function AlgorithmVisualizer() {
   const { state, dispatch } = useAlgorithm();
   const { currentStep, algorithm, data, visualizationData, target } = state;
@@ -86,7 +114,8 @@ export default function AlgorithmVisualizer() {
       return;
     }
 
-    const newData = generateRandomArray(5, 95, 15);
+    const length = category === "datastructure" ? 7 : 15;
+    const newData = generateRandomArray(5, 95, length);
     dispatch({ type: "SET_DATA", payload: newData });
 
     if (category === "searching") {
@@ -94,10 +123,13 @@ export default function AlgorithmVisualizer() {
       dispatch({ type: "SET_TARGET", payload: newTarget });
       const viz = regenerateSearch(algorithm, newData, newTarget);
       if (viz) dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
-    } else {
-      const viz = regenerateSort(algorithm, newData);
-      if (viz) dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+      return;
     }
+    const viz =
+      category === "datastructure"
+        ? regenerateDataStructure(algorithm, newData)
+        : regenerateSort(algorithm, newData);
+    if (viz) dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
   };
 
   const handleSetArray = (newData: number[]) => {
@@ -106,10 +138,12 @@ export default function AlgorithmVisualizer() {
     if (target === undefined) {
       dispatch({ type: "SET_TARGET", payload: currentTarget });
     }
-    const viz =
-      category === "searching"
-        ? regenerateSearch(algorithm, newData, currentTarget)
-        : regenerateSort(algorithm, newData);
+    const viz = regenerateForArrayCategory(
+      category,
+      algorithm,
+      newData,
+      currentTarget
+    );
     if (viz) dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
   };
 
@@ -165,6 +199,8 @@ export default function AlgorithmVisualizer() {
           <ColorLegend
             isSearchAlgorithm={category === "searching"}
             isGraphAlgorithm={category === "graph"}
+            isTreeAlgorithm={category === "datastructure"}
+            isGridAlgorithm={category === "dp"}
           />
         </div>
 

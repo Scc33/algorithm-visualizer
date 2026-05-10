@@ -14,6 +14,8 @@ import { topologicalSort } from "./graph/topologicalSort";
 import { bellmanFord } from "./graph/bellmanFord";
 import { prim } from "./graph/prim";
 import { kruskal } from "./graph/kruskal";
+import { bstInsert } from "./datastructure/bst";
+import { minHeapInsert } from "./datastructure/heap";
 
 export type SortingFn = (array: number[]) => AlgorithmVisualization;
 export type SearchFn = (
@@ -24,6 +26,7 @@ export type GraphFn = (
   graph: Graph,
   startVertex?: number
 ) => AlgorithmVisualization;
+export type DataStructureFn = (values: number[]) => AlgorithmVisualization;
 
 const sortingAlgorithms = {
   bubbleSort,
@@ -49,13 +52,20 @@ const graphAlgorithms = {
   kruskal,
 } as const satisfies Record<string, GraphFn>;
 
+const dataStructureAlgorithms = {
+  bstInsert,
+  minHeapInsert,
+} as const satisfies Record<string, DataStructureFn>;
+
 export type SortingAlgorithmName = keyof typeof sortingAlgorithms;
 export type SearchAlgorithmName = keyof typeof searchAlgorithms;
 export type GraphAlgorithmName = keyof typeof graphAlgorithms;
+export type DataStructureAlgorithmName = keyof typeof dataStructureAlgorithms;
 export type AlgorithmName =
   | SortingAlgorithmName
   | SearchAlgorithmName
-  | GraphAlgorithmName;
+  | GraphAlgorithmName
+  | DataStructureAlgorithmName;
 
 export function isSortingAlgorithm(name: string): name is SortingAlgorithmName {
   return name in sortingAlgorithms;
@@ -69,11 +79,18 @@ export function isGraphAlgorithm(name: string): name is GraphAlgorithmName {
   return name in graphAlgorithms;
 }
 
+export function isDataStructureAlgorithm(
+  name: string
+): name is DataStructureAlgorithmName {
+  return name in dataStructureAlgorithms;
+}
+
 export function isAlgorithmName(name: string): name is AlgorithmName {
   return (
     isSortingAlgorithm(name) ||
     isSearchAlgorithm(name) ||
-    isGraphAlgorithm(name)
+    isGraphAlgorithm(name) ||
+    isDataStructureAlgorithm(name)
   );
 }
 
@@ -87,6 +104,12 @@ export function getSearchAlgorithm(name: string): SearchFn | null {
 
 export function getGraphAlgorithm(name: string): GraphFn | null {
   return isGraphAlgorithm(name) ? graphAlgorithms[name] : null;
+}
+
+export function getDataStructureAlgorithm(
+  name: string
+): DataStructureFn | null {
+  return isDataStructureAlgorithm(name) ? dataStructureAlgorithms[name] : null;
 }
 
 export {
@@ -105,4 +128,6 @@ export {
   bellmanFord,
   prim,
   kruskal,
+  bstInsert,
+  minHeapInsert,
 };

@@ -141,4 +141,22 @@ export const availableAlgorithms: Record<string, AlgorithmInfo> = {
       "Kruskal's algorithm builds a minimum spanning tree (MST) by sorting all edges by weight and adding them one at a time, skipping any edge that would form a cycle. A disjoint-set (union-find) data structure makes the cycle check efficient. Unlike Prim's, Kruskal's grows the tree as a forest of components that gradually merge, making it well-suited to sparse graphs. It's used in network design, image segmentation, and as a building block for clustering algorithms.",
     difficulty: "medium",
   },
+  bstInsert: {
+    name: "Binary Search Tree (Insert)",
+    key: "bstInsert",
+    category: "datastructure",
+    subtitle: "Build a BST by inserting values one at a time",
+    description:
+      "A binary search tree (BST) maintains the invariant that every node's left subtree contains only smaller values and its right subtree only larger values. Inserting a value walks the tree from the root, branching left or right at each node by comparison, until it reaches a missing child where the new node is attached. Average insertion is O(log n) when the tree is balanced; the worst case degrades to O(n) when input order produces a skewed tree, motivating self-balancing variants like AVL and red-black trees.",
+    difficulty: "medium",
+  },
+  minHeapInsert: {
+    name: "Min-Heap (Insert)",
+    key: "minHeapInsert",
+    category: "datastructure",
+    subtitle: "Build a min-heap by inserting and sifting up",
+    description:
+      "A binary min-heap is a complete binary tree where every parent is less than or equal to its children. Stored as an array, the children of index i live at 2i+1 and 2i+2, so the structure stays compact without explicit pointers. Each insertion appends the new value at the end and 'sifts up' — repeatedly swapping it with its parent while the parent is larger — restoring the heap property in O(log n). Heaps are the backbone of priority queues, heap sort, and shortest-path algorithms like Dijkstra's.",
+    difficulty: "medium",
+  },
 };
