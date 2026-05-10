@@ -59,13 +59,13 @@ export default function ColorLegend(props: ColorLegendProps) {
 
   return (
     <div className="card p-4">
-      <h3 className="text-sm font-medium text-gray-700 mb-3">Color Legend</h3>
+      <h3 className="mb-3 text-sm font-medium text-gray-700">Color Legend</h3>
 
       <div className="flex flex-wrap gap-4">
         {legendItems.map((item) => (
           <div key={item.label} className="flex items-center">
             <div
-              className={`w-4 h-4 rounded mr-2 ${item.color}`}
+              className={`mr-2 h-4 w-4 rounded ${item.color}`}
               aria-hidden="true"
             ></div>
             <span className="text-sm text-gray-700">{item.label}</span>

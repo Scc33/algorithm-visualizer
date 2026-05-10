@@ -159,4 +159,22 @@ export const availableAlgorithms: Record<string, AlgorithmInfo> = {
       "A binary min-heap is a complete binary tree where every parent is less than or equal to its children. Stored as an array, the children of index i live at 2i+1 and 2i+2, so the structure stays compact without explicit pointers. Each insertion appends the new value at the end and 'sifts up' — repeatedly swapping it with its parent while the parent is larger — restoring the heap property in O(log n). Heaps are the backbone of priority queues, heap sort, and shortest-path algorithms like Dijkstra's.",
     difficulty: "medium",
   },
+  editDistance: {
+    name: "Edit Distance",
+    key: "editDistance",
+    category: "dp",
+    subtitle: "Levenshtein distance via bottom-up DP table",
+    description:
+      "Edit distance — also called Levenshtein distance — measures the minimum number of single-character insertions, deletions, or substitutions needed to turn one string into another. The classic dynamic-programming solution fills an (m+1)×(n+1) table where dp[i][j] is the cost to transform the first i characters of one string into the first j of the other. Each cell depends only on its top, left, and top-left neighbours, so the table fills row-by-row in O(m·n). The traceback through the dependencies reconstructs an optimal edit script. Variants underpin spell-checkers, DNA alignment, and diff tools.",
+    difficulty: "hard",
+  },
+  lcs: {
+    name: "Longest Common Subsequence",
+    key: "lcs",
+    category: "dp",
+    subtitle: "Find the longest subsequence shared by two strings",
+    description:
+      "The longest common subsequence (LCS) of two sequences is the longest sequence appearing in both as a subsequence — preserving order but not contiguity. The standard dynamic-programming solution fills an (m+1)×(n+1) table where dp[i][j] is the LCS length of the first i and j characters. When characters match, the cell extends the diagonal by one; otherwise it inherits the larger of its top and left neighbours. The table fills in O(m·n), and a traceback recovers the actual subsequence. LCS is the workhorse behind Unix `diff`, version control merge, and computational biology sequence alignment.",
+    difficulty: "medium",
+  },
 };

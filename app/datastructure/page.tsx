@@ -12,7 +12,7 @@ export default function DataStructureAlgorithms() {
       title="Data Structures"
       subtitle="Visualize how core data structures are built — see the comparisons, links, and rebalancing decisions one step at a time."
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {dsAlgorithms.map((algorithm) => (
           <AlgorithmCard key={algorithm[0]} algorithm={algorithm[1]} />
         ))}

@@ -16,6 +16,8 @@ import { prim } from "./graph/prim";
 import { kruskal } from "./graph/kruskal";
 import { bstInsert } from "./datastructure/bst";
 import { minHeapInsert } from "./datastructure/heap";
+import { editDistance } from "./dp/editDistance";
+import { lcs } from "./dp/lcs";
 
 export type SortingFn = (array: number[]) => AlgorithmVisualization;
 export type SearchFn = (
@@ -27,6 +29,7 @@ export type GraphFn = (
   startVertex?: number
 ) => AlgorithmVisualization;
 export type DataStructureFn = (values: number[]) => AlgorithmVisualization;
+export type DpFn = (a: string, b: string) => AlgorithmVisualization;
 
 const sortingAlgorithms = {
   bubbleSort,
@@ -57,15 +60,22 @@ const dataStructureAlgorithms = {
   minHeapInsert,
 } as const satisfies Record<string, DataStructureFn>;
 
+const dpAlgorithms = {
+  editDistance,
+  lcs,
+} as const satisfies Record<string, DpFn>;
+
 export type SortingAlgorithmName = keyof typeof sortingAlgorithms;
 export type SearchAlgorithmName = keyof typeof searchAlgorithms;
 export type GraphAlgorithmName = keyof typeof graphAlgorithms;
 export type DataStructureAlgorithmName = keyof typeof dataStructureAlgorithms;
+export type DpAlgorithmName = keyof typeof dpAlgorithms;
 export type AlgorithmName =
   | SortingAlgorithmName
   | SearchAlgorithmName
   | GraphAlgorithmName
-  | DataStructureAlgorithmName;
+  | DataStructureAlgorithmName
+  | DpAlgorithmName;
 
 export function isSortingAlgorithm(name: string): name is SortingAlgorithmName {
   return name in sortingAlgorithms;
@@ -85,12 +95,17 @@ export function isDataStructureAlgorithm(
   return name in dataStructureAlgorithms;
 }
 
+export function isDpAlgorithm(name: string): name is DpAlgorithmName {
+  return name in dpAlgorithms;
+}
+
 export function isAlgorithmName(name: string): name is AlgorithmName {
   return (
     isSortingAlgorithm(name) ||
     isSearchAlgorithm(name) ||
     isGraphAlgorithm(name) ||
-    isDataStructureAlgorithm(name)
+    isDataStructureAlgorithm(name) ||
+    isDpAlgorithm(name)
   );
 }
 
@@ -112,6 +127,10 @@ export function getDataStructureAlgorithm(
   return isDataStructureAlgorithm(name) ? dataStructureAlgorithms[name] : null;
 }
 
+export function getDpAlgorithm(name: string): DpFn | null {
+  return isDpAlgorithm(name) ? dpAlgorithms[name] : null;
+}
+
 export {
   bubbleSort,
   selectionSort,
@@ -130,4 +149,6 @@ export {
   kruskal,
   bstInsert,
   minHeapInsert,
+  editDistance,
+  lcs,
 };

@@ -90,8 +90,10 @@ function regenerateForArrayCategory(
   data: number[],
   target: number
 ): AlgorithmVisualization | null {
-  if (category === "searching") return regenerateSearch(algorithm, data, target);
-  if (category === "datastructure") return regenerateDataStructure(algorithm, data);
+  if (category === "searching")
+    return regenerateSearch(algorithm, data, target);
+  if (category === "datastructure")
+    return regenerateDataStructure(algorithm, data);
   return regenerateSort(algorithm, data);
 }
 
@@ -182,14 +184,16 @@ export default function AlgorithmVisualizer() {
             {renderPrimitive(visualizationData, currentStep)}
           </div>
 
-          <ArrayInputPanel
-            category={category}
-            numVertices={numVertices}
-            onSetArray={handleSetArray}
-            onSetTarget={handleSetTarget}
-            onSetStart={handleSetStart}
-            onRandomize={handleRandomize}
-          />
+          {category !== "dp" && (
+            <ArrayInputPanel
+              category={category}
+              numVertices={numVertices}
+              onSetArray={handleSetArray}
+              onSetTarget={handleSetTarget}
+              onSetStart={handleSetStart}
+              onRandomize={handleRandomize}
+            />
+          )}
 
           <VisualizerControls
             currentStep={currentStep}
