@@ -4,10 +4,14 @@ import type { AlgorithmVisualization } from "@/lib/types";
 import ArrayBars from "./ArrayBars";
 import ArrayCells from "./ArrayCells";
 import Graph2D from "./Graph2D";
+import TreeShape from "./TreeShape";
+import Grid2D from "./Grid2D";
 
 export { default as ArrayBars } from "./ArrayBars";
 export { default as ArrayCells } from "./ArrayCells";
 export { default as Graph2D } from "./Graph2D";
+export { default as TreeShape } from "./TreeShape";
+export { default as Grid2D } from "./Grid2D";
 export { default as CodeView } from "./CodeView";
 
 /**
@@ -33,6 +37,14 @@ export function renderPrimitive(
     case "graph-2d": {
       const step = viz.steps[currentStep]!;
       return createElement(Graph2D, { step });
+    }
+    case "tree-shape": {
+      const step = viz.steps[currentStep]!;
+      return createElement(TreeShape, { step });
+    }
+    case "grid-2d": {
+      const step = viz.steps[currentStep]!;
+      return createElement(Grid2D, { step });
     }
   }
 }

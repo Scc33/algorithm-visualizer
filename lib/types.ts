@@ -38,7 +38,50 @@ export interface GraphStep {
   lineNumber?: number;
 }
 
-export type PrimitiveKind = "array-bars" | "array-cells" | "graph-2d";
+export interface BinaryTreeNode {
+  id: number;
+  value: number;
+  left: number | null;
+  right: number | null;
+}
+
+export interface TreeStep {
+  nodes: BinaryTreeNode[];
+  rootId: number | null;
+  current: number | null;
+  highlighted: number[];
+  compared: number[];
+  inserted: number | null;
+  message: string;
+  lineNumber?: number;
+}
+
+export type GridCell = number | string | null;
+
+export interface GridCoord {
+  row: number;
+  col: number;
+}
+
+export interface GridStep {
+  rows: number;
+  cols: number;
+  cells: GridCell[][];
+  current: GridCoord | null;
+  highlighted: GridCoord[];
+  path: GridCoord[];
+  rowLabels: string[];
+  colLabels: string[];
+  message: string;
+  lineNumber?: number;
+}
+
+export type PrimitiveKind =
+  | "array-bars"
+  | "array-cells"
+  | "graph-2d"
+  | "tree-shape"
+  | "grid-2d";
 
 export type StepsForPrimitive<P extends PrimitiveKind> = P extends "array-bars"
   ? SortingStep[]
@@ -46,12 +89,18 @@ export type StepsForPrimitive<P extends PrimitiveKind> = P extends "array-bars"
     ? SearchStep[]
     : P extends "graph-2d"
       ? GraphStep[]
-      : never;
+      : P extends "tree-shape"
+        ? TreeStep[]
+        : P extends "grid-2d"
+          ? GridStep[]
+          : never;
 
 type PrimitiveBinding =
   | { primitive: "array-bars"; steps: SortingStep[] }
   | { primitive: "array-cells"; steps: SearchStep[] }
-  | { primitive: "graph-2d"; steps: GraphStep[] };
+  | { primitive: "graph-2d"; steps: GraphStep[] }
+  | { primitive: "tree-shape"; steps: TreeStep[] }
+  | { primitive: "grid-2d"; steps: GridStep[] };
 
 export type AlgorithmVisualization = PrimitiveBinding & {
   name: string;
@@ -69,7 +118,8 @@ export type AlgorithmCategory =
   | "sorting"
   | "searching"
   | "graph"
-  | "datastructure";
+  | "datastructure"
+  | "dp";
 
 export interface AlgorithmInfo {
   name: string;
