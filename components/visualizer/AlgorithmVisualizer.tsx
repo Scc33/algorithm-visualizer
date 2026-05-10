@@ -7,6 +7,7 @@ import VisualizerControls from "./VisualizerControls";
 import AlgorithmInfo from "./AlgorithmInfo";
 import AlgorithmPseudocode from "./AlgorithmPseudocode";
 import ColorLegend from "./ColorLegend";
+import ArrayInputPanel from "./ArrayInputPanel";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 import {
   getGraphAlgorithm,
@@ -15,6 +16,7 @@ import {
   isGraphAlgorithm,
 } from "@/lib/algorithms";
 import { defaultGraphFor } from "@/lib/algorithms/graph/sampleGraphs";
+import { generateRandomArray, getRandomValueFromArray } from "@/lib/utils";
 import type {
   AlgorithmVisualization,
   GraphStep,
@@ -22,14 +24,20 @@ import type {
   SortingStep,
 } from "@/lib/types";
 
-function regenerateGraph(algorithm: string): AlgorithmVisualization | null {
+function regenerateGraph(
+  algorithm: string,
+  startVertex?: number
+): AlgorithmVisualization | null {
   if (!isGraphAlgorithm(algorithm)) return null;
   const graphFn = getGraphAlgorithm(algorithm);
   if (!graphFn) return null;
   try {
     const graph = defaultGraphFor(algorithm);
-    const startVertex = Math.floor(Math.random() * graph.numVertices);
-    return graphFn(graph, startVertex);
+    const vertex =
+      startVertex !== undefined
+        ? startVertex
+        : Math.floor(Math.random() * graph.numVertices);
+    return graphFn(graph, vertex);
   } catch (error) {
     console.error("Error generating graph visualization:", error);
     return null;
@@ -72,22 +80,56 @@ export default function AlgorithmVisualizer() {
   const { currentStep, algorithm, data, visualizationData, target } = state;
   const category = visualizationData?.category ?? "";
 
-  const handleGenerateNewData = () => {
+  const numVertices =
+    category === "graph" && visualizationData
+      ? (visualizationData.steps[0] as GraphStep).graph.numVertices
+      : 6;
+
+  const handleRandomize = () => {
     if (category === "graph") {
-      const viz = regenerateGraph(algorithm);
+      const randomStart = Math.floor(Math.random() * numVertices);
+      dispatch({ type: "SET_TARGET", payload: randomStart });
+      const viz = regenerateGraph(algorithm, randomStart);
       if (viz) dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
       return;
     }
 
-    dispatch({
-      type: "GENERATE_RANDOM_DATA",
-      payload: { min: 5, max: 95, length: 15 },
-    });
+    const newData = generateRandomArray(5, 95, 15);
+    dispatch({ type: "SET_DATA", payload: newData });
 
+    if (category === "searching") {
+      const newTarget = getRandomValueFromArray(newData);
+      dispatch({ type: "SET_TARGET", payload: newTarget });
+      const viz = regenerateSearch(algorithm, newData, newTarget);
+      if (viz) dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+    } else {
+      const viz = regenerateSort(algorithm, newData);
+      if (viz) dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+    }
+  };
+
+  const handleSetArray = (newData: number[]) => {
+    dispatch({ type: "SET_DATA", payload: newData });
+    const currentTarget = target ?? getRandomValueFromArray(newData);
+    if (target === undefined) {
+      dispatch({ type: "SET_TARGET", payload: currentTarget });
+    }
     const viz =
       category === "searching"
-        ? regenerateSearch(algorithm, state.data, target ?? 0)
-        : regenerateSort(algorithm, state.data);
+        ? regenerateSearch(algorithm, newData, currentTarget)
+        : regenerateSort(algorithm, newData);
+    if (viz) dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+  };
+
+  const handleSetTarget = (newTarget: number) => {
+    dispatch({ type: "SET_TARGET", payload: newTarget });
+    const viz = regenerateSearch(algorithm, data, newTarget);
+    if (viz) dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
+  };
+
+  const handleSetStart = (start: number) => {
+    dispatch({ type: "SET_TARGET", payload: start });
+    const viz = regenerateGraph(algorithm, start);
     if (viz) dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
   };
 
@@ -130,11 +172,18 @@ export default function AlgorithmVisualizer() {
             )}
           </div>
 
+          <ArrayInputPanel
+            category={category}
+            numVertices={numVertices}
+            onSetArray={handleSetArray}
+            onSetTarget={handleSetTarget}
+            onSetStart={handleSetStart}
+            onRandomize={handleRandomize}
+          />
+
           <VisualizerControls
             currentStep={currentStep}
             totalSteps={visualizationData.steps.length}
-            onGenerateNewArray={handleGenerateNewData}
-            algorithmCategory={category}
           />
 
           <ColorLegend
