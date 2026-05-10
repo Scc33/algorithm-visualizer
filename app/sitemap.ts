@@ -3,83 +3,37 @@ import { availableAlgorithms } from "@/lib/algorithms/metadata";
 import { APP_URL } from "@/constants/URL";
 import { glossaryTerms } from "@/lib/glossary/glossary";
 
+type ChangeFreq = MetadataRoute.Sitemap[number]["changeFrequency"];
+
+interface StaticEntry {
+  path: string;
+  changeFrequency: ChangeFreq;
+  priority: number;
+}
+
+const STATIC_ENTRIES: StaticEntry[] = [
+  { path: "", changeFrequency: "weekly", priority: 1.0 },
+  { path: "/about", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/difficulty", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/sorting", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/searching", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/graph", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/datastructure", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/dp", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/pathfinding", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/glossary", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/difficulty/easy", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/difficulty/medium", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/difficulty/hard", changeFrequency: "monthly", priority: 0.8 },
+];
+
 function buildStaticPages(baseUrl: string): MetadataRoute.Sitemap {
-  const monthly = "monthly" as const;
-  const weekly = "weekly" as const;
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: weekly,
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: monthly,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/difficulty`,
-      lastModified: new Date(),
-      changeFrequency: monthly,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/sorting`,
-      lastModified: new Date(),
-      changeFrequency: weekly,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/searching`,
-      lastModified: new Date(),
-      changeFrequency: weekly,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/graph`,
-      lastModified: new Date(),
-      changeFrequency: weekly,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/datastructure`,
-      lastModified: new Date(),
-      changeFrequency: weekly,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/dp`,
-      lastModified: new Date(),
-      changeFrequency: weekly,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/glossary`,
-      lastModified: new Date(),
-      changeFrequency: monthly,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/difficulty/easy`,
-      lastModified: new Date(),
-      changeFrequency: monthly,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/difficulty/medium`,
-      lastModified: new Date(),
-      changeFrequency: monthly,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/difficulty/hard`,
-      lastModified: new Date(),
-      changeFrequency: monthly,
-      priority: 0.8,
-    },
-  ];
+  return STATIC_ENTRIES.map((entry) => ({
+    url: `${baseUrl}${entry.path}`,
+    lastModified: new Date(),
+    changeFrequency: entry.changeFrequency,
+    priority: entry.priority,
+  }));
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {

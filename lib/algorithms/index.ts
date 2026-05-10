@@ -18,6 +18,10 @@ import { bstInsert } from "./datastructure/bst";
 import { minHeapInsert } from "./datastructure/heap";
 import { editDistance } from "./dp/editDistance";
 import { lcs } from "./dp/lcs";
+import { aStar } from "./pathfinding/aStar";
+import { dijkstraGrid } from "./pathfinding/dijkstraGrid";
+import { mazeRecursiveBacktracker } from "./pathfinding/mazeRecursiveBacktracker";
+import type { PathfindingInput } from "./pathfinding/grid";
 
 export type SortingFn = (array: number[]) => AlgorithmVisualization;
 export type SearchFn = (
@@ -30,6 +34,9 @@ export type GraphFn = (
 ) => AlgorithmVisualization;
 export type DataStructureFn = (values: number[]) => AlgorithmVisualization;
 export type DpFn = (a: string, b: string) => AlgorithmVisualization;
+export type PathfindingFn = (
+  input: PathfindingInput
+) => AlgorithmVisualization;
 
 const sortingAlgorithms = {
   bubbleSort,
@@ -65,17 +72,25 @@ const dpAlgorithms = {
   lcs,
 } as const satisfies Record<string, DpFn>;
 
+const pathfindingAlgorithms = {
+  aStar,
+  dijkstraGrid,
+  mazeRecursiveBacktracker,
+} as const satisfies Record<string, PathfindingFn>;
+
 export type SortingAlgorithmName = keyof typeof sortingAlgorithms;
 export type SearchAlgorithmName = keyof typeof searchAlgorithms;
 export type GraphAlgorithmName = keyof typeof graphAlgorithms;
 export type DataStructureAlgorithmName = keyof typeof dataStructureAlgorithms;
 export type DpAlgorithmName = keyof typeof dpAlgorithms;
+export type PathfindingAlgorithmName = keyof typeof pathfindingAlgorithms;
 export type AlgorithmName =
   | SortingAlgorithmName
   | SearchAlgorithmName
   | GraphAlgorithmName
   | DataStructureAlgorithmName
-  | DpAlgorithmName;
+  | DpAlgorithmName
+  | PathfindingAlgorithmName;
 
 export function isSortingAlgorithm(name: string): name is SortingAlgorithmName {
   return name in sortingAlgorithms;
@@ -99,13 +114,20 @@ export function isDpAlgorithm(name: string): name is DpAlgorithmName {
   return name in dpAlgorithms;
 }
 
+export function isPathfindingAlgorithm(
+  name: string
+): name is PathfindingAlgorithmName {
+  return name in pathfindingAlgorithms;
+}
+
 export function isAlgorithmName(name: string): name is AlgorithmName {
   return (
     isSortingAlgorithm(name) ||
     isSearchAlgorithm(name) ||
     isGraphAlgorithm(name) ||
     isDataStructureAlgorithm(name) ||
-    isDpAlgorithm(name)
+    isDpAlgorithm(name) ||
+    isPathfindingAlgorithm(name)
   );
 }
 
@@ -131,6 +153,10 @@ export function getDpAlgorithm(name: string): DpFn | null {
   return isDpAlgorithm(name) ? dpAlgorithms[name] : null;
 }
 
+export function getPathfindingAlgorithm(name: string): PathfindingFn | null {
+  return isPathfindingAlgorithm(name) ? pathfindingAlgorithms[name] : null;
+}
+
 export {
   bubbleSort,
   selectionSort,
@@ -151,4 +177,7 @@ export {
   minHeapInsert,
   editDistance,
   lcs,
+  aStar,
+  dijkstraGrid,
+  mazeRecursiveBacktracker,
 };

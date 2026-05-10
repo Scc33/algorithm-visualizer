@@ -73,6 +73,11 @@ export interface GridStep {
   rowLabels: string[];
   colLabels: string[];
   message: string;
+  walls?: GridCoord[];
+  start?: GridCoord | null;
+  goal?: GridCoord | null;
+  frontier?: GridCoord[];
+  visited?: GridCoord[];
   lineNumber?: number;
 }
 
@@ -119,7 +124,8 @@ export type AlgorithmCategory =
   | "searching"
   | "graph"
   | "datastructure"
-  | "dp";
+  | "dp"
+  | "pathfinding";
 
 export interface AlgorithmInfo {
   name: string;

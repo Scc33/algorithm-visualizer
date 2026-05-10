@@ -177,4 +177,31 @@ export const availableAlgorithms: Record<string, AlgorithmInfo> = {
       "The longest common subsequence (LCS) of two sequences is the longest sequence appearing in both as a subsequence — preserving order but not contiguity. The standard dynamic-programming solution fills an (m+1)×(n+1) table where dp[i][j] is the LCS length of the first i and j characters. When characters match, the cell extends the diagonal by one; otherwise it inherits the larger of its top and left neighbours. The table fills in O(m·n), and a traceback recovers the actual subsequence. LCS is the workhorse behind Unix `diff`, version control merge, and computational biology sequence alignment.",
     difficulty: "medium",
   },
+  aStar: {
+    name: "A* Pathfinding",
+    key: "aStar",
+    category: "pathfinding",
+    subtitle: "Best-first search guided by a heuristic to a goal cell",
+    description:
+      "A* finds the shortest path from a start cell to a goal cell on a grid by combining the cost so far (g) with an admissible estimate of the remaining cost (h, here Manhattan distance). It always expands the open-set node with the smallest f = g + h, which lets it focus exploration toward the goal rather than fanning out uniformly like Dijkstra's. With an admissible, consistent heuristic, A* is guaranteed to return an optimal path, and it routinely outperforms uninformed search on spatial maps. Pathfinding in games, robotics, and routing systems is the canonical application.",
+    difficulty: "medium",
+  },
+  dijkstraGrid: {
+    name: "Dijkstra (Grid)",
+    key: "dijkstraGrid",
+    category: "pathfinding",
+    subtitle: "Uniform-cost shortest path on a grid with obstacles",
+    description:
+      "Dijkstra's algorithm specialised to a grid finds the shortest path from a start cell to a goal cell when every step costs the same. It expands the open-set node with the smallest tentative distance, relaxing each unblocked neighbour, until it pops the goal. Unlike A*, it has no heuristic — every direction is treated equally — so it explores the frontier as an expanding ring around the start. The grid version makes the difference from heuristic-guided search tangible: side-by-side with A*, you see exactly how much exploration the heuristic saves.",
+    difficulty: "medium",
+  },
+  mazeRecursiveBacktracker: {
+    name: "Recursive Backtracker (Maze)",
+    key: "mazeRecursiveBacktracker",
+    category: "pathfinding",
+    subtitle: "Carve a perfect maze with randomised depth-first search",
+    description:
+      "The recursive backtracker — also called randomised depth-first search — generates a perfect maze (one with exactly one path between any two cells) by carving passages from a starting cell. At each step it picks a random unvisited neighbour two cells away, knocks down the wall between them, and recurses; when no unvisited neighbours remain, it backtracks. The result is a long, winding maze with few short branches, distinct from algorithms like Prim's or Wilson's that produce more uniform structure. Mazes generated this way are a common test bed for pathfinding algorithms.",
+    difficulty: "medium",
+  },
 };

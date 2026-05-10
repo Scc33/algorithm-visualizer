@@ -184,7 +184,7 @@ export default function AlgorithmVisualizer() {
             {renderPrimitive(visualizationData, currentStep)}
           </div>
 
-          {category !== "dp" && (
+          {category !== "dp" && category !== "pathfinding" && (
             <ArrayInputPanel
               category={category}
               numVertices={numVertices}
@@ -205,6 +205,7 @@ export default function AlgorithmVisualizer() {
             isGraphAlgorithm={category === "graph"}
             isTreeAlgorithm={category === "datastructure"}
             isGridAlgorithm={category === "dp"}
+            isPathfindingAlgorithm={category === "pathfinding"}
           />
         </div>
 
