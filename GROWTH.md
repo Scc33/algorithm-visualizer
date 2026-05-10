@@ -12,6 +12,62 @@ Copy the template at the bottom of this file, fill it in, and prepend it to the 
 
 ## Snapshots
 
+### 2026-05-10 — After Phase 8: pathfinding & spatial on the grid
+
+**Trigger:** Phase 8 pathfinding and maze generation on `Grid2D`. Adds A\*, Dijkstra-on-grid, and a recursive-backtracker maze generator. New `pathfinding` category, new grid input panel with click-to-edit walls/start/goal, URL-shareable grid configurations.
+
+#### Algorithms
+
+| Category        | Count  | Names                                                                    |
+| --------------- | ------ | ------------------------------------------------------------------------ |
+| Sorting         | 6      | bubbleSort, selectionSort, insertionSort, mergeSort, quickSort, heapSort |
+| Searching       | 2      | linearSearch, binarySearch                                               |
+| Graph           | 7      | bfs, dfs, dijkstra, topologicalSort, bellmanFord, prim, kruskal          |
+| Data Structures | 2      | bstInsert, minHeapInsert                                                 |
+| Dynamic Prog.   | 2      | editDistance, lcs                                                        |
+| Pathfinding     | 3      | aStar, dijkstraGrid, mazeRecursiveBacktracker                            |
+| **Total**       | **22** |                                                                          |
+
+Difficulty breakdown: easy × 4, medium × 14, hard × 4
+
+#### Test suite
+
+| Metric     | Count |
+| ---------- | ----- |
+| Test files | 15    |
+| Test cases | 176   |
+
+New test file:
+
+- `__tests__/lib/algorithms/pathfinding/pathfinding.test.ts` — A\* / Dijkstra optimality, wall routing, unreachable goals, maze invariants
+
+#### Pages & routes
+
+New routes: `/pathfinding`, `/pathfinding/[algorithm]`. Sitemap entries added; navbar link added.
+
+#### Components
+
+New: `components/visualizer/GridInputPanel.tsx` — click-to-edit grid with wall/start/goal modes, resize controls, randomize/clear buttons. `Grid2D` primitive extended to render walls, start, goal, frontier (open set), and visited (closed set) on top of the existing DP grid contract.
+
+`ColorLegend` gained a pathfinding-specific palette.
+
+#### Source code
+
+| Metric                                   | Count  |
+| ---------------------------------------- | ------ |
+| TypeScript/TSX files                     | 83     |
+| Total lines (lib+components+context+app) | ~5,018 |
+
+#### Notes
+
+- **Step shape evolution:** `GridStep` gained optional `walls`, `start`, `goal`, `frontier`, `visited` fields. DP code is untouched — it just doesn't populate them. Pathfinding uses all five.
+- **PathfindingFn signature:** `(input: PathfindingInput) => AlgorithmVisualization`, with `PathfindingInput = { rows, cols, start, goal, walls }`. Maze generation uses the same signature even though it ignores walls (it produces them).
+- **A\* heuristic:** Manhattan distance — admissible and consistent on a 4-connected grid with unit costs.
+- **Maze gen seed:** uses a deterministic Mulberry32 PRNG so visualizations are reproducible across reloads. (To re-randomize on demand, the route would need to thread a fresh seed.)
+- **URL state:** grid config encodes as `?r=N&c=M&s=row,col&g=row,col&w=r,c;r,c;…`. Resize clamps walls/start/goal into bounds.
+
+---
+
 ### 2026-05-10 — After Phases 6 & 7: data structures and DP on the new primitives
 
 **Trigger:** Phase 6 data structures (BST insert, min-heap insert) and Phase 7 dynamic programming (Edit Distance, LCS) layered on top of the Phase 5 visual-primitives architecture. Two new primitives — TreeShape and Grid2D — extend the existing array-bars / array-cells / graph-2d set.

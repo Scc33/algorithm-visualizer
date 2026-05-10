@@ -3,6 +3,7 @@ interface ColorLegendProps {
   isGraphAlgorithm?: boolean;
   isTreeAlgorithm?: boolean;
   isGridAlgorithm?: boolean;
+  isPathfindingAlgorithm?: boolean;
 }
 
 interface LegendItem {
@@ -46,7 +47,18 @@ const gridItems: LegendItem[] = [
   { color: "bg-emerald-200", label: "Solution Path" },
 ];
 
+const pathfindingItems: LegendItem[] = [
+  { color: "bg-green-400", label: "Start" },
+  { color: "bg-red-400", label: "Goal" },
+  { color: "bg-gray-800", label: "Wall" },
+  { color: "bg-yellow-300", label: "Current" },
+  { color: "bg-sky-200", label: "Frontier (open set)" },
+  { color: "bg-indigo-100", label: "Visited (closed set)" },
+  { color: "bg-emerald-200", label: "Final Path" },
+];
+
 function pickItems(props: ColorLegendProps): LegendItem[] {
+  if (props.isPathfindingAlgorithm) return pathfindingItems;
   if (props.isSearchAlgorithm) return searchItems;
   if (props.isGraphAlgorithm) return graphItems;
   if (props.isTreeAlgorithm) return treeItems;

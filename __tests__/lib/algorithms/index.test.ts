@@ -1,10 +1,12 @@
 import { describe, it, expect } from "vitest";
 import {
   getGraphAlgorithm,
+  getPathfindingAlgorithm,
   getSearchAlgorithm,
   getSortingAlgorithm,
   isAlgorithmName,
   isGraphAlgorithm,
+  isPathfindingAlgorithm,
   isSearchAlgorithm,
   isSortingAlgorithm,
 } from "@/lib/algorithms";
@@ -50,6 +52,26 @@ describe("getGraphAlgorithm", () => {
   });
 });
 
+describe("getPathfindingAlgorithm", () => {
+  it("returns the function for a known pathfinding algorithm", () => {
+    const fn = getPathfindingAlgorithm("aStar");
+    expect(fn).toBeTypeOf("function");
+    const viz = fn!({
+      rows: 4,
+      cols: 4,
+      start: { row: 0, col: 0 },
+      goal: { row: 3, col: 3 },
+      walls: [],
+    });
+    expect(viz.key).toBe("aStar");
+  });
+
+  it("returns null for non-pathfinding names", () => {
+    expect(getPathfindingAlgorithm("bubbleSort")).toBeNull();
+    expect(getPathfindingAlgorithm("madeUp")).toBeNull();
+  });
+});
+
 describe("category guards", () => {
   it("classify known algorithm keys correctly", () => {
     expect(isSortingAlgorithm("bubbleSort")).toBe(true);
@@ -61,12 +83,17 @@ describe("category guards", () => {
     expect(isGraphAlgorithm("prim")).toBe(true);
     expect(isGraphAlgorithm("kruskal")).toBe(true);
     expect(isGraphAlgorithm("bubbleSort")).toBe(false);
+    expect(isPathfindingAlgorithm("aStar")).toBe(true);
+    expect(isPathfindingAlgorithm("dijkstraGrid")).toBe(true);
+    expect(isPathfindingAlgorithm("mazeRecursiveBacktracker")).toBe(true);
+    expect(isPathfindingAlgorithm("dfs")).toBe(false);
   });
 
   it("isAlgorithmName accepts all categories and rejects unknown", () => {
     expect(isAlgorithmName("dfs")).toBe(true);
     expect(isAlgorithmName("bubbleSort")).toBe(true);
     expect(isAlgorithmName("linearSearch")).toBe(true);
+    expect(isAlgorithmName("aStar")).toBe(true);
     expect(isAlgorithmName("nope")).toBe(false);
     expect(isAlgorithmName("")).toBe(false);
   });

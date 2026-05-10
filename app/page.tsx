@@ -10,6 +10,7 @@ const CATEGORY_LABELS: Record<AlgorithmCategory, string> = {
   graph: "Graph Algorithms",
   datastructure: "Data Structures",
   dp: "Dynamic Programming",
+  pathfinding: "Pathfinding & Spatial",
 };
 
 const CATEGORY_ORDER: AlgorithmCategory[] = [
@@ -18,6 +19,7 @@ const CATEGORY_ORDER: AlgorithmCategory[] = [
   "graph",
   "datastructure",
   "dp",
+  "pathfinding",
 ];
 
 export default function Home() {

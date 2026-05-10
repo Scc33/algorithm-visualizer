@@ -62,6 +62,7 @@ const navLinks = [
   { href: "/graph", label: "Graph" },
   { href: "/datastructure", label: "Data Structures" },
   { href: "/dp", label: "DP" },
+  { href: "/pathfinding", label: "Pathfinding" },
   { href: "/difficulty", label: "Difficulty" },
   { href: "/glossary", label: "Glossary" },
 ];
