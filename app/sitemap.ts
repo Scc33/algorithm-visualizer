@@ -44,6 +44,18 @@ function buildStaticPages(baseUrl: string): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/datastructure`,
+      lastModified: new Date(),
+      changeFrequency: weekly,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/dp`,
+      lastModified: new Date(),
+      changeFrequency: weekly,
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/glossary`,
       lastModified: new Date(),
       changeFrequency: monthly,

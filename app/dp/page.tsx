@@ -12,7 +12,7 @@ export default function DpAlgorithms() {
       title="Dynamic Programming"
       subtitle="Watch DP tables fill cell-by-cell — see how each subproblem builds on its dependencies and how the final answer is reconstructed via traceback."
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {dpAlgorithms.map((algorithm) => (
           <AlgorithmCard key={algorithm[0]} algorithm={algorithm[1]} />
         ))}

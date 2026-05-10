@@ -1,8 +1,4 @@
-import type {
-  AlgorithmVisualization,
-  GridCell,
-  GridStep,
-} from "../../types";
+import type { AlgorithmVisualization, GridCell, GridStep } from "../../types";
 import { createVisualization } from "../utils";
 
 const PSEUDO = [
@@ -43,10 +39,7 @@ interface FillContext {
 
 function pushStep(
   ctx: FillContext,
-  partial: Omit<
-    GridStep,
-    "rows" | "cols" | "cells" | "rowLabels" | "colLabels"
-  >
+  partial: Omit<GridStep, "rows" | "cols" | "cells" | "rowLabels" | "colLabels">
 ): void {
   ctx.steps.push({
     rows: ctx.dp.length,
