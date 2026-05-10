@@ -14,7 +14,11 @@ interface CellSets {
   visited: Set<string>;
 }
 
-function isCoordEqual(a: GridCoord | null | undefined, row: number, col: number): boolean {
+function isCoordEqual(
+  a: GridCoord | null | undefined,
+  row: number,
+  col: number
+): boolean {
   return !!a && a.row === row && a.col === col;
 }
 

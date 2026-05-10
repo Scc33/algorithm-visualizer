@@ -1,4 +1,9 @@
-import type { AlgorithmVisualization, GridCell, GridCoord, GridStep } from "../../types";
+import type {
+  AlgorithmVisualization,
+  GridCell,
+  GridCoord,
+  GridStep,
+} from "../../types";
 import { createVisualization } from "../utils";
 import { coordKey, type PathfindingInput } from "./grid";
 
@@ -107,8 +112,14 @@ function unvisitedNeighbors(
 }
 
 function snapStartCell(input: PathfindingInput): GridCoord {
-  const r = input.start.row % 2 === 1 ? input.start.row : Math.max(1, input.start.row - 1);
-  const c = input.start.col % 2 === 1 ? input.start.col : Math.max(1, input.start.col - 1);
+  const r =
+    input.start.row % 2 === 1
+      ? input.start.row
+      : Math.max(1, input.start.row - 1);
+  const c =
+    input.start.col % 2 === 1
+      ? input.start.col
+      : Math.max(1, input.start.col - 1);
   return {
     row: Math.min(r, input.rows - 2),
     col: Math.min(c, input.cols - 2),

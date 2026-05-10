@@ -1,4 +1,9 @@
-import type { AlgorithmVisualization, GridCell, GridCoord, GridStep } from "../../types";
+import type {
+  AlgorithmVisualization,
+  GridCell,
+  GridCoord,
+  GridStep,
+} from "../../types";
 import { createVisualization } from "../utils";
 import {
   coordFromKey,

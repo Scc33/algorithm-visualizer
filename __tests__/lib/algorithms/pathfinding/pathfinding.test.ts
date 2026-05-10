@@ -125,9 +125,7 @@ describe("mazeRecursiveBacktracker", () => {
   it("carved cells and wall cells are disjoint", () => {
     const viz = mazeRecursiveBacktracker(input({ rows: 7, cols: 7 }));
     const last = lastStep(viz);
-    const wallSet = new Set(
-      (last.walls ?? []).map((w) => `${w.row}:${w.col}`)
-    );
+    const wallSet = new Set((last.walls ?? []).map((w) => `${w.row}:${w.col}`));
     for (const c of last.visited ?? []) {
       expect(wallSet.has(`${c.row}:${c.col}`)).toBe(false);
     }

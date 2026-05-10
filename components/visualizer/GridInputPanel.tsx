@@ -28,11 +28,7 @@ function coordKey(c: GridCoord): string {
   return `${c.row}:${c.col}`;
 }
 
-function cellClass(
-  isStart: boolean,
-  isGoal: boolean,
-  isWall: boolean
-): string {
+function cellClass(isStart: boolean, isGoal: boolean, isWall: boolean): string {
   if (isStart) return "bg-green-400 border-green-600";
   if (isGoal) return "bg-red-400 border-red-600";
   if (isWall) return "bg-gray-800 border-gray-900";
@@ -72,7 +68,11 @@ function applyClickInMode(
   return { ...config, walls };
 }
 
-function resize(config: GridConfig, nextRows: number, nextCols: number): GridConfig {
+function resize(
+  config: GridConfig,
+  nextRows: number,
+  nextCols: number
+): GridConfig {
   return {
     rows: nextRows,
     cols: nextCols,
@@ -101,7 +101,7 @@ function ModeToggle({ mode, onChange }: ModeToggleProps) {
         <button
           key={m}
           onClick={() => onChange(m)}
-          className={`rounded px-3 py-1 text-xs font-medium uppercase tracking-wide ${
+          className={`rounded px-3 py-1 text-xs font-medium tracking-wide uppercase ${
             mode === m
               ? "bg-blue-600 text-white"
               : "bg-gray-100 text-gray-700 hover:bg-gray-200"

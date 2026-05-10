@@ -34,9 +34,7 @@ export type GraphFn = (
 ) => AlgorithmVisualization;
 export type DataStructureFn = (values: number[]) => AlgorithmVisualization;
 export type DpFn = (a: string, b: string) => AlgorithmVisualization;
-export type PathfindingFn = (
-  input: PathfindingInput
-) => AlgorithmVisualization;
+export type PathfindingFn = (input: PathfindingInput) => AlgorithmVisualization;
 
 const sortingAlgorithms = {
   bubbleSort,

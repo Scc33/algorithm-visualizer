@@ -14,7 +14,7 @@ Copy the template at the bottom of this file, fill it in, and prepend it to the 
 
 ### 2026-05-10 — After Phase 8: pathfinding & spatial on the grid
 
-**Trigger:** Phase 8 pathfinding and maze generation on `Grid2D`. Adds A*, Dijkstra-on-grid, and a recursive-backtracker maze generator. New `pathfinding` category, new grid input panel with click-to-edit walls/start/goal, URL-shareable grid configurations.
+**Trigger:** Phase 8 pathfinding and maze generation on `Grid2D`. Adds A\*, Dijkstra-on-grid, and a recursive-backtracker maze generator. New `pathfinding` category, new grid input panel with click-to-edit walls/start/goal, URL-shareable grid configurations.
 
 #### Algorithms
 
@@ -39,7 +39,7 @@ Difficulty breakdown: easy × 4, medium × 14, hard × 4
 
 New test file:
 
-- `__tests__/lib/algorithms/pathfinding/pathfinding.test.ts` — A* / Dijkstra optimality, wall routing, unreachable goals, maze invariants
+- `__tests__/lib/algorithms/pathfinding/pathfinding.test.ts` — A\* / Dijkstra optimality, wall routing, unreachable goals, maze invariants
 
 #### Pages & routes
 
@@ -53,10 +53,10 @@ New: `components/visualizer/GridInputPanel.tsx` — click-to-edit grid with wall
 
 #### Source code
 
-| Metric                                   | Count   |
-| ---------------------------------------- | ------- |
-| TypeScript/TSX files                     | 83      |
-| Total lines (lib+components+context+app) | ~5,018  |
+| Metric                                   | Count  |
+| ---------------------------------------- | ------ |
+| TypeScript/TSX files                     | 83     |
+| Total lines (lib+components+context+app) | ~5,018 |
 
 #### Notes
 

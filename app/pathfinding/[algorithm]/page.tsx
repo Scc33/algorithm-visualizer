@@ -82,13 +82,19 @@ function configFromParams(
         row: clampInt(startRaw.row, 0, rows - 1, fallback.start.row),
         col: clampInt(startRaw.col, 0, cols - 1, fallback.start.col),
       }
-    : { row: Math.min(fallback.start.row, rows - 1), col: Math.min(fallback.start.col, cols - 1) };
+    : {
+        row: Math.min(fallback.start.row, rows - 1),
+        col: Math.min(fallback.start.col, cols - 1),
+      };
   const goal: GridCoord = goalRaw
     ? {
         row: clampInt(goalRaw.row, 0, rows - 1, fallback.goal.row),
         col: clampInt(goalRaw.col, 0, cols - 1, fallback.goal.col),
       }
-    : { row: Math.min(fallback.goal.row, rows - 1), col: Math.min(fallback.goal.col, cols - 1) };
+    : {
+        row: Math.min(fallback.goal.row, rows - 1),
+        col: Math.min(fallback.goal.col, cols - 1),
+      };
   const walls = (wallsRaw ?? fallback.walls).filter(
     (w) => w.row < rows && w.col < cols
   );
