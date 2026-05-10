@@ -39,7 +39,13 @@ function SortingPageInner() {
         dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
       }
     }
-  }, [algorithmKey, dispatch, state.algorithm, state.data, state.visualizationData]);
+  }, [
+    algorithmKey,
+    dispatch,
+    state.algorithm,
+    state.data,
+    state.visualizationData,
+  ]);
 
   // Keep URL in sync with current state
   useEffect(() => {

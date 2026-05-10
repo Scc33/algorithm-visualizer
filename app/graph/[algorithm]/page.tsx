@@ -55,7 +55,14 @@ function GraphPageInner() {
     const { startVertex, viz } = computeGraphViz(algorithmKey, state.target);
     dispatch({ type: "SET_TARGET", payload: startVertex });
     if (viz) dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
-  }, [algorithmKey, dispatch, state.algorithm, state.data, state.visualizationData, state.target]);
+  }, [
+    algorithmKey,
+    dispatch,
+    state.algorithm,
+    state.data,
+    state.visualizationData,
+    state.target,
+  ]);
 
   // Keep URL in sync with current start vertex and speed
   useEffect(() => {

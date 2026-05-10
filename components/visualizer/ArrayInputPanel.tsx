@@ -35,9 +35,13 @@ export default function ArrayInputPanel({
 
   const [arrayDraft, setArrayDraft] = useState(data.join(", "));
   const [arrayError, setArrayError] = useState<string | null>(null);
-  const [targetDraft, setTargetDraft] = useState(target !== undefined ? String(target) : "");
+  const [targetDraft, setTargetDraft] = useState(
+    target !== undefined ? String(target) : ""
+  );
   const [targetError, setTargetError] = useState<string | null>(null);
-  const [startDraft, setStartDraft] = useState(target !== undefined ? String(target) : "0");
+  const [startDraft, setStartDraft] = useState(
+    target !== undefined ? String(target) : "0"
+  );
   const [startError, setStartError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -72,7 +76,9 @@ export default function ArrayInputPanel({
   const handleSetStart = () => {
     const n = Number(startDraft.trim());
     if (!Number.isInteger(n) || isNaN(n) || n < 0 || n >= numVertices)
-      return setStartError(`Enter a vertex index between 0 and ${numVertices - 1}.`);
+      return setStartError(
+        `Enter a vertex index between 0 and ${numVertices - 1}.`
+      );
     setStartError(null);
     onSetStart(n);
   };
@@ -80,7 +86,7 @@ export default function ArrayInputPanel({
   if (category === "graph") {
     return (
       <div className="card space-y-4 p-6">
-        <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+        <h3 className="text-sm font-semibold tracking-wide text-gray-700 uppercase">
           Graph Options
         </h3>
         <div className="flex flex-col gap-2">
@@ -93,13 +99,20 @@ export default function ArrayInputPanel({
               min={0}
               max={numVertices - 1}
               value={startDraft}
-              onChange={(e) => { setStartDraft(e.target.value); setStartError(null); }}
+              onChange={(e) => {
+                setStartDraft(e.target.value);
+                setStartError(null);
+              }}
               onKeyDown={(e) => e.key === "Enter" && handleSetStart()}
               className="w-24 rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
               aria-label="Start vertex"
             />
-            <button onClick={handleSetStart} className="btn btn-primary">Set</button>
-            <button onClick={onRandomize} className="btn btn-secondary">Randomize</button>
+            <button onClick={handleSetStart} className="btn btn-primary">
+              Set
+            </button>
+            <button onClick={onRandomize} className="btn btn-secondary">
+              Randomize
+            </button>
           </div>
           <FieldError message={startError} />
         </div>
@@ -109,7 +122,7 @@ export default function ArrayInputPanel({
 
   return (
     <div className="card space-y-4 p-6">
-      <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+      <h3 className="text-sm font-semibold tracking-wide text-gray-700 uppercase">
         Input Data
       </h3>
       <div className="flex flex-col gap-2">
@@ -120,14 +133,21 @@ export default function ArrayInputPanel({
           <input
             type="text"
             value={arrayDraft}
-            onChange={(e) => { setArrayDraft(e.target.value); setArrayError(null); }}
+            onChange={(e) => {
+              setArrayDraft(e.target.value);
+              setArrayError(null);
+            }}
             onKeyDown={(e) => e.key === "Enter" && handleSetArray()}
             placeholder="e.g. 5, 10, 23, 8, 42"
             className="flex-1 rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
             aria-label="Array input"
           />
-          <button onClick={handleSetArray} className="btn btn-primary">Set</button>
-          <button onClick={onRandomize} className="btn btn-secondary">Randomize</button>
+          <button onClick={handleSetArray} className="btn btn-primary">
+            Set
+          </button>
+          <button onClick={onRandomize} className="btn btn-secondary">
+            Randomize
+          </button>
         </div>
         <FieldError message={arrayError} />
       </div>
@@ -142,12 +162,17 @@ export default function ArrayInputPanel({
               min={1}
               max={999}
               value={targetDraft}
-              onChange={(e) => { setTargetDraft(e.target.value); setTargetError(null); }}
+              onChange={(e) => {
+                setTargetDraft(e.target.value);
+                setTargetError(null);
+              }}
               onKeyDown={(e) => e.key === "Enter" && handleSetTarget()}
               className="w-28 rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
               aria-label="Search target"
             />
-            <button onClick={handleSetTarget} className="btn btn-primary">Set</button>
+            <button onClick={handleSetTarget} className="btn btn-primary">
+              Set
+            </button>
           </div>
           <FieldError message={targetError} />
         </div>

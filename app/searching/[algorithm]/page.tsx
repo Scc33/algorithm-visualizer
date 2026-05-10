@@ -1,7 +1,12 @@
 "use client";
 
 import { Suspense, useEffect, useRef } from "react";
-import { useParams, useRouter, useSearchParams, notFound } from "next/navigation";
+import {
+  useParams,
+  useRouter,
+  useSearchParams,
+  notFound,
+} from "next/navigation";
 import PageLayout from "@/components/layout/PageLayout";
 import AlgorithmVisualizer from "@/components/visualizer/AlgorithmVisualizer";
 import { useAlgorithm } from "@/context/AlgorithmContext";
@@ -26,7 +31,8 @@ function SearchingPageInner() {
     initializedFromUrl.current = true;
     const decoded = decodeUrlParams(searchParams);
     if (decoded.data) dispatch({ type: "SET_DATA", payload: decoded.data });
-    if (decoded.target) dispatch({ type: "SET_TARGET", payload: decoded.target });
+    if (decoded.target)
+      dispatch({ type: "SET_TARGET", payload: decoded.target });
     if (decoded.speed) dispatch({ type: "SET_SPEED", payload: decoded.speed });
   }, [searchParams, dispatch]);
 
@@ -53,7 +59,14 @@ function SearchingPageInner() {
         }
       }
     }
-  }, [algorithmKey, dispatch, state.algorithm, state.data, state.visualizationData, state.target]);
+  }, [
+    algorithmKey,
+    dispatch,
+    state.algorithm,
+    state.data,
+    state.visualizationData,
+    state.target,
+  ]);
 
   // Keep URL in sync with current state
   useEffect(() => {
