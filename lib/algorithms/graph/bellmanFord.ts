@@ -70,7 +70,7 @@ export function bellmanFord(
     path: [...state.path],
   });
 
-  return createVisualization("bellmanFord", state.steps, {
+  return createVisualization("bellmanFord", "graph-2d", state.steps, {
     timeComplexity: "O(V·E)",
     spaceComplexity: "O(V)",
     reference: "https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm",

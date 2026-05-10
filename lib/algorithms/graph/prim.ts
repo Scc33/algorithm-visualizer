@@ -69,7 +69,7 @@ export function prim(
     treeEdges: state.treeEdges.map((e) => ({ ...e })),
   });
 
-  return createVisualization("prim", state.steps, {
+  return createVisualization("prim", "graph-2d", state.steps, {
     timeComplexity: "O(V²)",
     spaceComplexity: "O(V + E)",
     reference: "https://en.wikipedia.org/wiki/Prim%27s_algorithm",

@@ -1,51 +1,11 @@
 import type { SearchStep } from "@/lib/types";
-import { useAlgorithm } from "@/context/AlgorithmContext";
-import { getSearchAlgorithm } from "@/lib/algorithms";
-import { useState, useEffect } from "react";
 
-interface SearchVisualizationProps {
+interface ArrayCellsProps {
   step: SearchStep;
-  maxValue: number;
 }
 
-export default function SearchVisualization({
-  step,
-}: SearchVisualizationProps) {
+export default function ArrayCells({ step }: ArrayCellsProps) {
   const { array, current, target, found, visited } = step;
-  const { state, dispatch } = useAlgorithm();
-  const [inputTarget, setInputTarget] = useState(target.toString());
-
-  // Update the input field when the target changes externally
-  useEffect(() => {
-    setInputTarget(target.toString());
-  }, [target]);
-
-  const handleTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    setInputTarget(newValue);
-
-    // Only process valid numbers
-    const newTarget = parseInt(newValue);
-    if (!isNaN(newTarget) && newTarget !== target) {
-      updateTarget(newTarget);
-    }
-  };
-
-  const updateTarget = (newTarget: number) => {
-    // Update the target value
-    dispatch({ type: "SET_TARGET", payload: newTarget });
-
-    // Regenerate visualization with the new target
-    const algorithmFunction = getSearchAlgorithm(state.algorithm);
-    if (algorithmFunction) {
-      try {
-        const viz = algorithmFunction(state.data, newTarget);
-        dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
-      } catch (error) {
-        console.error("Error generating visualization:", error);
-      }
-    }
-  };
 
   const isNotFound = current === -1 && visited.length > 0;
   let statusClass = "text-gray-600";
@@ -60,21 +20,8 @@ export default function SearchVisualization({
 
   return (
     <div className="flex w-full flex-col items-center space-y-8 bg-white p-6">
-      <div className="mb-4 flex w-full flex-wrap items-center gap-4">
-        <div className="flex items-center gap-2">
-          <label htmlFor="target-input" className="font-medium text-gray-600">
-            Target Value:
-          </label>
-          <input
-            id="target-input"
-            type="number"
-            value={inputTarget}
-            onChange={handleTargetChange}
-            className="w-16 rounded border border-gray-300 px-2 py-1 text-center text-gray-600"
-          />
-        </div>
-
-        <div className="ml-auto font-medium text-gray-600">
+      <div className="mb-4 flex w-full items-center justify-end">
+        <div className="font-medium text-gray-600">
           Status:
           <span className={`ml-2 font-bold ${statusClass}`}>{statusText}</span>
         </div>
@@ -82,15 +29,13 @@ export default function SearchVisualization({
 
       <div className="flex w-full items-center justify-center">
         {array.map((value, index) => {
-          // Determine the element's state for styling
-          let stateClass = "bg-blue-400"; // Default state
-
+          let stateClass = "bg-blue-400";
           if (found && index === current) {
-            stateClass = "bg-green-500"; // Found state
+            stateClass = "bg-green-500";
           } else if (index === current && !found) {
-            stateClass = "bg-yellow-400"; // Current examining state
+            stateClass = "bg-yellow-400";
           } else if (visited.includes(index) && !found) {
-            stateClass = "bg-gray-400"; // Already visited state
+            stateClass = "bg-gray-400";
           }
 
           return (

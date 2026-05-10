@@ -79,7 +79,7 @@ export function topologicalSort(
     path: [...state.path],
   });
 
-  return createVisualization("topologicalSort", state.steps, {
+  return createVisualization("topologicalSort", "graph-2d", state.steps, {
     timeComplexity: "O(V + E)",
     spaceComplexity: "O(V)",
     reference: "https://en.wikipedia.org/wiki/Topological_sorting",

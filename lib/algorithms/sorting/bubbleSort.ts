@@ -13,6 +13,7 @@ export function bubbleSort(array: number[]): AlgorithmVisualization {
     comparing: [],
     swapped: false,
     completed: [],
+    lineNumber: 0,
   });
 
   for (let i = 0; i < n; i++) {
@@ -24,6 +25,7 @@ export function bubbleSort(array: number[]): AlgorithmVisualization {
         comparing: [j, j + 1],
         swapped: false,
         completed: [...completed],
+        lineNumber: 5,
       });
 
       if (arr[j]! > arr[j + 1]!) {
@@ -37,6 +39,7 @@ export function bubbleSort(array: number[]): AlgorithmVisualization {
           comparing: [j, j + 1],
           swapped: true,
           completed: [...completed],
+          lineNumber: 6,
         });
       }
     }
@@ -50,13 +53,14 @@ export function bubbleSort(array: number[]): AlgorithmVisualization {
       comparing: [],
       swapped: false,
       completed: [...completed],
+      lineNumber: 10,
     });
 
     // If no swapping occurred in this pass, the array is already sorted
     if (!swapped) break;
   }
 
-  return createVisualization("bubbleSort", steps, {
+  return createVisualization("bubbleSort", "array-bars", steps, {
     timeComplexity: "O(n²)",
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Bubble_sort",

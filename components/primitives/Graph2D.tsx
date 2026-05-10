@@ -1,3 +1,5 @@
+"use client";
+
 import type { GraphStep } from "@/lib/types";
 import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
@@ -17,11 +19,11 @@ function getStatusMessage(
   return <p>Traversal will start from a selected vertex.</p>;
 }
 
-interface GraphVisualizationProps {
+interface Graph2DProps {
   step: GraphStep;
 }
 
-export default function GraphVisualization({ step }: GraphVisualizationProps) {
+export default function Graph2D({ step }: Graph2DProps) {
   const { graph, current, visited, stack, path, treeEdges } = step;
   const [graphSize, setGraphSize] = useState({ width: 0, height: 0 });
 

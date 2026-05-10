@@ -65,7 +65,7 @@ export function insertionSort(array: number[]): AlgorithmVisualization {
     });
   }
 
-  return createVisualization("insertionSort", steps, {
+  return createVisualization("insertionSort", "array-bars", steps, {
     timeComplexity: "O(n²)",
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Insertion_sort",

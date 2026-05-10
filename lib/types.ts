@@ -3,6 +3,7 @@ export interface SortingStep {
   comparing: number[];
   swapped: boolean;
   completed: number[];
+  lineNumber?: number;
 }
 
 export interface SearchStep {
@@ -11,6 +12,7 @@ export interface SearchStep {
   target: number; // Value being searched for
   found: boolean; // Whether the target has been found
   visited: number[]; // Indices already visited
+  lineNumber?: number;
 }
 
 export interface Edge {
@@ -33,10 +35,25 @@ export interface GraphStep {
   stack: number[];
   path: number[];
   treeEdges?: Edge[];
+  lineNumber?: number;
 }
 
-export interface AlgorithmVisualization {
-  steps: SortingStep[] | SearchStep[] | GraphStep[];
+export type PrimitiveKind = "array-bars" | "array-cells" | "graph-2d";
+
+export type StepsForPrimitive<P extends PrimitiveKind> = P extends "array-bars"
+  ? SortingStep[]
+  : P extends "array-cells"
+    ? SearchStep[]
+    : P extends "graph-2d"
+      ? GraphStep[]
+      : never;
+
+type PrimitiveBinding =
+  | { primitive: "array-bars"; steps: SortingStep[] }
+  | { primitive: "array-cells"; steps: SearchStep[] }
+  | { primitive: "graph-2d"; steps: GraphStep[] };
+
+export type AlgorithmVisualization = PrimitiveBinding & {
   name: string;
   description: string;
   timeComplexity: string;
@@ -46,7 +63,7 @@ export interface AlgorithmVisualization {
   category: string;
   difficulty: string;
   key: string;
-}
+};
 
 export type AlgorithmCategory =
   | "sorting"

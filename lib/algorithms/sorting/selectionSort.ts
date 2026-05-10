@@ -75,7 +75,7 @@ export function selectionSort(array: number[]): AlgorithmVisualization {
     completed: [...completed],
   });
 
-  return createVisualization("selectionSort", steps, {
+  return createVisualization("selectionSort", "array-bars", steps, {
     timeComplexity: "O(n²)",
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Selection_sort",

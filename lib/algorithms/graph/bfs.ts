@@ -50,7 +50,7 @@ export function bfs(
     path: [...path],
   });
 
-  return createVisualization("bfs", steps, {
+  return createVisualization("bfs", "graph-2d", steps, {
     timeComplexity: "O(V + E)",
     spaceComplexity: "O(V)",
     reference: "https://en.wikipedia.org/wiki/Breadth-first_search",

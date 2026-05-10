@@ -102,7 +102,7 @@ export function dijkstra(
     path: [...state.path],
   });
 
-  return createVisualization("dijkstra", state.steps, {
+  return createVisualization("dijkstra", "graph-2d", state.steps, {
     timeComplexity: "O(V²)",
     spaceComplexity: "O(V)",
     reference: "https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm",

@@ -1,14 +1,11 @@
 import type { SortingStep } from "@/lib/types";
 
-interface SortingVisualizationProps {
+interface ArrayBarsProps {
   step: SortingStep;
   maxValue: number;
 }
 
-export default function SortingVisualization({
-  step,
-  maxValue,
-}: SortingVisualizationProps) {
+export default function ArrayBars({ step, maxValue }: ArrayBarsProps) {
   const { array, comparing, swapped, completed } = step;
 
   return (
@@ -16,7 +13,6 @@ export default function SortingVisualization({
       {array.map((value, index) => {
         const height = (value / maxValue) * 100;
 
-        // Determine the bar color based on its state
         let barColor = "bg-blue-400";
         if (completed.includes(index)) {
           barColor = "bg-green-400";
