@@ -13,6 +13,7 @@ const baseState: VisualizationState = {
 };
 
 const fakeViz: AlgorithmVisualization = {
+  primitive: "array-bars",
   steps: [
     { array: [3, 1, 2], comparing: [], swapped: false, completed: [] },
     { array: [1, 2, 3], comparing: [], swapped: false, completed: [0, 1, 2] },

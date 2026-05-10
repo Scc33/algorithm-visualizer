@@ -1,13 +1,10 @@
 "use client";
 
-import SortingVisualization from "./SortingVisualization";
-import SearchVisualization from "./SearchVisualization";
-import GraphVisualization from "./GraphVisualization";
 import VisualizerControls from "./VisualizerControls";
 import AlgorithmInfo from "./AlgorithmInfo";
-import AlgorithmPseudocode from "./AlgorithmPseudocode";
 import ColorLegend from "./ColorLegend";
 import ArrayInputPanel from "./ArrayInputPanel";
+import { CodeView, renderPrimitive } from "@/components/primitives";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 import {
   getGraphAlgorithm,
@@ -17,12 +14,7 @@ import {
 } from "@/lib/algorithms";
 import { defaultGraphFor } from "@/lib/algorithms/graph/sampleGraphs";
 import { generateRandomArray, getRandomValueFromArray } from "@/lib/utils";
-import type {
-  AlgorithmVisualization,
-  GraphStep,
-  SearchStep,
-  SortingStep,
-} from "@/lib/types";
+import type { AlgorithmVisualization, GraphStep } from "@/lib/types";
 
 function regenerateGraph(
   algorithm: string,
@@ -81,7 +73,7 @@ export default function AlgorithmVisualizer() {
   const category = visualizationData?.category ?? "";
 
   const numVertices =
-    category === "graph" && visualizationData
+    visualizationData?.primitive === "graph-2d"
       ? (visualizationData.steps[0] as GraphStep).graph.numVertices
       : 6;
 
@@ -133,8 +125,6 @@ export default function AlgorithmVisualizer() {
     if (viz) dispatch({ type: "GENERATE_VISUALIZATION", payload: viz });
   };
 
-  const maxValue = data.length > 0 ? Math.max(...data) : 100;
-
   if (!visualizationData) {
     return (
       <div className="flex h-64 items-center justify-center">
@@ -146,31 +136,15 @@ export default function AlgorithmVisualizer() {
     );
   }
 
+  const currentLine = visualizationData.steps[currentStep]?.lineNumber;
+
   return (
     <div className="space-y-8">
       <AlgorithmInfo algorithm={visualizationData} />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
-          <div className="card">
-            {category === "sorting" && (
-              <SortingVisualization
-                step={visualizationData.steps[currentStep] as SortingStep}
-                maxValue={maxValue}
-              />
-            )}
-            {category === "searching" && (
-              <SearchVisualization
-                step={visualizationData.steps[currentStep] as SearchStep}
-                maxValue={maxValue}
-              />
-            )}
-            {category === "graph" && (
-              <GraphVisualization
-                step={visualizationData.steps[currentStep] as GraphStep}
-              />
-            )}
-          </div>
+          <div className="card">{renderPrimitive(visualizationData, currentStep)}</div>
 
           <ArrayInputPanel
             category={category}
@@ -193,7 +167,10 @@ export default function AlgorithmVisualizer() {
         </div>
 
         <div className="lg:col-span-1">
-          <AlgorithmPseudocode code={visualizationData.pseudoCode} />
+          <CodeView
+            code={visualizationData.pseudoCode}
+            {...(currentLine !== undefined ? { currentLine } : {})}
+          />
         </div>
       </div>
     </div>

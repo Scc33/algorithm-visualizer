@@ -17,6 +17,7 @@ export function binarySearch(
     target: target,
     found: false,
     visited: [],
+    lineNumber: 0,
   });
 
   let left = 0;
@@ -36,6 +37,7 @@ export function binarySearch(
       target: target,
       found: false,
       visited: [...visited],
+      lineNumber: 4,
     });
 
     // Check if middle element is the target
@@ -47,6 +49,7 @@ export function binarySearch(
         target: target,
         found: true,
         visited: [...visited],
+        lineNumber: 6,
       });
       found = true;
       break;
@@ -67,10 +70,11 @@ export function binarySearch(
       target: target,
       found: false,
       visited: [...visited],
+      lineNumber: 13,
     });
   }
 
-  return createVisualization("binarySearch", steps, {
+  return createVisualization("binarySearch", "array-cells", steps, {
     timeComplexity: "O(log n)",
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Binary_search_algorithm",

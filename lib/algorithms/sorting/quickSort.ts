@@ -27,7 +27,7 @@ export function quickSort(array: number[]): AlgorithmVisualization {
     completed: finalCompleted,
   });
 
-  return createVisualization("quickSort", steps, {
+  return createVisualization("quickSort", "array-bars", steps, {
     timeComplexity: "O(n log n) - average, O(n²) - worst case",
     spaceComplexity: "O(log n)",
     reference: "https://en.wikipedia.org/wiki/Quicksort",

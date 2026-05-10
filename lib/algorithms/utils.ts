@@ -1,18 +1,19 @@
 import type {
   AlgorithmVisualization,
-  GraphStep,
-  SearchStep,
-  SortingStep,
+  PrimitiveKind,
+  StepsForPrimitive,
 } from "../types";
 import { availableAlgorithms } from "./metadata";
 
 /**
- * Helper function to create an AlgorithmVisualization object from steps and algorithm-specific details
- * This eliminates duplication between the metadata and the algorithm implementation
+ * Helper function to create an AlgorithmVisualization object from steps and algorithm-specific details.
+ * The `primitive` argument selects the rendering primitive and (via StepsForPrimitive) constrains the
+ * accepted shape of `steps`.
  */
-export function createVisualization(
+export function createVisualization<P extends PrimitiveKind>(
   key: keyof typeof availableAlgorithms,
-  steps: SortingStep[] | SearchStep[] | GraphStep[],
+  primitive: P,
+  steps: StepsForPrimitive<P>,
   details: {
     timeComplexity: string;
     spaceComplexity: string;
@@ -27,6 +28,7 @@ export function createVisualization(
   }
 
   return {
+    primitive,
     steps,
     name: metadata.name,
     key: metadata.key,
@@ -34,5 +36,5 @@ export function createVisualization(
     difficulty: metadata.difficulty,
     description: metadata.description,
     ...details,
-  };
+  } as AlgorithmVisualization;
 }

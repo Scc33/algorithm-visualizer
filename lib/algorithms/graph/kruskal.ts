@@ -97,7 +97,7 @@ export function kruskal(graph: Graph): AlgorithmVisualization {
 
   state.steps.push(snapshot(state, -1, null));
 
-  return createVisualization("kruskal", state.steps, {
+  return createVisualization("kruskal", "graph-2d", state.steps, {
     timeComplexity: "O(E log E)",
     spaceComplexity: "O(V + E)",
     reference: "https://en.wikipedia.org/wiki/Kruskal%27s_algorithm",

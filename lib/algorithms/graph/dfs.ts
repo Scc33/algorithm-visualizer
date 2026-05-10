@@ -14,15 +14,16 @@ export function dfs(
   const stack: number[] = [start];
   const path: number[] = [];
 
-  const snapshot = (current: number): GraphStep => ({
+  const snapshot = (current: number, lineNumber: number): GraphStep => ({
     graph: cloneGraph(graph),
     current,
     visited: [...visited],
     stack: [...stack],
     path: [...path],
+    lineNumber,
   });
 
-  steps.push(snapshot(-1));
+  steps.push(snapshot(-1, 2));
 
   while (stack.length > 0) {
     const current = stack.pop()!;
@@ -33,7 +34,7 @@ export function dfs(
     visited.push(current);
     path.push(current);
 
-    steps.push(snapshot(current));
+    steps.push(snapshot(current, 6));
 
     const neighbors = [...graph.adjacency[current]!]
       .map((edge) => edge.to)
@@ -42,7 +43,7 @@ export function dfs(
     for (const neighbor of neighbors) {
       if (!visited.includes(neighbor)) {
         stack.push(neighbor);
-        steps.push(snapshot(current));
+        steps.push(snapshot(current, 8));
       }
     }
   }
@@ -53,9 +54,10 @@ export function dfs(
     visited: [...visited],
     stack: [],
     path: [...path],
+    lineNumber: 12,
   });
 
-  return createVisualization("dfs", steps, {
+  return createVisualization("dfs", "graph-2d", steps, {
     timeComplexity: "O(V + E)",
     spaceComplexity: "O(V)",
     reference: "https://en.wikipedia.org/wiki/Depth-first_search",

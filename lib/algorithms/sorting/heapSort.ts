@@ -57,7 +57,7 @@ export function heapSort(array: number[]): AlgorithmVisualization {
     completed: [...completed],
   });
 
-  return createVisualization("heapSort", steps, {
+  return createVisualization("heapSort", "array-bars", steps, {
     timeComplexity: "O(n log n)",
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Heapsort",

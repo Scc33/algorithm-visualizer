@@ -32,7 +32,7 @@ export function mergeSort(array: number[]): AlgorithmVisualization {
     completed: finalCompleted,
   });
 
-  return createVisualization("mergeSort", steps, {
+  return createVisualization("mergeSort", "array-bars", steps, {
     timeComplexity: "O(n log n)",
     spaceComplexity: "O(n)",
     reference: "https://en.wikipedia.org/wiki/Merge_sort",

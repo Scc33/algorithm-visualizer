@@ -57,7 +57,7 @@ export function linearSearch(
     });
   }
 
-  return createVisualization("linearSearch", steps, {
+  return createVisualization("linearSearch", "array-cells", steps, {
     timeComplexity: "O(n)",
     spaceComplexity: "O(1)",
     reference: "https://en.wikipedia.org/wiki/Linear_search",
