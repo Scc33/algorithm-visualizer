@@ -1,12 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { useAlgorithm } from "@/context/AlgorithmContext";
 
 interface VisualizerControlsProps {
   currentStep: number;
   totalSteps: number;
-  onGenerateNewArray: () => void;
-  algorithmCategory?: string;
 }
 
 const PrevIcon = (
@@ -98,11 +97,17 @@ const ResetIcon = (
 export default function VisualizerControls({
   currentStep,
   totalSteps,
-  onGenerateNewArray,
-  algorithmCategory = "sorting",
 }: VisualizerControlsProps) {
   const { state, dispatch } = useAlgorithm();
   const { isPlaying, speed } = state;
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
 
   const handlePlay = () => dispatch({ type: "SET_IS_PLAYING", payload: true });
   const handlePause = () =>
@@ -114,9 +119,6 @@ export default function VisualizerControls({
     dispatch({ type: "SET_SPEED", payload: parseInt(e.target.value) });
   const handleStepChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     dispatch({ type: "SET_CURRENT_STEP", payload: parseInt(e.target.value) });
-
-  const newDataButtonText =
-    algorithmCategory === "graph" ? "New Graph" : "New Array";
 
   return (
     <div className="card space-y-6 p-6">
@@ -201,25 +203,20 @@ export default function VisualizerControls({
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="flex items-center space-x-4">
-          <button
-            onClick={handleReset}
-            className="btn btn-secondary flex w-full cursor-pointer items-center justify-center space-x-2"
-          >
-            {ResetIcon}
-            <span>Reset</span>
-          </button>
-        </div>
+        <button
+          onClick={handleReset}
+          className="btn btn-secondary flex w-full cursor-pointer items-center justify-center space-x-2"
+        >
+          {ResetIcon}
+          <span>Reset</span>
+        </button>
 
-        <div>
-          <button
-            onClick={onGenerateNewArray}
-            className="btn btn-primary flex w-full cursor-pointer items-center justify-center space-x-2 bg-purple-500 hover:bg-purple-600"
-          >
-            {ResetIcon}
-            <span>{newDataButtonText}</span>
-          </button>
-        </div>
+        <button
+          onClick={handleShare}
+          className="btn btn-primary flex w-full cursor-pointer items-center justify-center space-x-2 bg-purple-500 hover:bg-purple-600"
+        >
+          <span>{copied ? "Copied!" : "Share"}</span>
+        </button>
       </div>
     </div>
   );
