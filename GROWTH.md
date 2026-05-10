@@ -12,6 +12,79 @@ Copy the template at the bottom of this file, fill it in, and prepend it to the 
 
 ## Snapshots
 
+### 2026-05-09 — After Phase 3 & 4: Graph algorithms + test expansion
+
+**Trigger:** Addition of Bellman-Ford, Prim's, Kruskal's algorithms; Phase 4 custom input editing & shareable URLs; comprehensive test suite expansion.
+
+#### Algorithms
+
+| Category   | Count | Names |
+|------------|-------|-------|
+| Sorting    | 6     | bubbleSort, selectionSort, insertionSort, mergeSort, quickSort, heapSort |
+| Searching  | 2     | linearSearch, binarySearch |
+| Graph      | 7     | bfs, dfs, dijkstra, topologicalSort, bellmanFord, prim, kruskal |
+| **Total**  | **15** | |
+
+Difficulty breakdown: easy × 4, medium × 8, hard × 3
+
+#### Test suite
+
+| Metric | Count |
+|--------|-------|
+| Test files | 11 |
+| Test cases | 134 |
+| Statement coverage | 57.17% |
+| Branch coverage | 44.73% |
+| Function coverage | 42.55% |
+
+Test files:
+- `__tests__/lib/utils.test.ts` — 2 cases
+- `__tests__/lib/algorithms/index.test.ts` — 4 cases
+- `__tests__/lib/algorithms/sorting/bubbleSort.test.ts` — 6 cases
+- `__tests__/lib/algorithms/sorting/sorting.test.ts` — 7 cases
+- `__tests__/lib/algorithms/searching/searching.test.ts` — 8 cases
+- `__tests__/lib/algorithms/graph/graph.test.ts` — 11 cases
+- `__tests__/lib/algorithms/graph/bellmanFord.test.ts` — NEW
+- `__tests__/lib/algorithms/graph/mst.test.ts` — NEW (Prim's & Kruskal's)
+- `__tests__/lib/algorithms/graph/sampleGraphs.test.ts` — NEW
+- `__tests__/context/AlgorithmContext.test.ts` — 17 cases
+- `__tests__/lib/urlState.test.ts` — NEW
+
+#### Pages & routes
+
+| Metric | Count |
+|--------|-------|
+| Static routes | 6 |
+| Dynamic routes | 6 |
+| **Total routes** | **12** |
+
+Routes unchanged from baseline; all new algorithms available via existing route structure.
+
+#### Components
+
+| Metric | Count |
+|--------|-------|
+| Total components | 17 |
+| Visualizer components | 10 |
+
+New components: InputPanel, graphEdge (support for custom input editing and graph visualization).
+
+#### Source code
+
+| Metric | Count |
+|--------|-------|
+| TypeScript/TSX files | 75 |
+| Total lines | ~7,879 |
+
+#### Notes
+
+- **Test coverage:** Increased from ~0% to 57.17% statement coverage. Algorithm implementations now 93%+ covered; components remain untested.
+- **Graph algorithms:** Added 3 new minimum spanning tree & shortest path algorithms (Bellman-Ford handles negative weights; Prim's and Kruskal's compute MSTs).
+- **Custom input:** Phase 4 added InputPanel and graph edge editor for user-provided graphs (instead of hardcoded sample graphs).
+- **Code growth:** +6 TypeScript/TSX files, +1,329 lines, +4 test files, +78 test cases.
+
+---
+
 ### 2026-05-09 — Baseline snapshot
 
 **Trigger:** Initial tracking entry; codebase post-Phase-1 tech-debt cleanup (tests for algorithms, reducer, and utils added).
