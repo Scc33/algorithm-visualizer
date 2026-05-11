@@ -32,7 +32,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "@vitest/coverage-v8": "^4.1.5",
     "eslint": "^9",
-    "eslint-config-next": "15.3.4",
+    "eslint-config-next": "16.2.6",
     "eslint-plugin-sonarjs": "^4.0.3",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
